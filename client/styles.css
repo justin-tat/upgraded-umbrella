@@ -1,3 +1,15 @@
 h2 {
     color: aquamarine;
 }
+
+#defaultView {
+    position: relative;
+    display: inline-block;
+    height: 600px;
+    width: 400px;
+}
+
+div > #mainImage {
+    height: 100%;
+    width: 100%;
+}

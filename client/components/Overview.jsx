@@ -1,10 +1,12 @@
 import React from 'react';
+import DefaultView from './DefaultView.jsx'
 
 class Overview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      status: 'normal'
+      status: 'normal',
+      view: 'default' 
     };
     this.onMouseEnter = this.onMouseEnter.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
@@ -28,6 +30,9 @@ class Overview extends React.Component {
     return(
       <div className={this.state.status}>
         <h2 onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>Overview Modal</h2>
+        {this.state.view === 'default' 
+          ? <DefaultView />
+          : <ExpandedView />}
       </div>
     )
   }
