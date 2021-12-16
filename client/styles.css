@@ -4,12 +4,56 @@ h2 {
 
 #defaultView {
     position: relative;
-    display: inline-block;
-    height: 600px;
-    width: 400px;
+    display: flex;
+    height: 40em;
+    width: 54em;
 }
 
-div > #mainImage {
-    height: 100%;
-    width: 100%;
+#mainImage {
+    max-height: 100%;
+    max-width: 50%;
+    height: auto;
+    width: auto;
 }
+
+#starRating {
+    display: flex;
+    height: 1em;
+    width: 5em;
+    gap: 1em;
+    align-items: center;
+    padding-left: 2em;
+}
+
+.indStar {
+    height: 100%;
+    width: auto;
+}
+
+.weirdStar {
+    height: 75%;
+    width: auto;
+}
+
+
+#thumbnailList {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 90px;
+    top: 10px;
+    left: 10px;
+}
+
+.thumbnail {
+    position: absolute;
+    max-width: 80px;
+    max-height: 80px;
+    width: auto;
+    height: auto;
+    border-style: solid;
+    border-color: white;
+}
+
+
+

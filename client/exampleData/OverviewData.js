@@ -416,6 +416,39 @@ var styles = {
     ]
 };
 
+var reviewMetadata = {
+    "product_id": "59553",
+    "ratings": {
+        "1": "6",
+        "2": "4",
+        "3": "21",
+        "4": "15",
+        "5": "26"
+    },
+    "recommended": {
+        "false": "17",
+        "true": "55"
+    },
+    "characteristics": {
+        "Fit": {
+            "id": 199845,
+            "value": "2.6986301369863014"
+        },
+        "Length": {
+            "id": 199846,
+            "value": "2.5205479452054795"
+        },
+        "Comfort": {
+            "id": 199847,
+            "value": "2.9178082191780822"
+        },
+        "Quality": {
+            "id": 199848,
+            "value": "3.0000000000000000"
+        }
+    }
+};
+
 module.exports = {
-    overviewProducts, styles
+    overviewProducts, styles, reviewMetadata
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import DefaultView from './DefaultView.jsx'
+import DefaultView from './Overview/DefaultView.jsx'
 
 class Overview extends React.Component {
   constructor(props) {
