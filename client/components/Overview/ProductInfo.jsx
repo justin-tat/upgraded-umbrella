@@ -1,5 +1,6 @@
 import React from 'react';
 import StarRating from './StarRating.jsx';
+import StyleInfo from './StyleInfo.jsx';
 
 //Eventually, ProductInfo only needs the styleID passed down as it can make calls to the API to find everything passed down in static version
 
@@ -7,10 +8,9 @@ class ProductInfo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            productID: props.styles.product_id,
+            productID: props.results.product_id,
             ratings: this.overallRating(props.ratings.ratings)
         };
-
     }
 
     overallRating(obj) {
@@ -24,7 +24,6 @@ class ProductInfo extends React.Component {
             rating += (parseInt(i) * parseInt(obj[i]));
             numReviews += parseInt(obj[i]);
         }
-
         var average = rating/numReviews;
         for(var i = 0; i < 5; i++) {
             if (average > 1) {
@@ -34,7 +33,6 @@ class ProductInfo extends React.Component {
             } else {
                 starArr.push({'value': 0, 'index': i});
             }
-
         }
         for(var i = 0; i <= 1; i += 0.25) {
             if (Math.abs(average - i) < closest) {
@@ -43,16 +41,21 @@ class ProductInfo extends React.Component {
             }
         }
         starArr[firstUnfilledIndex] = {'value': closestQuarter, 'index' : firstUnfilledIndex};
-        console.log(starArr);
         return starArr;
-        
-        
     }
+
+
 
     render() {
         return(
-            <div id="productInfo">
+            <div >
                 <StarRating rating={this.state.ratings} />
+                <StyleInfo productOverview={this.props.productOverview} 
+                    style={this.props.results[this.props.currStyle]} 
+                    styles={this.props.results} 
+                    currStyle={this.props.currStyle} 
+                    updateStyle={this.props.updateStyle}
+                />
             </div>)
     }
 }

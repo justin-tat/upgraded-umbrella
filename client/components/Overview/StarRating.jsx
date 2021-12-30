@@ -1,9 +1,4 @@
 import React from 'react';
-// import emptyStar from './img/emptyStar.png';
-// import quarterStar from './img/quarterStar.png';
-// import halfStar from './img/halfStar.png';
-// import threeQuarterStar from './img/threeQuarterStar.png';
-// import filledStarImg from './img/filledStar.png';
 
 var StarRating = (props) => {
     return(
@@ -16,6 +11,7 @@ var StarRating = (props) => {
                 filledStar = starNumber.value === 1 ? <img key={starNumber.index} alt="work harder bro" src={'./img/filledStar.png'} className="indStar"></img> : filledStar;
                 return filledStar;
             })}
+            <a href="#FillMeInLater">Read all reviews</a>
             
         </div>)
 }

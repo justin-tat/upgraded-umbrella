@@ -1,31 +1,25 @@
 import React from 'react';
-import exampleData from '../../exampleData/OverviewData.js';
 import ThumbnailList from './ThumbnailList.jsx';
 import ProductInfo from './ProductInfo.jsx';
 
-class DefaultView extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            styles: exampleData.styles,
-            currStyle: 0,
-            currIndex: 0,
-            variations: exampleData.styles.results[0].photos,
-            reviewMetadata: exampleData.reviewMetadata
-        };
-    }
-
-
-
-    render() {
-        return(
+var DefaultView = (props) => {
+    return (
         <div id="defaultView">
-            <img id="mainImage" src={this.state.variations[this.state.currIndex].url} ></img>
-            <ThumbnailList photos={this.state.variations}/>
-            <ProductInfo styles={this.state.styles} ratings={this.state.reviewMetadata}/>
+            {props.currPhotoIndex !== 0
+                ? <img src="./img/leftArrow.png" id="leftArrow" onClick={props.arrowClick}></img>
+                : <div></div>}
+            <div id="defaultViewImages">
+                <img id="mainImage" src={props.photos[props.currPhotoIndex].url} onClick={props.zoom}></img>
+                <ThumbnailList photos={props.photos} photoClick={props.photoClick} arrowClick={props.arrowClick} currPhotoIndex={props.currPhotoIndex}/>
+            </div>
+            {props.currPhotoIndex !== props.photos.length - 1
+                ? <div> <img src="./img/rightArrow.png" id="rightArrow" onClick={props.arrowClick}></img> </div>
+                : <div></div>}
+            <div id="productInfo">
+                <ProductInfo results={props.results} ratings={props.reviewMetadata} productOverview={props.productOverview} currStyle={props.currStyle} updateStyle={props.updateStyle}/>
+            </div>
         </div>);
 
-    }
 }
 
 export default DefaultView;
