@@ -3,7 +3,6 @@ import DefaultView from './Overview/DefaultView.jsx';
 import ExpandedView from './Overview/ExpandedView.jsx';
 import SellingPoints from './Overview/SellingPoints.jsx';
 import exampleData from '../exampleData/OverviewData.js';
-import $ from 'jquery';
 
 class Overview extends React.Component {
   constructor(props) {
@@ -168,7 +167,7 @@ class Overview extends React.Component {
           : <div></div>
         }
         {this.state.zoom === 'expanded'
-          ? 
+          ?
             <ExpandedView
               //ProductInfo related
               results={this.state.results}
@@ -185,7 +184,7 @@ class Overview extends React.Component {
               arrowClick={this.arrowClick}
               zoom={this.zoom}
               zoomedIn={this.state.zoomedIn}
-              dimensions={this.state.dimensions} 
+              dimensions={this.state.dimensions}
               expViewImg = {this.state.expViewImg}/>
           : <div></div>
         }

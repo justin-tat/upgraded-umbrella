@@ -1,5 +1,4 @@
 import React, { Component, createRef } from 'react'
-import PropTypes from 'prop-types'
 
 
 class Zoom extends Component {
@@ -122,24 +121,11 @@ class Zoom extends Component {
             ...this.innerDivStyle,
             transform: zoom ? `scale(${zoomScale})` : 'scale(1.0)',
           }}
-          
+
         />
       </div>
     )
   }
-}
-
-Zoom.propTypes = {
-  /** The path to the image. It can be a url. */
-  img: PropTypes.string.isRequired,
-  /** The zoom scale. */
-  zoomScale: PropTypes.number.isRequired,
-  /** The time (in seconds) that will take to scale your image. */
-  transitionTime: PropTypes.number,
-}
-
-Zoom.defaultProps = {
-  transitionTime: 0.1,
 }
 
 export default Zoom
