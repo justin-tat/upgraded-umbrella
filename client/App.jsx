@@ -4,7 +4,7 @@ import Overview from './components/Overview.jsx'
 import Comparison from './components/Comparison.jsx'
 import Forum from './components/Forum.jsx'
 import Reviews from './components/Reviews.jsx'
-import "./styles.css";
+import "./styles.scss";
 
 class App extends React.Component {
   constructor(props) {
