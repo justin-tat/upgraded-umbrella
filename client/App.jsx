@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Overview from './components/Overview.jsx'
 import Comparison from './components/Comparison.jsx'
-import Forum from './components/Forum.jsx'
 import Reviews from './components/Reviews.jsx'
 import "./styles.scss";
 
@@ -17,7 +16,6 @@ class App extends React.Component {
         <h1>Team Parasol's App</h1>
         <Overview/>
         <Comparison/>
-        <Forum/>
         <Reviews/>
       </div>
     )
