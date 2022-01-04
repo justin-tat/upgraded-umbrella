@@ -9,13 +9,14 @@ class Zoom extends Component {
       zoom: false,
       mouseX: null,
       mouseY: null,
+      newHeight: 0,
+      newWidth: 0
     }
 
     const {
       img,
       transitionTime,
     } = props
-    this.isLandscape();
 
     this.innerDivStyle = {
       height: `100%`,
@@ -31,6 +32,10 @@ class Zoom extends Component {
     this.handleMouseOver = this.handleMouseOver.bind(this);
     this.handleMouseOut = this.handleMouseOut.bind(this);
     this.handleMouseMovement = this.handleMouseMovement.bind(this);
+  }
+
+  componentDidMount() {
+    this.isLandscape();
   }
 
   handleMouseOver () {
@@ -55,6 +60,10 @@ class Zoom extends Component {
               width: "1120px",
               height: `${newHeight}px`
           }
+          this.setState({
+            newWidth: 1120,
+            newHeight: newHeight
+          });
       //When height should be set to 100%
       } else {
           var newWidth = 640 * imgAspectRatio;
@@ -62,26 +71,18 @@ class Zoom extends Component {
               width: `${newWidth}px`,
               height: "640px"
           }
+          this.setState({
+            newWidth: newWidth,
+            newHeight: 640 
+          });
       }
   }
 
   handleMouseMovement (e) {
-    const {
-      left: offsetLeft,
-      top: offsetTop,
-    } = this.imageRef.current.getBoundingClientRect();
-
-    const {
-      current: {
-        style: {
-          height,
-          width,
-        },
-      },
-    } = this.imageRef;
-
-    const x = ((e.pageX - offsetLeft) / parseInt(width, 10)) * 100;
-    const y = ((e.pageY - offsetTop) / parseInt(height, 10)) * 100;
+    var leftOffset = this.imageRef.current.getBoundingClientRect().left;
+    var topOffset = this.imageRef.current.getBoundingClientRect().top;
+    const x = ((e.pageX - leftOffset) / parseInt(this.state.newWidth)) * 100;
+    const y = ((e.pageY - topOffset) / parseInt(this.state.newHeight)) * 100;
 
 
     this.setState({
