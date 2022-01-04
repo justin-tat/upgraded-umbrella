@@ -16,11 +16,18 @@ var ExpandedView = (props) => {
                 }
 
                 {props.currPhotoIndex !== props.photos.length - 1 && props.zoomedIn === false
-                    ? <img src="./img/rightArrow.png" id="expandedRightArrow" onClick={props.arrowClick}></img>
+                    ? <img src="./img/rightArrow.png" 
+                    id="expandedRightArrow" 
+                    onClick={props.arrowClick}></img>
                     : <div></div>}
             </div>
             <div id="productInfo">
-                <ProductInfo results={props.results} ratings={props.reviewMetadata} productOverview={props.productOverview} currStyle={props.currStyle} updateStyle={props.updateStyle}/>
+                <ProductInfo 
+                results={props.results} 
+                ratings={props.reviewMetadata} 
+                productOverview={props.productOverview} 
+                currStyle={props.currStyle} 
+                updateStyle={props.updateStyle}/>
             </div>
         </div>
     )
