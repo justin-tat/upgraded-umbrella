@@ -13,3 +13,104 @@ div > #mainImage {
     height: 100%;
     width: 100%;
 }
+
+/* COMPARISON */
+#carousel {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    gap: 10px 20px;
+    height: 400px;
+    width: 75%;
+}
+
+.scrollWrapper {
+    display: flex;
+    flex-wrap: none;
+    overflow-x: auto;
+}
+
+.listItem {
+    flex: 0 0 auto;
+    /* border: solid gray 0.05em; */
+    width: 25%;
+    height: 85%;
+}
+
+.category, .price {
+    font-size: 1.5vw;
+}
+
+.productName {
+    font: bold;
+    font-size: 1.50;
+}
+
+.relatedImgBtn {
+    position: relative;
+    width: 100%;
+}
+
+.relatedImgBtn .carouselImg {
+    max-width: 100%;
+    height: auto;
+}
+.relatedImgBtn .modalButton {
+    position: absolute;
+    top: 2%;
+    left: 80%;
+    transform: translate(-10%, -90%);
+    -ms-transform: translate(-10%, -90%);
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+}
+
+.relatedImgBtn .addtoOutfit:hover {
+    background-color: black;
+  }
+
+.comparisonModal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modalContent {
+    width: 500px;
+    background-color: white;
+}
+
+.modalHeader, .modalFooter {
+    padding: 10px;
+}
+
+.modalTitle {
+    margin: 0;
+}
+
+.modalBody {
+    padding: 10px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee
+}
+
+.closeModal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.closeModal:hover,
+.closeModal:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
