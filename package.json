@@ -20,8 +20,7 @@
   "homepage": "https://github.com/rpp32-fec-parasol/upgraded-umbrella#readme",
   "dependencies": {
     "axios": "^0.24.0",
-    "express": "^4.17.1",
-    "prop-types": "^15.8.0",
+    "express": "^4.17.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-img-zoom": "^0.1.0"
