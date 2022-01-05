@@ -7,7 +7,7 @@ class ReviewList extends React.Component {
   }
 
   render() {
-    return(<div>
+    return(<div className='review-section'>
       <ReviewTile/>
       <ReviewTile/>
       <ReviewTile/>

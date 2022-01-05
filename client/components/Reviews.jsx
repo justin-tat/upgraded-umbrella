@@ -8,13 +8,13 @@ class Reviews extends React.Component {
   }
 
   render() {
-    return(<div>
-      <h3>Reviews</h3>
+    return(<>
+      <h3>Ratings &amp; Reviews</h3>
       <section id='reviews'>
-        <ReviewSummary className='review-section'/>
-        <ReviewList className='review-section'/>
+        <ReviewSummary/>
+        <ReviewList/>
       </section>
-    </div>)
+    </>)
   }
 }
 

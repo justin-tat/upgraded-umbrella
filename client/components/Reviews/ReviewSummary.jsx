@@ -6,7 +6,7 @@ class ReviewSummary extends React.Component {
   }
 
   render() {
-    return(<div>
+    return(<div className='review-section'>
       Review Summary
     </div>)
   }

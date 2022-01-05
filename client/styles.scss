@@ -1,14 +1,8 @@
 #reviews {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(1, 1fr);
-    grid-gap: 15px;
-    padding: 15px;
-
-    .review-section {
-        display: flex;
-        justify-content: center;
-    }
+    grid-template-columns: 20% 80%;
+    grid-template-rows: repeat(4, 1fr);
+    grid-gap: 10px;
 }
 
 h2 {
