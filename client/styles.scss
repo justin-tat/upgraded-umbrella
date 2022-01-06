@@ -65,6 +65,14 @@ h2 {
     justify-content: center;
 }
 
+.revertToExpanded {
+    position: absolute;
+    height: 7%;
+    width: 5%;
+    top: 1%;
+    right:2%;
+    z-index: 2;
+}
 
 #expandedImg {
     max-height: 100%;
