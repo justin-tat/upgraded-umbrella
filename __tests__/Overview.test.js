@@ -72,9 +72,11 @@ describe('Default View Component', () => {
             hide={false}
             />);
         console.log(overview);
-        overview.find('#mainIma').simulate('click');
+        overview.find('#mainImage').simulate('click');
         expect(mockFunction).toHaveBeenCalled();
-    }) 
+    });
+    
+    
 
 
 });
