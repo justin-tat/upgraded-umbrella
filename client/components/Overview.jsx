@@ -8,7 +8,6 @@ class Overview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      status: 'normal',
       results: exampleData.styles.results,
       currStyle: 0,
       currPhotoIndex: 0,
@@ -20,8 +19,6 @@ class Overview extends React.Component {
       dimensions: {},
       expViewImg: {}
     };
-    this.onMouseEnter = this.onMouseEnter.bind(this);
-    this.onMouseLeave = this.onMouseLeave.bind(this);
     this.photoClick = this.photoClick.bind(this);
     this.arrowClick = this.arrowClick.bind(this);
     this.updateStyle = this.updateStyle.bind(this);
@@ -37,18 +34,6 @@ class Overview extends React.Component {
     event.preventDefault();
     this.setState({
       hide: !this.state.hide
-    });
-  }
-
-  onMouseEnter(event) {
-    this.setState({
-      status: 'hovered'
-    })
-  }
-
-  onMouseLeave(event) {
-    this.setState({
-      status: 'normal'
     });
   }
 
@@ -158,8 +143,7 @@ class Overview extends React.Component {
 
   render() {
     return (
-      <div className={this.state.status} id="overview">
-        <h2 onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>Overview Modal</h2>
+      <div id="overview">
         {this.state.zoom === 'default'
           ? <DefaultView results={this.state.results}
             currStyle={this.state.currStyle}
