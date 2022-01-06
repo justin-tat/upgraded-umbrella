@@ -2,13 +2,10 @@ import React from 'react';
 import ComparisonModal from './ComparisonModal.jsx';
 
 const RelatedItem = (props) => {
-  console.log('Related Item Props: ', props.image);
+  // console.log('Related Item Props: ', props.image);
   return (
     <div className='listItem' >
       <div className='relatedImgBtn'>
-        <button className='modalButton' onClick={props.displayModal} >
-          <img className="far fa-star"></img>
-        </button>
         <ComparisonModal/>
         <img className='carouselImg' src={props.image}></img>
       </div>
@@ -21,9 +18,9 @@ const RelatedItem = (props) => {
 }
 
 const Related = (props) => {
-  console.log('From Related Data: ', props.relatedData);
+  // console.log('From Related Data: ', props.relatedData);
   var relatedList = props.relatedData;
-  console.log('RelatedList: ', relatedList);
+  // console.log('RelatedList: ', relatedList);
   var relatedItems = relatedList.map((item) =>
     <RelatedItem key={item.id} productId={item.id} displayModal={props.displayModal} category={item.category} name={item.name} price={item.default_price} image={item.productImg}/>
   );
