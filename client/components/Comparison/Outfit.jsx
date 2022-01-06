@@ -4,7 +4,7 @@ import FontAwesome from 'react-icons/fa';
 const OutfitItem = (props) => {
   return (
     <div className='listItem' >
-      <div className='relatedImgBtn' value={props.id} onClick={() => {props.removeOutfitItem(props.id)}}>
+      <div className='relatedImgBtn' onClick={() => {props.removeOutfitItem(props.id)}}>
         <img className='carouselImg' src={props.image}></img>
       </div>
       <div className='category'>{props.category}</div>

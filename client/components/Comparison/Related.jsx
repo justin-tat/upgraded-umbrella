@@ -1,14 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ComparisonModal from './ComparisonModal.jsx';
 
 const RelatedItem = (props) => {
   // console.log('Related Item Props: ', props.image);
+  var [show, setShow] = useState(false);
   return (
     <div className='listItem' >
-      <div className='relatedImgBtn'>
-        <ComparisonModal/>
+      <div className='relatedImgBtn' onClick={() => setShow(true)}>
         <img className='carouselImg' src={props.image}></img>
       </div>
+      <ComparisonModal show={show} onClose={() => setShow(false)} show={show}/>
       <div className='category'>{props.category}</div>
       <div className='productName'>{props.name}</div>
       <div className='price'>{props.price}</div>
@@ -18,9 +19,7 @@ const RelatedItem = (props) => {
 }
 
 const Related = (props) => {
-  // console.log('From Related Data: ', props.relatedData);
   var relatedList = props.relatedData;
-  // console.log('RelatedList: ', relatedList);
   var relatedItems = relatedList.map((item) =>
     <RelatedItem key={item.id} productId={item.id} displayModal={props.displayModal} category={item.category} name={item.name} price={item.default_price} image={item.productImg}/>
   );
