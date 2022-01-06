@@ -125,6 +125,11 @@ class Comparison extends React.Component {
   updateOutfit (event) {
     var outfitObj = {};
     console.log('Your outfit is being updated!');
+    for (var item of this.state.outfit) {
+      if (item.id === this.state.productId) {
+        return;
+      }
+    }
     this.pullProductInfo(this.state.productId, (err, productInfo) => {
       if (err) {
         console.log(err);
