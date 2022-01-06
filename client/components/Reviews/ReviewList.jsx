@@ -7,10 +7,13 @@ class ReviewList extends React.Component {
   }
 
   render() {
-    return(<div className='review-section'>
-      <ReviewTile/>
-      <ReviewTile/>
-      <ReviewTile/>
+    return(<div className='reviewList'>
+      <h4>Review List</h4>
+      <ul>
+        {this.props.reviews.map(review => {
+          return <ReviewTile key={review.review_id} review={review}/>
+        })}
+      </ul>
     </div>)
   }
 }
