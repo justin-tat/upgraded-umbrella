@@ -6,6 +6,9 @@ var ExpandedView = (props) => {
     return (
         <div id="expandedView">
             <div id="expandedViewImages">
+                <img src="./img/expandedToDefault.png" 
+                    className="revertToExpanded" 
+                    onClick={props.revertToExpanded}></img>
                 {props.currPhotoIndex !== 0 && props.zoomedIn === false
                     ? <img src="./img/leftArrow.png" id="expandedLeftArrow" onClick={props.arrowClick}></img>
                     : <div></div>
