@@ -14,7 +14,7 @@ class Comparison extends React.Component {
     this.state = {
       outfit: [],
       related: [],
-      productId: 59553,
+      productId: 59555,
     }
   }
 
@@ -134,17 +134,34 @@ class Comparison extends React.Component {
           if (err) {
             console.log(err);
           } else {
+            var newOutfit = this.state.outfit;
             outfitObj.productImg = imageData.imageData;
             localStorage.setItem(outfitObj.id, JSON.stringify(outfitObj));
-            this.setState ((state, props) => ({
-              outfit: state.outfit.push(outfitObj)
-            }));
+            newOutfit.push(outfitObj);
+            this.setState ({
+              outfit: newOutfit
+            });
           }
         });
       }
     });
   }
 
+  removeOutfitItem (productId) {
+    console.log('REMOVING OUTFIT ITEM!');
+    console.log('Removing item: ', productId);
+    localStorage.removeItem(productId);
+    var outfitItems = this.state.outfit;
+    var newOutfit = [];
+    for (var item of outfitItems) {
+      if (item.id !== productId) {
+        newOutfit.push(item);
+      }
+    }
+    this.setState ({
+      outfit: newOutfit
+    });
+  }
 
 
   render() {
@@ -154,7 +171,7 @@ class Comparison extends React.Component {
         <p>RELATED PRODUCTS</p>
         <Related relatedData={this.state.related} />
         <p>YOUR OUTFIT</p>
-        <Outfit updateOutfit={this.updateOutfit.bind(this)} outfit={this.state.outfit}/>
+        <Outfit updateOutfit={this.updateOutfit.bind(this)} outfit={this.state.outfit} removeOutfitItem={this.removeOutfitItem.bind(this)}/>
       </div>
     )
   }
