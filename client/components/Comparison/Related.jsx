@@ -6,13 +6,13 @@ const RelatedItem = (props) => {
   var [show, setShow] = useState(false);
   return (
     <div className='listItem' >
-      <div className='relatedImgBtn' onClick={() => setShow(true)}>
-        <img className='carouselImg' src={props.image}></img>
+      <div className='relatedImgBox' onClick={() => setShow(true)}>
+        <img className='relatedImg' src={props.image}></img>
       </div>
       <ComparisonModal show={show} onClose={() => setShow(false)} show={show}/>
       <div className='category'>{props.category}</div>
       <div className='productName'>{props.name}</div>
-      <div className='price'>{props.price}</div>
+      <div className='price'>${props.price}</div>
       <div className='rating'>XXXXX</div>
     </div>
   );
