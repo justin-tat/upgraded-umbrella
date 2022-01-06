@@ -5,7 +5,7 @@ const OutfitItem = (props) => {
   return (
     <div className='listItem' >
       <div className='relatedImgBtn' value={props.id} onClick={() => {props.removeOutfitItem(props.id)}}>
-        <img className='carouselImg' src='https://images.unsplash.com/photo-1501088430049-71c79fa3283e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80'></img>
+        <img className='carouselImg' src={props.image}></img>
       </div>
       <div className='category'>{props.category}</div>
       <div className='productName'>{props.name}</div>
@@ -17,9 +17,12 @@ const OutfitItem = (props) => {
 
 const Outfit = (props) => {
   var outfitList = props.outfit;
-  var outfits = outfitList.map((item) =>
-    <OutfitItem key={item.id} id={item.id} category={item.category} name={item.name} price={item.default_price} image={item.productImg} removeOutfitItem={props.removeOutfitItem} />
-  )
+  if (outfitList.length > 0) {
+    console.log('outfit list: ', outfitList);
+    var outfits = outfitList.map((item) =>
+      <OutfitItem key={item.id} id={item.id} category={item.category} name={item.name} price={item.default_price} image={item.productImg} removeOutfitItem={props.removeOutfitItem} />
+    )
+  }
   return (
       <div className='scrollWrapper'>
         <br></br>
