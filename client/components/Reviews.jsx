@@ -26,7 +26,6 @@ class Reviews extends React.Component {
       params: { productId: productId }
     }).then(result => {
       let reviews = result.data;
-      console.log(reviews);
       this.setState({
         reviews: reviews
       })

@@ -13,7 +13,6 @@ app.use(express.static('./client/dist'));
 // })
 
 app.get('/', (req, res) => {
-  console.log('testing');
   res.sendStatus(200);
 });
 
