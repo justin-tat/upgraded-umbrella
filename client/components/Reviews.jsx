@@ -10,7 +10,8 @@ class Reviews extends React.Component {
     this.state = {
       productId: 59554,
       reviews: [],
-      averageRating: null
+      averageRating: null,
+      sortOption: 'relevance'
     }
   }
 

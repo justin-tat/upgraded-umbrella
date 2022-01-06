@@ -9,6 +9,11 @@ class ReviewList extends React.Component {
   render() {
     return(<div className='reviewList'>
       <h4>Review List</h4>
+      {this.props.reviews.length} reviews, sorted by <select>
+        <option>relevance</option>
+        <option>helpful</option>
+        <option>newest</option>
+      </select>
       <ul>
         {this.props.reviews.map(review => {
           return <ReviewTile key={review.review_id} review={review}/>
