@@ -7,21 +7,16 @@ const OutfitItem = (props) => {
       <div className='relatedImgBtn'>
         <img className='carouselImg' src='https://images.unsplash.com/photo-1501088430049-71c79fa3283e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80'></img>
       </div>
-      <div className='category'>CATEGORY</div>
-      <div className='productName'>Expanded Product Name with Extra Text</div>
-      <div className='price'>$123</div>
+      <div className='category'>{props.category}</div>
+      <div className='productName'>{props.name}</div>
+      <div className='price'>{props.price}</div>
       <div className='rating'>XXXXX</div>
     </div>
   );
 }
 
 const Outfit = (props) => {
-  var outfitList = [];
-  var productIds = Object.keys(props.outfit);
-  for (var productId of productIds) {
-    outfitList.push(props.outfit.getItem(productId));
-  };
-  // console.log('OUTFIT LIST: ', outfitList);
+  var outfitList = props.outfit;
   var outfits = outfitList.map((item) =>
     <OutfitItem key={item.id} id={item.id} category={item.category} name={item.name} price={item.default_price} image={item.productImg} />
   )
