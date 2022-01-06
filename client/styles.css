@@ -88,6 +88,7 @@ h2 {
     flex-direction: row;
     gap: 10px 20px;
     height: 400px;
+    max-height: 400px;
     width: 75%;
 }
 
@@ -99,43 +100,55 @@ h2 {
 
 .listItem {
     flex: 0 0 auto;
-    /* border: solid gray 0.05em; */
-    width: 25%;
-    height: 85%;
+    border: solid gray 0.05em;
+    width: 12em;
+    height: 94%;
+    max-height: fit-content;
+    min-height: fit-content;
 }
 
-.category, .price {
-    font-size: 1.5vw;
+.category {
+    margin-top: 0.50em;
+    margin-bottom: 0.25em;
+    margin-left: 0.75em;
+    font-size: 0.85em;
+    font-family: sans-serif;
+    font: normal;
+}
+
+.price {
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+    margin-left: 0.75em;
+    font-size: 0.85em;
+    font-family: sans-serif;
+    font: normal;
 }
 
 .productName {
-    font: bold;
-    font-size: 1.50;
+    font-family: sans-serif;
+    margin-left: 0.70em;
+    font-weight: bold;
+    font-size: 0.85em;
 }
 
-.relatedImgBtn {
-    position: relative;
-    width: 100%;
+.rating {
+    margin-left: 0.45em;
 }
 
-.relatedImgBtn .carouselImg {
-    max-width: 100%;
+.relatedImg {
+    min-height: 5em;
     height: auto;
+    max-width: 12em;
+    vertical-align: middle;
 }
-.relatedImgBtn .modalButton {
+.relatedImgBox .modalButton {
+    background-color: rgb(211, 208, 208);
     position: absolute;
-    top: 2%;
-    left: 80%;
-    transform: translate(-10%, -90%);
-    -ms-transform: translate(-10%, -90%);
-    padding: 12px 24px;
-    border: none;
-    border-radius: 5px;
+    width: auto;
+    height: 35em;
+    vertical-align: middle;
 }
-
-.relatedImgBtn .addtoOutfit:hover {
-    background-color: black;
-  }
 
 .comparisonModal {
     position: fixed;
@@ -143,15 +156,15 @@ h2 {
     top: 0;
     right: 0;
     bottom: 0;
-    background-color: #fff;
+    background-color: rgba(0, 0, 0, 0.25);
     display: flex;
-    align-items: center;
+    align-items:center;
     justify-content: center;
 }
 
 .modalContent {
     width: 500px;
-    background-color: white;
+    background-color: #fff;
 }
 
 .modalHeader, .modalFooter {
@@ -182,15 +195,32 @@ h2 {
   cursor: pointer;
 }
 
+.relatedImg:hover, .plusImage:hover {
+    cursor: pointer;
+}
+
 .addItem {
+    flex: 0 0 auto;
     border: solid gray 0.05em;
-    width: 25%;
-    height: 85%;
+    width: 12em;
+    height: 94%;
+    max-height: fit-content;
+    min-height: fit-content;
 }
 
 .addToOutfit {
     position: relative;
-    left: 5%;
+    margin-left: 0.40em;
+    margin-top: 0.25em;
+    left: 10%;
     top: 30%;
+    font-size: x-large;
     cursor:pointer
+}
+
+.plusImage {
+    position: relative;
+    margin-top: 5em;
+    margin-left: 3.5em;
+    height: 5em;
 }
