@@ -3,8 +3,8 @@ import FontAwesome from 'react-icons/fa';
 
 const OutfitItem = (props) => {
   return (
-    <div className='listItem'>
-      <div className='relatedImgBtn'>
+    <div className='listItem' >
+      <div className='relatedImgBtn' value={props.id} onClick={() => {props.removeOutfitItem(props.id)}}>
         <img className='carouselImg' src='https://images.unsplash.com/photo-1501088430049-71c79fa3283e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80'></img>
       </div>
       <div className='category'>{props.category}</div>
@@ -18,7 +18,7 @@ const OutfitItem = (props) => {
 const Outfit = (props) => {
   var outfitList = props.outfit;
   var outfits = outfitList.map((item) =>
-    <OutfitItem key={item.id} id={item.id} category={item.category} name={item.name} price={item.default_price} image={item.productImg} />
+    <OutfitItem key={item.id} id={item.id} category={item.category} name={item.name} price={item.default_price} image={item.productImg} removeOutfitItem={props.removeOutfitItem} />
   )
   return (
       <div className='scrollWrapper'>
