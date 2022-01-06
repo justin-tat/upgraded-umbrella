@@ -28,6 +28,7 @@ class Overview extends React.Component {
     this.zoom = this.zoom.bind(this);
     this.toggleHide = this.toggleHide.bind(this);
     this.onImgLoad = this.onImgLoad.bind(this);
+    this.revertToExpanded = this.revertToExpanded.bind(this);
   }
 
   //Make office hours about component did mount and how to avoid errors when calling nested objects in downstream components. Do you use example data, and then just override it in componentDidMount with an API call?
@@ -65,6 +66,14 @@ class Overview extends React.Component {
       });
     }
 
+  }
+
+  revertToExpanded(e) {
+    e.preventDefault();
+    this.setState({
+      zoom: 'default',
+      zoomedIn: false
+    });
   }
 
   onImgLoad({ target: img }) {
@@ -185,7 +194,8 @@ class Overview extends React.Component {
               zoom={this.zoom}
               zoomedIn={this.state.zoomedIn}
               dimensions={this.state.dimensions}
-              expViewImg = {this.state.expViewImg}/>
+              expViewImg = {this.state.expViewImg}
+              revertToExpanded = {this.revertToExpanded}/>
           : <div></div>
         }
         <div id="productFeatures">
