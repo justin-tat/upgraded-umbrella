@@ -14,32 +14,59 @@ class Comparison extends React.Component {
     this.state = {
       outfit: [],
       related: [],
-      productId: 59553
+      productId: 59553,
+      myStorage: {}
     }
   }
 
   componentDidMount () {
+    // localStorage.clear();
     this.storeRelatedItems(this.state.productId, (err, allProductObjs) => {
       this.setState({
         related: allProductObjs
       });
     });
+    this.checkLocalStorage((err, storageData) =>{
+      if (err) {
+        console.log(err);
+      } else {
+        this.setState({
+          outfit: storageData
+        })
+      }
+    })
+  }
+
+  checkLocalStorage (cb) {
+    var outfitList = [];
+    var myStorage = window.localStorage;
+    var productIds = Object.keys(myStorage);
+    if (productIds.length > 0) {
+      for (var productId of productIds) {
+        outfitList.push(myStorage.getItem(productId));
+      };
+      console.log(outfitList);
+      console.log(myStorage);
+      cb (null, outfitList);
+    } else {
+      cb('NO ITEMS IN LOCAL STORAGE!', null);
+    }
   }
 
   pullItemImages (itemId, cb) {
-    console.log('This is the item value in pullItemImages: ', itemId);
+    // console.log('This is the item value in pullItemImages: ', itemId);
     $.get({
       url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/${itemId}/styles/`,
       headers: {
         'Authorization': `${API_Token.API_Token}`
       }
     }, (data) => {
-      console.log('Data pulled when looking for images: ', data.results);
+      // console.log('Data pulled when looking for images: ', data.results);
       var imageData = data.results[0].photos[0];
       if (imageData.url === null) {
         imageData.url = 'https://images.unsplash.com/photo-1501088430049-71c79fa3283e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80';
       }
-      console.log('Image Data: ', imageData.url);
+      // console.log('Image Data: ', imageData.url);
       cb(null, {itemId: itemId, imageData: imageData.url});
     }
   )}
@@ -99,13 +126,34 @@ class Comparison extends React.Component {
     });
   }
 
-  updateOutfit (productId) {
+  updateOutfit (event) {
+    var outfitObj = {};
+    if (myStorage === undefined) {
+      var myStorage = window.localStorage;
+    }
     console.log('Your outfit is being updated!');
-    var myStorage = window.localStorage;
-    myStorage[productId] = 'stuff';
-    console.log(myStorage);
-    localStorage.clear();
-    console.log(myStorage);
+    this.pullProductInfo(this.state.productId, (err, productInfo) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('Update Outfit Product Info: ', productInfo);
+        outfitObj = productInfo;
+        this.pullItemImages(productInfo.id, (err, imageData) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log('image Data in updateOutfit: ', imageData);
+            outfitObj.productImg = imageData.imageData;
+            myStorage[outfitObj.id] = outfitObj;
+            console.log('This is myStorage: ', myStorage);
+            console.log(myStorage.getItem(imageData.itemId));
+            this.setState ({
+              outfit: myStorage
+            })
+          }
+        });
+      }
+    });
   }
 
 
