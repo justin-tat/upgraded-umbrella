@@ -5,8 +5,8 @@ const ComparisonModal = (props) => {
     return null
   }
   return (
-    <div className='comparisonModal'>
-      <div className='modalContent'>
+    <div className='comparisonModal' onClick={props.onClose}>
+      <div className='modalContent' >
         <div className='modalHeader'>
           <h4 className='modalTitle'>Comparing</h4>
         </div>
@@ -14,7 +14,7 @@ const ComparisonModal = (props) => {
           This is the modal content
         </div>
         <div className='modalFooter'>
-          <button className='modalBtn'>Close</button>
+          {/* <button className='modalBtn' onClick={props.onClose}>Close</button> */}
         </div>
       </div>
     </div>
