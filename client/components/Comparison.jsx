@@ -59,11 +59,29 @@ class Comparison extends React.Component {
         'Authorization': `${API_Token.API_Token}`
       }
     }, (data) => {
-      var imageData = data.results[0].photos[0];
-      if (imageData.url === null) {
-        imageData.url = 'https://images.unsplash.com/photo-1501088430049-71c79fa3283e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80';
+      var defaultFound = false;
+      var imageUrl,
+          itemData,
+          originalPrice,
+          styleId,
+          salePrice;
+      for (var style of data.results) {
+        if (style['default?']) {
+          defaultFound = true;
+          styleId = style.style_id;
+          imageUrl = style.photos[0].url;
+          originalPrice = style.original_price;
+          salePrice = style.sale_price;
+        }
       }
-      cb(null, {itemId: itemId, imageData: imageData.url});
+      if (!defaultFound) {
+        styleId = data.results[0].styleId;
+        imageUrl = data.results[0].photos[0].url;
+        originalPrice = data.results[0].original_price;
+        salePrice = data.results[0].sale_price;
+      }
+      itemData = {itemId, styleId, imageUrl, originalPrice, salePrice};
+      cb(null, itemData);
     }
   )}
 
@@ -109,7 +127,11 @@ class Comparison extends React.Component {
                   itemId = imageData.itemId;
                   for (var product of allProductObjs) {
                     if (product.id === itemId) {
-                      product.productImg = imageData.imageData;
+                      product.productImg = imageData.imageUrl;
+                      product.styleId = imageData.styleId;
+                      product.originalPrice = imageData.originalPrice;
+                      product.salePrice = imageData.salePrice;
+                      console.log(product);
                       cb(null, allProductObjs);
                     }
                   }
@@ -140,7 +162,7 @@ class Comparison extends React.Component {
             console.log(err);
           } else {
             var newOutfit = this.state.outfit;
-            outfitObj.productImg = imageData.imageData;
+            outfitObj.productImg = imageData.imageUrl;
             localStorage.setItem(outfitObj.id, JSON.stringify(outfitObj));
             newOutfit.push(outfitObj);
             this.setState ({
