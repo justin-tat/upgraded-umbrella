@@ -4,8 +4,8 @@ import FontAwesome from 'react-icons/fa';
 const OutfitItem = (props) => {
   return (
     <div className='listItem' >
-      <div className='relatedImgBtn' onClick={() => {props.removeOutfitItem(props.id)}}>
-        <img className='carouselImg' src={props.image}></img>
+      <div className='relatedImgBox' onClick={() => {props.removeOutfitItem(props.id)}}>
+        <img className='relatedImg' src={props.image}></img>
       </div>
       <div className='category'>{props.category}</div>
       <div className='productName'>{props.name}</div>
@@ -28,8 +28,8 @@ const Outfit = (props) => {
         <br></br>
         <div id='carousel'>
           <div className='addItem' onClick={props.updateOutfit}>
-          {/* <script src="https://kit.fontawesome.com/17353c3ded.js" crossOrigin="anonymous"></script> */}
-          <h4 className='addToOutfit' >Add To Outfit</h4>
+          <img className='plusImage' src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Plus_symbol.svg/1200px-Plus_symbol.svg.png' />
+          <div className='addToOutfit' >Add To Outfit</div>
           </div>
           {outfits}
         </div>
