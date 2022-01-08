@@ -15,6 +15,7 @@ class Comparison extends React.Component {
       outfit: [],
       related: [],
       productId: 59555,
+      productData: {}
     }
   }
 
@@ -33,7 +34,16 @@ class Comparison extends React.Component {
           outfit: storageData
         })
       }
-    })
+    });
+    this.pullProductInfo(this.state.productId, (err, productInfo) => {
+      if (err) {
+        console.log(err);
+      } else {
+        this.setState ({
+          productData: productInfo
+        });
+      }
+    });
   }
 
   checkLocalStorage (cb) {
@@ -196,9 +206,9 @@ class Comparison extends React.Component {
       <div>
         <h2>Related Items and Comparison Modal</h2>
         <p>RELATED PRODUCTS</p>
-        <Related relatedData={this.state.related} />
+        <Related relatedData={this.state.related} currProductData={this.state.productData}/>
         <p>YOUR OUTFIT</p>
-        <Outfit updateOutfit={this.updateOutfit.bind(this)} outfit={this.state.outfit} removeOutfitItem={this.removeOutfitItem.bind(this)}/>
+        <Outfit updateOutfit={this.updateOutfit.bind(this)} outfit={this.state.outfit} removeOutfitItem={this.removeOutfitItem.bind(this)} />
       </div>
     )
   }
