@@ -8,7 +8,7 @@ class Reviews extends React.Component {
     super(props);
 
     this.state = {
-      productId: 59553,
+      productId: 59554,
       reviews: [],
       averageRating: null
     }
@@ -28,7 +28,7 @@ class Reviews extends React.Component {
       let reviews = result.data;
       this.setState({
         reviews: reviews
-      }, this.sort());
+      }, () => this.sort());
     });
     //TODO handle case where we do not successfully retrieve a productId by letting client display error
   }
