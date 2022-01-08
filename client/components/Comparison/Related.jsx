@@ -18,18 +18,17 @@ const RelatedItem = (props) => {
   // console.log('ProductData: ', productData);
   //adjust price display depending on sale
   return (
-    <div className='listItem' >
-      <div className='relatedItemBox' onClick={() => setShow(true)}>
+    <div className='listItem'>
+      <div className='relatedImgBox' onClick={() => setShow(true)}>
         <img className='relatedImg' src={image}></img>
-        <div className='relatedDetails'>
-          <div className='category'>{props.category}</div>
-          <div className='productName'>{props.name}</div>
-          <div className='price'>${props.price}</div>
-          <div className='rating'>XXXXX</div>
-        </div>
       </div>
-      <ComparisonModal relatedData={productData} show={show} onClose={() => setShow(false)} show={show}/>
-
+      <div className='relatedDetails'>
+        <div className='category'>{props.category}</div>
+        <div className='productName'>{props.name}</div>
+        <div className='price'>${props.price}</div>
+        <div className='rating'>XXXXX</div>
+     </div>
+      <ComparisonModal currProductData={props.currProductData} relatedData={productData} show={show} onClose={() => setShow(false)} show={show}/>
     </div>
   );
 }
@@ -37,11 +36,13 @@ const RelatedItem = (props) => {
 const Related = (props) => {
   var relatedList = props.relatedData;
   var relatedItems = relatedList.map((item) =>
-    <RelatedItem key={item.id} productId={item.id} relatedData={props.relatedData} displayModal={props.displayModal} category={item.category} name={item.name} price={item.default_price} image={item.productImg}/>
+    <RelatedItem  key={item.id} productId={item.id} relatedData={props.relatedData}
+                  displayModal={props.displayModal} category={item.category} name={item.name}
+                  price={item.default_price} image={item.productImg} currProductData={props.currProductData} />
   );
   return(
       <div className='scrollWrapper'>
-        <div id='carousel'>
+        <div id='relatedCarousel'>
           {relatedItems}
         </div>
       </div>
