@@ -7,10 +7,12 @@ const OutfitItem = (props) => {
       <div className='relatedImgBox' onClick={() => {props.removeOutfitItem(props.id)}}>
         <img className='relatedImg' src={props.image}></img>
       </div>
-      <div className='category'>{props.category}</div>
-      <div className='productName'>{props.name}</div>
-      <div className='price'>{props.price}</div>
-      <div className='rating'>XXXXX</div>
+      <div className='relatedDetails'>
+        <div className='category'>{props.category}</div>
+        <div className='productName'>{props.name}</div>
+        <div className='price'>{props.price}</div>
+        <div className='rating'>XXXXX</div>
+      </div>
     </div>
   );
 }
@@ -26,7 +28,7 @@ const Outfit = (props) => {
   return (
       <div className='scrollWrapper'>
         <br></br>
-        <div id='carousel'>
+        <div id='outfitCarousel'>
           <div className='addItem' onClick={props.updateOutfit}>
           <img className='plusImage' src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Plus_symbol.svg/1200px-Plus_symbol.svg.png' />
           <div className='addToOutfit' >Add To Outfit</div>
