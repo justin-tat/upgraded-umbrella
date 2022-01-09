@@ -59,6 +59,9 @@ const ComparisonModal = (props) => {
       <div className='modalContent' >
         <div className='modalHeader'>
           <p className='modalTitle'>Comparing</p>
+          <div className='modalProductNames' >
+            <div className='currentName'>{props.currProductData.name}</div> <div className='relatedName'>{props.relatedData.name}</div>
+          </div>
         </div>
         <div className='modalBody'>
           {modalFeatures}
