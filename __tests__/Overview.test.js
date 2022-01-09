@@ -4,7 +4,7 @@ import DefaultView from "../client/components/Overview/DefaultView";
 import renderer from 'react-test-renderer';
 import React from 'react';
 import Enzyme, {shallow, mount} from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import exampleData from '../client/exampleData/OverviewData.js';
 
 
@@ -42,6 +42,7 @@ describe('Overview Component', () => {
 });
 
 describe('Default View Component', () => {
+    
     test('It should not display a left arrow to begin with', () => {
         const overview = renderer.create(<Overview/>);
         var tree = overview.toJSON();
@@ -57,8 +58,10 @@ describe('Default View Component', () => {
         expect(defaultView.children[2].children[0]).toEqual(" ");
     });
     test('should be able to click on the default view image', () => {
+        const targetFunction = jest.fn();
         const mockFunction = jest.fn();
-        const overview = shallow(<DefaultView 
+        const overview = shallow(
+        <DefaultView 
             results={styles.results} 
             currStyle={0} 
             currPhotoIndex={0} 
@@ -67,16 +70,113 @@ describe('Default View Component', () => {
             productOverview={products}
             arrowClick={mockFunction}
             updateStyle={mockFunction}
-            zoom={mockFunction}
+            zoom={targetFunction}
             toggleHide={mockFunction}
             hide={false}
-            />);
-        console.log(overview);
+        />);
         overview.find('#mainImage').simulate('click');
-        expect(mockFunction).toHaveBeenCalled();
+        expect(targetFunction).toHaveBeenCalled();
+        expect(mockFunction).not.toHaveBeenCalled();
     });
-    
-    
+    test('should be able to click on the right arrow to advance the photo displayed', () => {
+        const overview = mount(<Overview/>);
+        expect(overview.state().currPhotoIndex).toEqual(0);
+        overview.find("#rightArrow").simulate('click');
+        expect(overview.state().currPhotoIndex).toEqual(1);
+        overview.find("#rightArrow").simulate('click');
+        expect(overview.state().currPhotoIndex).toEqual(2);
+        overview.unmount();
+    });
+    test('Should be able to click on the left arrow to decrement the photo displayed', () => {
+        const overview = mount(<Overview/>);
+        overview.find("#rightArrow").simulate('click');
+        overview.find("#rightArrow").simulate('click');
+        expect(overview.state().currPhotoIndex).toEqual(2);
+        overview.find("#leftArrow").simulate('click');
+        expect(overview.state().currPhotoIndex).toEqual(1);
+        overview.unmount();
+    });
+    test('Should be able to click on the down arrow to advance the photo displayed', () => {
+        const overview = mount(<Overview/>);
+        overview.find("#downPhotoArrow").simulate('click');
+        overview.find("#downPhotoArrow").simulate('click');
+        expect(overview.state().currPhotoIndex).toEqual(2);
+        overview.unmount();
+    });
+    test('Should be able to click on the up photo arrow to decrement the photo displayed', () => {
+        const overview = mount(<Overview/>);
+        overview.find("#downPhotoArrow").simulate('click');
+        overview.find("#downPhotoArrow").simulate('click');
+        expect(overview.state().currPhotoIndex).toEqual(2);
+        overview.find("#upPhotoArrow").simulate('click');
+        expect(overview.state().currPhotoIndex).toEqual(1);
+        overview.unmount();
+    })
+    test('Should be able to change to the ExpandedView after clicking on the photo displayed', () => {
+        const overview = mount(<Overview/>);
+        overview.find("#mainImage").simulate('click');
+        expect(overview.state().zoom).toEqual('expanded');
+        overview.unmount();
 
-
+    });
 });
+
+describe('Expanded View Component', () => {
+    let overview;
+
+    beforeEach(() => {
+        overview = mount(<Overview/>);
+        overview.find("#mainImage").simulate('click');
+    });
+    afterEach(() => {
+        overview.unmount();
+    });
+
+    test('It should have a button to revert the view to the default state', () => {
+        expect(overview.state().zoom).toEqual('expanded');
+        overview.find(".revertToExpanded").simulate('click');
+        expect(overview.state().zoom).toEqual('default');
+    })
+    test('It should have a button to advance the photo indicated', () => {
+        expect(overview.state().currPhotoIndex).toEqual(0);
+        overview.find("#expandedRightArrow").simulate('click');
+        expect(overview.state().currPhotoIndex).toEqual(1);
+    });
+    test('It should have a button to decrement the photo indicated', () => {
+        expect(overview.state().currPhotoIndex).toEqual(0);
+        overview.find("#expandedRightArrow").simulate('click');
+        expect(overview.state().currPhotoIndex).toEqual(1);
+        overview.find("#expandedLeftArrow").simulate('click');
+        expect(overview.state().currPhotoIndex).toEqual(0);
+    });
+    test('Upon clicking the expanded image, it should enter the zoomedIn view', () => {
+        expect(overview.state().zoomedIn).toEqual(false);
+        overview.find('#expandedImg').simulate('click');
+        expect(overview.state().zoomedIn).toEqual(true);
+    });
+});
+
+describe('Zoomed In View', () => {
+    let overview;
+    beforeEach(() => {
+        overview = mount(<Overview/>);
+        overview.find('#mainImage').simulate('click');
+        overview.find('#expandedImg').simulate('click');
+    });
+
+    afterEach(() => {
+        overview.unmount();
+    });
+
+    test('Should allow to revert back to the default view by clicking on a marker', () => {
+        expect(overview.state().zoomedIn).toEqual(true);
+        overview.find(".revertToExpanded").simulate('click');
+        expect(overview.state().zoomedIn).toEqual(false);
+        expect(overview.state().zoom).toEqual('default');
+    });
+
+    test('Should change the cursor to a magnifying glass when hovering over the image', () => {
+        const cursorStyle = overview.find('#zoomedInImage').get(0).props.style;
+        console.log(cursorStyle);
+    });
+})
