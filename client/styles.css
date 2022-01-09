@@ -82,7 +82,17 @@ h2 {
 }
 
 /* COMPARISON */
-#carousel {
+#relatedCarousel {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    gap: 10px 20px;
+    height: 400px;
+    max-height: 400px;
+    width: 75%;
+}
+
+#outfitCarousel {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
@@ -106,6 +116,11 @@ h2 {
     max-height: fit-content;
     min-height: fit-content;
 }
+
+/* .relatedDetails  {
+    position: relative;
+    align-self: bottom;
+} */
 
 .category {
     margin-top: 0.50em;
@@ -156,6 +171,8 @@ h2 {
     top: 0;
     right: 0;
     bottom: 0;
+    /* max-height: 20em;
+    width: auto; */
     background-color: rgba(0, 0, 0, 0.25);
     display: flex;
     align-items:center;
@@ -223,4 +240,44 @@ h2 {
     margin-top: 5em;
     margin-left: 3.5em;
     height: 5em;
+}
+
+.featureRow {
+    width:fit-content;
+    display: flex;
+    object-fit: contain;
+}
+
+.featureName {
+    max-width: 80%;
+    vertical-align: center;
+}
+
+.featureRow > div {
+    margin: 5px;
+    max-width:max-content;
+}
+
+.checkContainer {
+    max-height: 5em;
+    width: 10%;
+}
+
+.leftCheck {
+    max-height: 40%;
+    max-width: 2em;
+}
+
+.rightCheck {
+    max-height: 40%;
+    max-width: 2em;
+    margin-right: 5px;
+}
+
+.modalProductNames {
+    display: flex;
+}
+
+.relatedName {
+    left: 5px;
 }
