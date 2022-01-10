@@ -115,12 +115,13 @@ h2 {
     height: 94%;
     max-height: fit-content;
     min-height: fit-content;
+    position: relative;
 }
 
-/* .relatedDetails  {
-    position: relative;
-    align-self: bottom;
-} */
+.relatedDetails  {
+    position: absolute;
+    bottom: 2%;
+}
 
 .category {
     margin-top: 0.50em;
@@ -151,18 +152,33 @@ h2 {
     margin-left: 0.45em;
 }
 
+.starImg {
+    max-height: 10%;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    max-width: 2em;
+}
+
 .relatedImg {
+    /* position: relative; */
     min-height: 5em;
     height: auto;
     max-width: 12em;
-    vertical-align: middle;
+    /* vertical-align: middle;
+    top: 0;
+    left: 0; */
+    display: block;
+    margin: auto;
 }
-.relatedImgBox .modalButton {
-    background-color: rgb(211, 208, 208);
-    position: absolute;
-    width: auto;
+.relatedImgBox /*.modalButton*/ {
+    /* background-color: rgb(211, 208, 208); */
+    position: relative;
+    /* width: auto; */
     height: 35em;
-    vertical-align: middle;
+    /* vertical-align: middle; */
+    top: 0;
+    left: 0;
 }
 
 .comparisonModal {
@@ -177,6 +193,7 @@ h2 {
     display: flex;
     align-items:center;
     justify-content: center;
+    z-index: 9999;
 }
 
 .modalContent {
@@ -214,7 +231,7 @@ h2 {
   cursor: pointer;
 }
 
-.relatedImg:hover, .plusImage:hover {
+.starImg:hover, .plusImage:hover {
     cursor: pointer;
 }
 
@@ -283,3 +300,4 @@ h2 {
 .relatedName {
     left: 5px;
 }
+
