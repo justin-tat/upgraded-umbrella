@@ -14,7 +14,7 @@ class Comparison extends React.Component {
     this.state = {
       outfit: [],
       related: [],
-      productId: 59556,
+      productId: 59555,
       productData: {}
     }
   }
@@ -39,8 +39,15 @@ class Comparison extends React.Component {
       if (err) {
         console.log(err);
       } else {
-        this.setState ({
-          productData: productInfo
+        this.pullItemRatings(this.state.productId, (err, reviewData) => {
+          if (err) {
+            console.log(err);
+          } else {
+            productInfo.ratings = reviewData.ratings;
+            this.setState ({
+              productData: productInfo
+            })
+          }
         });
       }
     });
@@ -54,12 +61,21 @@ class Comparison extends React.Component {
       for (var productId of productIds) {
         outfitList.push(JSON.parse(myStorage.getItem(productId)));
       };
-      console.log(outfitList);
-      console.log(myStorage);
       cb (null, outfitList);
     } else {
       cb('NO ITEMS IN LOCAL STORAGE!', null);
     }
+  }
+
+  pullItemRatings (itemId, cb) {
+    $.get({
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/meta/?product_id=${itemId}`,
+      headers: {
+        'Authorization': `${API_Token.API_Token}`
+      }
+    }, (data) => {
+      cb(null, {ratings: data, itemId: itemId});
+    });
   }
 
   pullItemImages (itemId, cb) {
@@ -141,7 +157,6 @@ class Comparison extends React.Component {
                       product.styleId = imageData.styleId;
                       product.originalPrice = imageData.originalPrice;
                       product.salePrice = imageData.salePrice;
-                      console.log(product);
                       cb(null, allProductObjs);
                     }
                   }
@@ -176,7 +191,6 @@ class Comparison extends React.Component {
             outfitObj.styleId = imageData.styleId;
             outfitObj.originalPrice = imageData.originalPrice;
             outfitObj.salePrice = imageData.salePrice;
-            console.log('Image Data in outfitObj: ', outfitObj);
             localStorage.setItem(outfitObj.id, JSON.stringify(outfitObj));
             newOutfit.push(outfitObj);
             this.setState ({

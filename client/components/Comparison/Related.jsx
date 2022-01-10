@@ -2,21 +2,27 @@ import React, {useState} from 'react';
 import ComparisonModal from './ComparisonModal.jsx';
 import NoImage from './ComparisonImages/noImage.png';
 import Star from './ComparisonImages/starImg.png';
+import Half from './ComparisonImages/halfStar.png';
 
 const RelatedItem = (props) => {
-  // console.log('Related Item Props: ', props);
-  var productData, price, originalPrice, redStyle;
+  var productData,
+      price,
+      originalPrice,
+      image,
+      ratings,
+      redStyle;
   var [show, setShow] = useState(false);
-  var image = props.image;
-  if (props.image === null || props.image === undefined) {
+
+  if (!props.image) {
     image = NoImage;
+  } else {
+    image = props.image;
   }
   for (var product of props.relatedData) {
     if (product.id === props.productId) {
       productData = product;
     }
   }
-  console.log('ProductData: ', productData);
   if (productData.salePrice) {
     price = '$' + productData.salePrice;
     originalPrice = '$' + productData.originalPrice;
@@ -24,7 +30,9 @@ const RelatedItem = (props) => {
   } else {
     price = '$' + productData.originalPrice;
   }
-  //adjust price display depending on sale
+
+  console.log('this is the ratings: ', props.ratings);
+
   return (
     <div className='listItem'>
       <div className='relatedImgBox' >
@@ -38,19 +46,28 @@ const RelatedItem = (props) => {
           <div className='salePrice' style={redStyle}>{price}</div>
           <div className='originalPrice'> {originalPrice}</div>
         </div>
-        <div className='rating'>XXXXX</div>
+        <div className='rating'>
+            <img className='ratingStar' src={Half}></img>
+            <img className='ratingStar' src={Half}></img>
+            <img className='ratingStar' src={Half}></img>
+            <img className='ratingStar' src={Half}></img>
+            <img className='ratingStar' src={Half}></img>
+        </div>
      </div>
-      <ComparisonModal currProductData={props.currProductData} relatedData={productData} show={show} onClose={() => setShow(false)} show={show}/>
+      <ComparisonModal  currProductData={props.currProductData}
+                        relatedData={productData} show={show}
+                        onClose={() => setShow(false)} show={show}/>
     </div>
   );
 }
 
 const Related = (props) => {
-  var relatedList = props.relatedData;
-  var relatedItems = relatedList.map((item) =>
+  console.log('Related Props: ', props);
+  var relatedItems = (props.relatedData).map((item) =>
     <RelatedItem  key={item.id} productId={item.id} relatedData={props.relatedData}
                   displayModal={props.displayModal} category={item.category} name={item.name}
-                  price={item.default_price} image={item.productImg} currProductData={props.currProductData} />
+                  price={item.default_price} image={item.productImg} ratings={item.ratings}
+                  currProductData={props.currProductData} />
   );
   return(
       <div className='scrollWrapper'>

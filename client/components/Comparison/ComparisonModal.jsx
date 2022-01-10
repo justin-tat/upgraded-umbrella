@@ -4,13 +4,10 @@ import Check from './ComparisonImages/checkMark.png';
 const Feature = (props) => {
   console.log('Feature Props: ', props);
   if (props.feature.check === 'right') {
-    console.log('RIGHT CHECK!');
     var rightCheck = Check;
   } else if (props.feature.check === 'left') {
-    console.log('LEFT CHECK!');
     var leftCheck = Check;
-  } else if (props.feature.check === 'both') {
-    console.log('BOTH CHECK!');
+  } else {
     var rightCheck = Check;
     var leftCheck = Check;
   }

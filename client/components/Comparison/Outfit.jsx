@@ -1,14 +1,17 @@
 import React from 'react';
+import Plus from './ComparisonImages/plusImg.png';
 import xImg from './ComparisonImages/xIcon.png';
 
 const OutfitItem = (props) => {
-  var price, originalPrice, styleRed;
+  var price,
+      originalPrice,
+      styleRed;
   if (props.salePrice) {
-    price = '$' + props.salePrice;
-    originalPrice = '$' + props.originalPrice;
+    price = `$${props.salePrice}`;
+    originalPrice = `$${props.originalPrice}`;
     styleRed = {color: 'red'};
   } else {
-    price = '$' + props.originalPrice;
+    price = `$${props.originalPrice}`;
   }
   return (
     <div className='listItem' >
@@ -30,11 +33,11 @@ const OutfitItem = (props) => {
 }
 
 const Outfit = (props) => {
-  var outfitList = props.outfit;
-  console.log('outfit props: ', props.outfit);
-  if (outfitList.length > 0) {
-    var outfits = outfitList.map((item) =>
-      <OutfitItem key={item.id} id={item.id} category={item.category} name={item.name} salePrice={item.salePrice} originalPrice={item.originalPrice} image={item.productImg} removeOutfitItem={props.removeOutfitItem} />
+  if ((props.outfit).length > 0) {
+    var outfits = (props.outfit).map((item) =>
+      <OutfitItem key={item.id} id={item.id} category={item.category} name={item.name}
+                  salePrice={item.salePrice} originalPrice={item.originalPrice} image={item.productImg}
+                  removeOutfitItem={props.removeOutfitItem} />
     )
   }
   return (
@@ -42,7 +45,7 @@ const Outfit = (props) => {
         <br></br>
         <div id='outfitCarousel'>
           <div className='addItem' onClick={props.updateOutfit}>
-          <img className='plusImage' src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Plus_symbol.svg/1200px-Plus_symbol.svg.png' />
+          <img className='plusImage' src={Plus} />
           <div className='addToOutfit' >Add To Outfit</div>
           </div>
           {outfits}
