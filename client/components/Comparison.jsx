@@ -14,7 +14,7 @@ class Comparison extends React.Component {
     this.state = {
       outfit: [],
       related: [],
-      productId: 59555,
+      productId: 59556,
       productData: {}
     }
   }
