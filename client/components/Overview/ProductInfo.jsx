@@ -44,8 +44,6 @@ class ProductInfo extends React.Component {
         return starArr;
     }
 
-
-
     render() {
         return(
             <div >

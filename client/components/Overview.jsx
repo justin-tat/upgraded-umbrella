@@ -36,8 +36,6 @@ class Overview extends React.Component {
     } else if (this.state.zoom === 'expanded') {
       this.setState({
         zoomedIn: !this.state.zoomedIn
-      }, () => {
-        //console.log("state.zoomedIn", this.state.zoomedIn);
       });
     }
 
