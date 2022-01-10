@@ -1,11 +1,12 @@
 import React from 'react';
-import FontAwesome from 'react-icons/fa';
+import xImg from './ComparisonImages/xIcon.png';
 
 const OutfitItem = (props) => {
   return (
     <div className='listItem' >
-      <div className='relatedImgBox' onClick={() => {props.removeOutfitItem(props.id)}}>
+      <div className='relatedImgBox' >
         <img className='relatedImg' src={props.image}></img>
+        <img className='xImg' src={xImg} onClick={() => {props.removeOutfitItem(props.id)}}></img>
       </div>
       <div className='relatedDetails'>
         <div className='category'>{props.category}</div>

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import ComparisonModal from './ComparisonModal.jsx';
 import NoImage from './ComparisonImages/noImage.png';
-import Star from './ComparisonImages/starIcon.png';
+import Star from './ComparisonImages/starImg.png';
 
 const RelatedItem = (props) => {
   // console.log('Related Item Props: ', props);

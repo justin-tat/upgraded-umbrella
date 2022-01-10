@@ -87,7 +87,7 @@ h2 {
     flex-wrap: nowrap;
     flex-direction: row;
     gap: 10px 20px;
-    height: 400px;
+    height: auto;
     max-height: 400px;
     width: 75%;
 }
@@ -103,6 +103,7 @@ h2 {
 }
 
 .scrollWrapper {
+    max-height: 400px;
     display: flex;
     flex-wrap: none;
     overflow-x: auto;
@@ -157,6 +158,14 @@ h2 {
     position: absolute;
     right: 10px;
     top: 10px;
+    max-width: 1.25em;
+}
+
+.xImg {
+    max-height: 10%;
+    position: absolute;
+    left: 10px;
+    top: 10px;
     max-width: 2em;
 }
 
@@ -172,7 +181,7 @@ h2 {
     margin: auto;
 }
 .relatedImgBox /*.modalButton*/ {
-    /* background-color: rgb(211, 208, 208); */
+    /* background-color: rgb(211, 208, 208); removing this takes the gray away */
     position: relative;
     /* width: auto; */
     height: 35em;
@@ -231,7 +240,7 @@ h2 {
   cursor: pointer;
 }
 
-.starImg:hover, .plusImage:hover {
+.starImg:hover, .plusImage:hover, .xImg:hover {
     cursor: pointer;
 }
 
