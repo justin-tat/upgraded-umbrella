@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import ComparisonModal from './ComparisonModal.jsx';
 import NoImage from './ComparisonImages/noImage.png';
+import Star from './ComparisonImages/starIcon.png';
 
 const RelatedItem = (props) => {
   // console.log('Related Item Props: ', props);
@@ -19,7 +20,8 @@ const RelatedItem = (props) => {
   //adjust price display depending on sale
   return (
     <div className='listItem'>
-      <div className='relatedImgBox' onClick={() => setShow(true)}>
+      <div className='relatedImgBox' >
+        <img className='starImg' src={Star} onClick={() => setShow(true)}></img>
         <img className='relatedImg' src={image}></img>
       </div>
       <div className='relatedDetails'>
