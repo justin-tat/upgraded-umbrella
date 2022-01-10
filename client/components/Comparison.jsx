@@ -173,6 +173,10 @@ class Comparison extends React.Component {
           } else {
             var newOutfit = this.state.outfit;
             outfitObj.productImg = imageData.imageUrl;
+            outfitObj.styleId = imageData.styleId;
+            outfitObj.originalPrice = imageData.originalPrice;
+            outfitObj.salePrice = imageData.salePrice;
+            console.log('Image Data in outfitObj: ', outfitObj);
             localStorage.setItem(outfitObj.id, JSON.stringify(outfitObj));
             newOutfit.push(outfitObj);
             this.setState ({
