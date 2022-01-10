@@ -2,6 +2,14 @@ import React from 'react';
 import xImg from './ComparisonImages/xIcon.png';
 
 const OutfitItem = (props) => {
+  var price, originalPrice, styleRed;
+  if (props.salePrice) {
+    price = '$' + props.salePrice;
+    originalPrice = '$' + props.originalPrice;
+    styleRed = {color: 'red'};
+  } else {
+    price = '$' + props.originalPrice;
+  }
   return (
     <div className='listItem' >
       <div className='relatedImgBox' >
@@ -11,7 +19,10 @@ const OutfitItem = (props) => {
       <div className='relatedDetails'>
         <div className='category'>{props.category}</div>
         <div className='productName'>{props.name}</div>
-        <div className='price'>{props.price}</div>
+        <div className='price' >
+          <div className='salePrice' style={styleRed} >{price}</div>
+          <div className='originalPrice'>{originalPrice}</div>
+        </div>
         <div className='rating'>XXXXX</div>
       </div>
     </div>
@@ -20,10 +31,10 @@ const OutfitItem = (props) => {
 
 const Outfit = (props) => {
   var outfitList = props.outfit;
+  console.log('outfit props: ', props.outfit);
   if (outfitList.length > 0) {
-    console.log('outfit list: ', outfitList);
     var outfits = outfitList.map((item) =>
-      <OutfitItem key={item.id} id={item.id} category={item.category} name={item.name} price={item.default_price} image={item.productImg} removeOutfitItem={props.removeOutfitItem} />
+      <OutfitItem key={item.id} id={item.id} category={item.category} name={item.name} salePrice={item.salePrice} originalPrice={item.originalPrice} image={item.productImg} removeOutfitItem={props.removeOutfitItem} />
     )
   }
   return (
