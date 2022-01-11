@@ -9,16 +9,46 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: 59553
+      id: 59553,
+      addToCarousel: false,
+      outfitCarousel: []
+
     }
+    this.changeId = this.changeId.bind(this);
+    this.addToCarousel = this.addToCarousel.bind(this);
+    // this.starClickHandler = this.startClickHandler.bind(this);
+
+  }
+
+  // starClickHandler() {
+  //   //if star is clicked
+  //   //update outfitCarousel by adding the current productId
+  // }
+
+  removeFromCarousel(){
+    this.setState({
+      addToCarousel: false
+    })
+  }
+
+  addToCarousel() {
+    this.setState({
+      addToCarousel: !this.state.addToCarousel
+    });
+  }
+
+  changeId(event) {
+    this.setState({
+      id: event.target.value,
+    });
   }
 
   render() {
     return (
       <div>
         <h1>Team Parasol's App</h1>
-        <Overview productId={this.state.id}/>
-        <Comparison productId={this.state.id}/>
+        <Overview productId={this.state.id} addToCarousel={this.addToCarousel} />
+        <Comparison productId={this.state.id} changeId={this.changeId} addToCarousel={this.addToCarousel}/>
         <Reviews productId={this.state.id}/>
       </div>
     )

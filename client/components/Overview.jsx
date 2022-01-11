@@ -143,7 +143,8 @@ class Overview extends React.Component {
             arrowClick={this.arrowClick}
             updateStyle={this.updateStyle}
             zoom={this.zoom}
-            hide={this.state.hide} />
+            hide={this.state.hide} 
+            addToCarousel={this.props.addToCarousel}/>
           : <div></div>
         }
         {this.state.zoom === 'expanded'
@@ -166,7 +167,8 @@ class Overview extends React.Component {
               zoomedIn={this.state.zoomedIn}
               dimensions={this.state.dimensions}
               expViewImg = {this.state.expViewImg}
-              revertToExpanded = {this.revertToExpanded}/>
+              revertToExpanded = {this.revertToExpanded}
+              addToCarousel={this.props.addToCarousel}/>
           : <div></div>
         }
         <div id="productFeatures">

@@ -25,6 +25,7 @@ var DefaultView = (props) => {
                 productOverview={props.productOverview} 
                 currStyle={props.currStyle} 
                 updateStyle={props.updateStyle}
+                addToCarousel={props.addToCarousel}
                 />
             </div>
         </div>);

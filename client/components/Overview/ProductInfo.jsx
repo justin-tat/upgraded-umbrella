@@ -53,6 +53,7 @@ class ProductInfo extends React.Component {
                     styles={this.props.results} 
                     currStyle={this.props.currStyle} 
                     updateStyle={this.props.updateStyle}
+                    addToCarousel={this.props.addToCarousel}
                 />
             </div>)
     }
