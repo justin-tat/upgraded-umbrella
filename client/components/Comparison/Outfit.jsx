@@ -1,32 +1,27 @@
 import React from 'react';
+import Price from './Price.jsx';
 import Plus from './ComparisonImages/plusImg.png';
 import xImg from './ComparisonImages/xIcon.png';
+import NoImage from './ComparisonImages/noImage.png';
+import Ratings from './Ratings.jsx';
 
 const OutfitItem = (props) => {
-  var price,
+  var image = props.image ? props.image : NoImage;
+  var salePrice,
       originalPrice,
-      styleRed;
-  if (props.salePrice) {
-    price = `$${props.salePrice}`;
-    originalPrice = `$${props.originalPrice}`;
-    styleRed = {color: 'red'};
-  } else {
-    price = `$${props.originalPrice}`;
-  }
+      redFont;
+
   return (
     <div className='listItem' >
       <div className='relatedImgBox' >
         <img className='relatedImg' src={props.image}></img>
-        <img className='xImg' src={xImg} onClick={() => {props.removeOutfitItem(props.id)}}></img>
+        <img className='xImg' src={xImg} onClick={() => {props.removeOutfitItem(props.id)}} ></img>
       </div>
       <div className='relatedDetails'>
         <div className='category'>{props.category}</div>
         <div className='productName'>{props.name}</div>
-        <div className='price' >
-          <div className='salePrice' style={styleRed} >{price}</div>
-          <div className='originalPrice'>{originalPrice}</div>
-        </div>
-        <div className='rating'>XXXXX</div>
+        <Price salePrice={props.salePrice} originalPrice={props.originalPrice} />
+        <Ratings ratings={props.ratings} />
       </div>
     </div>
   );
@@ -34,9 +29,15 @@ const OutfitItem = (props) => {
 
 const Outfit = (props) => {
   if ((props.outfit).length > 0) {
-    var outfits = (props.outfit).map((item) =>
-      <OutfitItem key={item.id} id={item.id} category={item.category} name={item.name}
-                  salePrice={item.salePrice} originalPrice={item.originalPrice} image={item.productImg}
+    var outfits = (props.outfit).map((product) =>
+      <OutfitItem key={product.id}
+                  id={product.id}
+                  category={product.category}
+                  name={product.name}
+                  salePrice={product.salePrice}
+                  originalPrice={product.originalPrice}
+                  image={product.imageUrl}
+                  ratings={product.ratings}
                   removeOutfitItem={props.removeOutfitItem} />
     )
   }
@@ -44,7 +45,7 @@ const Outfit = (props) => {
       <div className='scrollWrapper'>
         <br></br>
         <div id='outfitCarousel'>
-          <div className='addItem' onClick={props.updateOutfit}>
+          <div className='addItem' onClick={props.addOutfitItem}>
           <img className='plusImage' src={Plus} />
           <div className='addToOutfit' >Add To Outfit</div>
           </div>
