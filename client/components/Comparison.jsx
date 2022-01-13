@@ -3,9 +3,6 @@ import jquery from 'jquery';
 import $ from 'jquery';
 import Related from './Comparison/Related.jsx';
 import Outfit from './Comparison/Outfit.jsx';
-import ComparisonModal from './Comparison/ComparisonModal.jsx';
-import overviewProducts from '../exampleData/OverviewData.js';
-import styles from '../exampleData/OverviewData.js';
 import API_Token from '../config/apiKey.js';
 
 class Comparison extends React.Component {
@@ -14,203 +11,149 @@ class Comparison extends React.Component {
     this.state = {
       outfit: [],
       related: [],
-      productId: 59555,
+      productId: /*props.productId ||*/ 59553,
       productData: {}
-    }
+      }
+    this.addOutfitItem = this.addOutfitItem.bind(this);
+    this.removeOutfitItem = this.removeOutfitItem.bind(this);
   }
 
-  componentDidMount () {
-    // localStorage.clear();
-    this.storeRelatedItems(this.state.productId, (err, allProductObjs) => {
-      this.setState({
-        related: allProductObjs
-      });
-    });
-    this.checkLocalStorage((err, storageData) =>{
-      if (err) {
-        console.log(err);
-      } else {
-        this.setState({
-          outfit: storageData
-        })
-      }
-    });
-    this.pullProductInfo(this.state.productId, (err, productInfo) => {
-      if (err) {
-        console.log(err);
-      } else {
-        this.pullItemRatings(this.state.productId, (err, reviewData) => {
-          if (err) {
-            console.log(err);
-          } else {
-            productInfo.ratings = reviewData.ratings;
-            this.setState ({
-              productData: productInfo
-            })
-          }
-        });
-      }
-    });
-  }
-
-  checkLocalStorage (cb) {
-    var outfitList = [];
-    var myStorage = window.localStorage;
-    var productIds = Object.keys(myStorage);
-    if (productIds.length > 0) {
-      for (var productId of productIds) {
-        outfitList.push(JSON.parse(myStorage.getItem(productId)));
-      };
-      cb (null, outfitList);
+componentDidMount() {
+  this.fillCarousels(this.state.productId);
+  this.checkLocalStorage((err, storageData) =>{
+    if (err) {
+      console.log(err);
     } else {
-      cb('NO ITEMS IN LOCAL STORAGE!', null);
+      this.setState({
+        outfit: storageData,
+      });
+      console.log('THIS IS THE STATE: ', this.state);
     }
-  }
+  });
+}
 
-  pullItemRatings (itemId, cb) {
-    $.get({
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/meta/?product_id=${itemId}`,
-      headers: {
-        'Authorization': `${API_Token.API_Token}`
-      }
-    }, (data) => {
-      cb(null, {ratings: data, itemId: itemId});
+checkLocalStorage (cb) {
+  var outfitList = [];
+  var myStorage = window.localStorage;
+  var productIds = Object.keys(myStorage);
+  if (productIds.length > 0) {
+    for (var productId of productIds) {
+      outfitList.push(JSON.parse(myStorage.getItem(productId)));
+    };
+    cb (null, outfitList);
+  } else {
+    cb('NO ITEMS IN LOCAL STORAGE!', null);
+  }
+}
+
+fillCarousels (productId) {
+  var currentProduct;
+  var relatedProducts = [];
+  this.createProductObj(productId, (err, productObj) => {
+    console.log('Created Product Obj: ', productObj);
+    this.setState({
+      productData: productObj
     });
-  }
-
-  pullItemImages (itemId, cb) {
-    $.get({
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/${itemId}/styles/`,
-      headers: {
-        'Authorization': `${API_Token.API_Token}`
-      }
-    }, (data) => {
-      var defaultFound = false;
-      var imageUrl,
-          itemData,
-          originalPrice,
-          styleId,
-          salePrice;
-      for (var style of data.results) {
-        if (style['default?']) {
-          defaultFound = true;
-          styleId = style.style_id;
-          imageUrl = style.photos[0].url;
-          originalPrice = style.original_price;
-          salePrice = style.sale_price;
-        }
-      }
-      if (!defaultFound) {
-        styleId = data.results[0].styleId;
-        imageUrl = data.results[0].photos[0].url;
-        originalPrice = data.results[0].original_price;
-        salePrice = data.results[0].sale_price;
-      }
-      itemData = {itemId, styleId, imageUrl, originalPrice, salePrice};
-      cb(null, itemData);
-    }
-  )}
-
-  pullRelatedItems (itemId, cb) {
-    $.get({
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/${itemId}/related/`,
-      headers: {
-        'Authorization': `${API_Token.API_Token}`
-      }
-    }, (data) => {
-      cb(null, data);
-    })
-  }
-
-  pullProductInfo (itemId, cb) {
-    $.get({
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/${itemId}/`,
-      headers: {
-        'Authorization': `${API_Token.API_Token}`
-      }
-    }, (productInfo) => {
-        cb(null, productInfo);
-    })
-  }
-
-  storeRelatedItems (itemId, cb) {
-    var allProductObjs = [];
-    this.pullRelatedItems(itemId, (err, relatedItems) => {
-      if (err) {
-        console.log('ERROR: ', err);
-      } else {
-        for (var item of relatedItems) {
-          this.pullProductInfo(item, (err, productInfo) => {
-            if (err) {
-              console.log('ERROR: ', err);
-            } else {
-              allProductObjs.push(productInfo);
-              itemId = productInfo.id;
-              this.pullItemImages(itemId, (err, imageData) => {
-                if (err) {
-                  console.log(err);
-                } else {
-                  itemId = imageData.itemId;
-                  for (var product of allProductObjs) {
-                    if (product.id === itemId) {
-                      product.productImg = imageData.imageUrl;
-                      product.styleId = imageData.styleId;
-                      product.originalPrice = imageData.originalPrice;
-                      product.salePrice = imageData.salePrice;
-                      cb(null, allProductObjs);
-                    }
-                  }
-                }
-              })
-            }
+    for (var relatedId of productObj.related) {
+      console.log('Iterated related Id: ', relatedId);
+      this.createProductObj(relatedId, (err, relatedProductObj) => {
+        if (err) {
+          console.log('ERROR: ', err);
+        } else {
+          console.log('Created Related Product Obj: ', relatedProductObj);
+          relatedProducts = this.state.related;
+          relatedProducts.push(relatedProductObj);
+          this.setState({
+            related: relatedProducts
           });
         }
-      }
+      });
+    }
     });
-  }
+}
 
-  updateOutfit (event) {
-    var outfitObj = {};
-    console.log('Your outfit is being updated!');
-    for (var item of this.state.outfit) {
-      if (item.id === this.state.productId) {
+createProductObj (productId, cb) {
+  var productObj;
+  $.get({
+    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/${productId}/`,
+    headers: {
+      'Authorization': `${API_Token.API_Token}`
+    }
+  }, (productData) => {
+    console.log('Pulled Product Data: ', productData);
+    productObj = productData;
+    $.get({
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/meta/?product_id=${productId}`,
+      headers: {
+        'Authorization': `${API_Token.API_Token}`
+      }
+    }, (ratingsData) => {
+      console.log('Pulled Ratings Data: ', ratingsData);
+      productObj.ratings = ratingsData.ratings;
+      $.get({
+        url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/${productId}/related/`,
+        headers: {
+          'Authorization': `${API_Token.API_Token}`
+        }
+      }, (relatedData) => {
+        console.log('Pulled Related Data: ', relatedData);
+        productObj.related = relatedData;
+        $.get({
+          url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/${productId}/styles/`,
+          headers: {
+            'Authorization': `${API_Token.API_Token}`
+          }
+        }, (imageData) => {
+          console.log('Pulled Image Data: ', imageData);
+          var defaultFound = false;
+          var imageUrl,
+              originalPrice,
+              styleId,
+              salePrice;
+          for (var style of imageData.results) {
+            if (style['default?']) {
+              defaultFound = true;
+              productObj.styleId = style.style_id;
+              productObj.imageUrl = style.photos[0].url;
+              productObj.originalPrice = style.original_price;
+              productObj.salePrice = style.sale_price;
+            }
+          }
+          if (!defaultFound) {
+            productObj.styleId = imageData.results[0].styleId;
+            productObj.imageUrl = imageData.results[0].photos[0].url;
+            productObj.originalPrice = imageData.results[0].original_price;
+            productObj.salePrice = imageData.results[0].sale_price;
+          }
+          cb(null, productObj);
+        });
+      });
+    });
+  });
+}
+
+  addOutfitItem (event) {
+    var newOutfit = this.state.outfit;
+    for (var item=0; item < newOutfit.length; item++) {
+      if (newOutfit[item].id === this.state.productId) {
         return;
       }
     }
-    this.pullProductInfo(this.state.productId, (err, productInfo) => {
-      if (err) {
-        console.log(err);
-      } else {
-        outfitObj = productInfo;
-        this.pullItemImages(productInfo.id, (err, imageData) => {
-          if (err) {
-            console.log(err);
-          } else {
-            var newOutfit = this.state.outfit;
-            outfitObj.productImg = imageData.imageUrl;
-            outfitObj.styleId = imageData.styleId;
-            outfitObj.originalPrice = imageData.originalPrice;
-            outfitObj.salePrice = imageData.salePrice;
-            localStorage.setItem(outfitObj.id, JSON.stringify(outfitObj));
-            newOutfit.push(outfitObj);
-            this.setState ({
-              outfit: newOutfit
-            });
-          }
-        });
-      }
+    localStorage.setItem(this.state.productData.id, JSON.stringify(this.state.productData));
+    newOutfit.push(this.state.productData);
+    this.setState ({
+      outfit: newOutfit
     });
   }
 
   removeOutfitItem (productId) {
-    console.log('REMOVING OUTFIT ITEM!');
     console.log('Removing item: ', productId);
     localStorage.removeItem(productId);
-    var outfitItems = this.state.outfit;
     var newOutfit = [];
-    for (var item of outfitItems) {
-      if (item.id !== productId) {
-        newOutfit.push(item);
+    var outfit = this.state.outfit;
+    for (var product of outfit) {
+      if (product.id !== productId) {
+        newOutfit.push(product);
       }
     }
     this.setState ({
@@ -218,18 +161,21 @@ class Comparison extends React.Component {
     });
   }
 
-
   render() {
     return(
       <div>
         <h2>Related Items and Comparison Modal</h2>
         <p>RELATED PRODUCTS</p>
-        <Related relatedData={this.state.related} currProductData={this.state.productData}/>
+        <Related  relatedProducts={this.state.related}
+                  currProductData={this.state.productData}/>
         <p>YOUR OUTFIT</p>
-        <Outfit updateOutfit={this.updateOutfit.bind(this)} outfit={this.state.outfit} removeOutfitItem={this.removeOutfitItem.bind(this)} />
+        <Outfit outfit={this.state.outfit}
+                addOutfitItem={this.addOutfitItem}
+                removeOutfitItem={this.removeOutfitItem} />
       </div>
     )
   }
+
 }
 
 export default Comparison;
