@@ -159,7 +159,20 @@ h2 {
 }
 
 .rating {
+    position: relative;
+    height: 1em;
+    gap: 0.5em;
     margin-left: 0.45em;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+.ratingStar {
+    font: 0.5em;
+    /* flex: auto;
+    position: absolute;
+    max-width: 20px; */
 }
 
 .starImg {
@@ -313,9 +326,15 @@ h2 {
 
 .modalProductNames {
     display: flex;
+    position: relative;
 }
 
 .relatedName {
-    left: 5px;
+    position: absolute;
+    right: 0;
 }
+
+
+
+
 
