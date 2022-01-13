@@ -87,7 +87,7 @@ h2 {
     flex-wrap: nowrap;
     flex-direction: row;
     gap: 10px 20px;
-    height: auto;
+    height: 400px;
     max-height: 400px;
     width: 75%;
 }
@@ -106,7 +106,8 @@ h2 {
     max-height: 400px;
     display: flex;
     flex-wrap: none;
-    overflow-x: auto;
+    overflow-x: none;
+    overflow-y: none;
 }
 
 .listItem {
@@ -117,6 +118,7 @@ h2 {
     max-height: fit-content;
     min-height: fit-content;
     position: relative;
+    align-items: stretch;
 }
 
 .relatedDetails  {
@@ -170,9 +172,6 @@ h2 {
 
 .ratingStar {
     font: 0.5em;
-    /* flex: auto;
-    position: absolute;
-    max-width: 20px; */
 }
 
 .starImg {
@@ -192,22 +191,20 @@ h2 {
 }
 
 .relatedImg {
-    /* position: relative; */
     min-height: 5em;
     height: auto;
     max-width: 12em;
-    /* vertical-align: middle;
-    top: 0;
-    left: 0; */
+    width: 100%;
     display: block;
     margin: auto;
+
 }
 .relatedImgBox /*.modalButton*/ {
-    /* background-color: rgb(211, 208, 208); removing this takes the gray away */
+    background-color: rgb(211, 208, 208); /*removing this takes the gray away */
     position: relative;
-    /* width: auto; */
-    height: 35em;
-    /* vertical-align: middle; */
+    display: flex;
+    align-items: center;
+    height: 18em;
     top: 0;
     left: 0;
 }
@@ -218,8 +215,6 @@ h2 {
     top: 0;
     right: 0;
     bottom: 0;
-    /* max-height: 20em;
-    width: auto; */
     background-color: rgba(0, 0, 0, 0.25);
     display: flex;
     align-items:center;
@@ -293,22 +288,26 @@ h2 {
 }
 
 .featureRow {
-    width:fit-content;
+    /* width:fit-content;
     display: flex;
-    object-fit: contain;
+    object-fit: contain; */
+    text-align: center;
 }
 
 .featureName {
     max-width: 80%;
     vertical-align: center;
+    display:inline-block;
 }
 
 .featureRow > div {
     margin: 5px;
     max-width:max-content;
+    /* justify-content: center; */
 }
 
 .checkContainer {
+    vertical-align: right;
     max-height: 5em;
     width: 10%;
 }
@@ -322,6 +321,7 @@ h2 {
     max-height: 40%;
     max-width: 2em;
     margin-right: 5px;
+    right: 0;
 }
 
 .modalProductNames {
