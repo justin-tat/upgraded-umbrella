@@ -8,8 +8,7 @@ const Feature = (props) => {
   } else if (props.feature.check === 'left') {
     var leftCheck = Check;
   } else {
-    var rightCheck = Check;
-    var leftCheck = Check;
+    var rightCheck, leftCheck = Check;
   }
   return(
     <div className='featureRow'>
@@ -25,30 +24,32 @@ const Feature = (props) => {
 }
 
 const ComparisonModal = (props) => {
-  var clickedItemList = props.relatedData.features;
-  var currItemList = props.currProductData.features;
+  console.log(props);
+  var foundSharedFeature;
+  var relatedFeatureList = props.relatedProduct.features;
+  var currentFeatureList = props.currProductData.features;
   if (!props.show) {
     return null
   }
-  var allItemsList = currItemList;
-  allItemsList.forEach(item => item.check = 'left');
+  var allFeatureList = currentFeatureList;
+  allFeatureList.forEach(feature => feature.check = 'left');
   var holdingArray = [];
-  for (var clickedItem of clickedItemList) {
-    var foundShared = false;
-    for (var allItem of allItemsList) {
-      if (clickedItem.feature === allItem.feature && clickedItem.value === allItem.value) {
-        allItem.check = 'both';
-        foundShared = true;
+  for (var relatedFeature of relatedFeatureList) {
+    foundSharedFeature = false;
+    for (var allFeature of allFeatureList) {
+      if (relatedFeature.feature === allFeature.feature && relatedFeature.value === allFeature.value) {
+        allFeature.check = 'both';
+        foundSharedFeature = true;
       }
     }
-    if (!foundShared) {
-      clickedItem.check = 'right';
-      holdingArray.push(clickedItem);
+    if (!foundSharedFeature) {
+      relatedFeature.check = 'right';
+      holdingArray.push(relatedFeature);
     }
   }
-  allItemsList = allItemsList.concat(holdingArray);
-  var modalFeatures = allItemsList.map((feature) =>
-    <Feature key={props.relatedData.styleId} feature={feature} />
+  allFeatureList = allFeatureList.concat(holdingArray);
+  var modalFeatures = allFeatureList.map((feature) =>
+    <Feature key={props.relatedProduct.styleId ? props.relatedProduct.styleId + props.relatedProduct.id : props.relatedProduct.id} feature={feature} />
   );
 
   return (
@@ -57,7 +58,7 @@ const ComparisonModal = (props) => {
         <div className='modalHeader'>
           <p className='modalTitle'>Comparing</p>
           <div className='modalProductNames' >
-            <div className='currentName'>{props.currProductData.name}</div> <div className='relatedName'>{props.relatedData.name}</div>
+            <div className='currentName'>{props.currProductData.name}</div> <div className='relatedName'>{props.relatedProduct.name}</div>
           </div>
         </div>
         <div className='modalBody'>

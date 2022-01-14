@@ -16,6 +16,7 @@ class Comparison extends React.Component {
       }
     this.addOutfitItem = this.addOutfitItem.bind(this);
     this.removeOutfitItem = this.removeOutfitItem.bind(this);
+    this.changeId = this.changeId.bind(this);
   }
 
 componentDidMount() {
@@ -27,7 +28,6 @@ componentDidMount() {
       this.setState({
         outfit: storageData,
       });
-      console.log('THIS IS THE STATE: ', this.state);
     }
   });
 }
@@ -49,18 +49,19 @@ checkLocalStorage (cb) {
 fillCarousels (productId) {
   var currentProduct;
   var relatedProducts = [];
+  this.setState({
+    related: [],
+    productData: ''
+  })
   this.createProductObj(productId, (err, productObj) => {
-    console.log('Created Product Obj: ', productObj);
     this.setState({
       productData: productObj
     });
     for (var relatedId of productObj.related) {
-      console.log('Iterated related Id: ', relatedId);
       this.createProductObj(relatedId, (err, relatedProductObj) => {
         if (err) {
           console.log('ERROR: ', err);
         } else {
-          console.log('Created Related Product Obj: ', relatedProductObj);
           relatedProducts = this.state.related;
           relatedProducts.push(relatedProductObj);
           this.setState({
@@ -80,7 +81,6 @@ createProductObj (productId, cb) {
       'Authorization': `${API_Token.API_Token}`
     }
   }, (productData) => {
-    console.log('Pulled Product Data: ', productData);
     productObj = productData;
     $.get({
       url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/meta/?product_id=${productId}`,
@@ -88,7 +88,6 @@ createProductObj (productId, cb) {
         'Authorization': `${API_Token.API_Token}`
       }
     }, (ratingsData) => {
-      console.log('Pulled Ratings Data: ', ratingsData);
       productObj.ratings = ratingsData.ratings;
       $.get({
         url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/${productId}/related/`,
@@ -96,7 +95,6 @@ createProductObj (productId, cb) {
           'Authorization': `${API_Token.API_Token}`
         }
       }, (relatedData) => {
-        console.log('Pulled Related Data: ', relatedData);
         productObj.related = relatedData;
         $.get({
           url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/${productId}/styles/`,
@@ -104,7 +102,6 @@ createProductObj (productId, cb) {
             'Authorization': `${API_Token.API_Token}`
           }
         }, (imageData) => {
-          console.log('Pulled Image Data: ', imageData);
           var defaultFound = false;
           var imageUrl,
               originalPrice,
@@ -147,7 +144,6 @@ createProductObj (productId, cb) {
   }
 
   removeOutfitItem (productId) {
-    console.log('Removing item: ', productId);
     localStorage.removeItem(productId);
     var newOutfit = [];
     var outfit = this.state.outfit;
@@ -161,14 +157,23 @@ createProductObj (productId, cb) {
     });
   }
 
+  changeId (productId) {
+    console.log('new product id: ', productId);
+    this.setState ({
+      productId: productId
+    });
+    this.fillCarousels(productId);
+  }
+
   render() {
     return(
       <div>
         <h2>Related Items and Comparison Modal</h2>
-        <p>RELATED PRODUCTS</p>
+        <div className='relatedTitle' >RELATED PRODUCTS</div>
         <Related  relatedProducts={this.state.related}
-                  currProductData={this.state.productData}/>
-        <p>YOUR OUTFIT</p>
+                  currProductData={this.state.productData}
+                  changeId={this.changeId} />
+        <div className='outfitTitle'>YOUR OUTFIT</div>
         <Outfit outfit={this.state.outfit}
                 addOutfitItem={this.addOutfitItem}
                 removeOutfitItem={this.removeOutfitItem} />

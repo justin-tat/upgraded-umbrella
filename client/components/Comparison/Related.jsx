@@ -23,7 +23,7 @@ const RelatedItem = (props) => {
     <div className='listItem'>
     <div className='relatedImgBox' >
       <img className='starImg' src={Star} onClick={() => setShow(true)}></img>
-      <img className='relatedImg' value={props.productId} src={image} onClick={props.changeId} ></img>
+      <img className='relatedImg' value={props.productId} src={image} onClick={() => {props.changeId(props.productId)}} ></img>
     </div>
       <div className='relatedDetails'>
         <div className='category'>{props.category}</div>
@@ -41,7 +41,6 @@ const RelatedItem = (props) => {
 }
 
 const Related = (props) => {
-  console.log('RELATED: ', props.relatedProducts);
   var relatedItems = (props.relatedProducts).map((product) =>
     <RelatedItem  key = {product.id}
                   productId = {product.id}
@@ -53,7 +52,7 @@ const Related = (props) => {
                   image = {product.imageUrl}
                   ratings = {product.ratings}
                   currProductData = {props.currProductData}
-                  changeId = {() => {console.log(props.id)}}
+                  changeId = {props.changeId}
     />
   );
   return(

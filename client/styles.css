@@ -82,6 +82,14 @@ h2 {
 }
 
 /* COMPARISON */
+.relatedTitle, .outfitTitle {
+    font-family: sans-serif;
+    font-weight: lighter;
+    margin-left: 40px;
+    margin-bottom: 10px;
+    margin-top: 50px;
+}
+
 #relatedCarousel {
     display: flex;
     flex-wrap: nowrap;
@@ -90,6 +98,8 @@ h2 {
     height: 400px;
     max-height: 400px;
     width: 75%;
+    margin-left: 40px;
+    /* margin: 0 auto; */
 }
 
 #outfitCarousel {
@@ -100,6 +110,8 @@ h2 {
     height: 400px;
     max-height: 400px;
     width: 75%;
+    margin-left: 40px;
+    /* margin: 0 auto; */
 }
 
 .scrollWrapper {
@@ -233,6 +245,10 @@ h2 {
 
 .modalTitle {
     margin: 0;
+    font-family: sans-serif;
+    font-weight: lighter;
+    font-size: small;
+    margin-bottom: 15px;
 }
 
 .modalBody {
@@ -288,9 +304,9 @@ h2 {
 }
 
 .featureRow {
-    /* width:fit-content;
+    /* width:fit-content;*/
     display: flex;
-    object-fit: contain; */
+    object-fit: contain;
     text-align: center;
 }
 
@@ -322,11 +338,15 @@ h2 {
     max-width: 2em;
     margin-right: 5px;
     right: 0;
+    float: right;
 }
 
 .modalProductNames {
     display: flex;
     position: relative;
+    font-family: sans-serif;
+    font-weight: normal;
+    color: rgb(48, 47, 47)
 }
 
 .relatedName {
