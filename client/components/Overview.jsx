@@ -1,8 +1,11 @@
 import React from 'react';
+import axios from 'axios';
 import DefaultView from './Overview/DefaultView.jsx';
 import ExpandedView from './Overview/ExpandedView.jsx';
 import SellingPoints from './Overview/SellingPoints.jsx';
 import exampleData from '../exampleData/OverviewData.js';
+
+//Create mock data structure instead of using exampleData
 
 class Overview extends React.Component {
   constructor(props) {
@@ -23,19 +26,67 @@ class Overview extends React.Component {
     this.arrowClick = this.arrowClick.bind(this);
     this.updateStyle = this.updateStyle.bind(this);
     this.zoom = this.zoom.bind(this);
-    this.toggleHide = this.toggleHide.bind(this);
     this.onImgLoad = this.onImgLoad.bind(this);
     this.revertToExpanded = this.revertToExpanded.bind(this);
   }
 
-  //Make office hours about component did mount and how to avoid errors when calling nested objects in downstream components. Do you use example data, and then just override it in componentDidMount with an API call?
-
-  toggleHide(event) {
-    event.preventDefault();
-    this.setState({
-      hide: !this.state.hide
-    });
+  componentDidMount() {
+    this.getOverview(this.props.productId);
   }
+  
+  getOverview(productID) {
+    //Good
+    axios({
+      baseURL: 'http://localhost:3000',
+      url: '/productOverview',
+      method: 'get',
+      params: { productID: productID }
+    }).then(result => {
+      let results = result.data;
+      console.log('Inside of client side code styles', results);
+      this.setState({
+        productOverview: results
+      });
+    })
+    .catch(err => {
+      console.log('Failed inside of productOverview of client side code');
+    });
+    axios({
+      baseURL: 'http://localhost:3000',
+      url: '/styles',
+      method: 'get',
+      params: { productID: productID }
+    }).then(result => {
+      let styles = result.data;
+      console.log('Inside of client side code styles', styles);
+      this.setState({
+        results: styles.results,
+        photos: styles.results[0].photos,
+        currStyle: 0,
+        zoom: 'expanded'
+      });
+    })
+    .catch(err => {
+      console.log('Failed inside of styles of client side code');
+    });;
+    axios({
+      baseURL: 'http://localhost:3000',
+      url: '/starReviews',
+      method: 'get',
+      params: { productID: productID }
+    }).then(result => {
+      let reviewMetadata = result.data;
+      console.log('Inside of client side code reviewMetadata', reviewMetadata);
+      this.setState({
+        reviewMetadata: reviewMetadata
+      })
+    })
+    .catch(err => {
+      console.log('Failed inside of starReviews of client side code');
+    });;
+  }
+
+  
 
   zoom(event) {
     event.preventDefault();
@@ -46,8 +97,6 @@ class Overview extends React.Component {
     } else if (this.state.zoom === 'expanded') {
       this.setState({
         zoomedIn: !this.state.zoomedIn
-      }, () => {
-        //console.log("state.zoomedIn", this.state.zoomedIn);
       });
     }
 
@@ -114,7 +163,7 @@ class Overview extends React.Component {
           this.setState({
             currStyle: i,
             currPhotoIndex: 0,
-            photos: exampleData.styles.results[i].photos
+            photos: this.state.results[i].photos
           });
         }
       }
@@ -145,7 +194,8 @@ class Overview extends React.Component {
     return (
       <div id="overview">
         {this.state.zoom === 'default'
-          ? <DefaultView results={this.state.results}
+          ? <DefaultView 
+            results={this.state.results}
             currStyle={this.state.currStyle}
             currPhotoIndex={this.state.currPhotoIndex}
             photos={this.state.photos}
@@ -155,8 +205,8 @@ class Overview extends React.Component {
             arrowClick={this.arrowClick}
             updateStyle={this.updateStyle}
             zoom={this.zoom}
-            toggleHide={this.toggleHide}
-            hide={this.state.hide} />
+            hide={this.state.hide} 
+            addToCarousel={this.props.addToCarousel}/>
           : <div></div>
         }
         {this.state.zoom === 'expanded'
@@ -179,7 +229,8 @@ class Overview extends React.Component {
               zoomedIn={this.state.zoomedIn}
               dimensions={this.state.dimensions}
               expViewImg = {this.state.expViewImg}
-              revertToExpanded = {this.revertToExpanded}/>
+              revertToExpanded = {this.revertToExpanded}
+              addToCarousel={this.props.addToCarousel}/>
           : <div></div>
         }
         <div id="productFeatures">

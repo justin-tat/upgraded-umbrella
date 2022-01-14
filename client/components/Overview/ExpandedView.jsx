@@ -30,7 +30,8 @@ var ExpandedView = (props) => {
                 ratings={props.reviewMetadata} 
                 productOverview={props.productOverview} 
                 currStyle={props.currStyle} 
-                updateStyle={props.updateStyle}/>
+                updateStyle={props.updateStyle}
+                addToCarousel={props.addToCarousel}/>
             </div>
         </div>
     )

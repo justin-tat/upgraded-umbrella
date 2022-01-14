@@ -141,7 +141,7 @@ class StyleInfo extends React.Component {
                 </div>
                 <StyleList styles={this.state.styleRows} updateStyle={this.props.updateStyle} currStyle={this.props.currStyle}/>
                 <CartSpecifics availableSizes={this.state.availableSizes} updateSize={this.updateSize} size={this.state.size} quantity={this.state.quantity}/>
-                <AddToCart updateCart={this.updateCart}/>
+                <AddToCart updateCart={this.updateCart} addToCarousel={this.props.addToCarousel}/>
             </div>
         )
     }

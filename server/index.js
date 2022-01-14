@@ -1,5 +1,6 @@
 const express = require('express');
 const { getAllReviews } = require('./ReviewsService.js');
+const { getStarReviews, getProductOverview, getStyles } = require('./OverviewService'); 
 
 const app = express();
 const port = 3000;
@@ -18,7 +19,7 @@ app.get('/', (req, res) => {
 
 // Ratings & Reviews
 app.get('/reviews', (req, res) => {
-  let productId = req.query.productId;
+  let productId = req.query.product_id;
   getAllReviews(productId).then(result => {
     let reviews = result.data.results;
     res.send(reviews);
@@ -28,7 +29,7 @@ app.get('/reviews', (req, res) => {
 })
 
 app.get('/averageRating', (req, res) => {
-  let productId = req.query.productId;
+  let productId = req.query.productID;
   getAllReviews(productId).then(result => {
     let reviews = result.data.results;
     let rating = 0;
@@ -41,6 +42,43 @@ app.get('/averageRating', (req, res) => {
     res.status(404).send(err);
   });
 })
+
+//Overview API Requests
+app.get('/starReviews', (req, res) => {
+  var productID = req.query.productID;
+  getStarReviews(productID).then(results => {
+    //console.log("Inside express server", results.data);
+    res.send(results.data);
+  })
+  .catch(err => {
+    console.log("Failed in starReviews");
+    res.status(404).send(err);
+  })
+});
+
+app.get('/styles', (req, res) => {
+  var productID = req.query.productID;
+  getStyles(productID).then(results => {
+    res.send(results.data);
+  })
+  .catch(err => {
+    console.log("Failed in styles", err);
+    res.status(404).send(err);
+  })
+});
+
+app.get('/productOverview', (req, res) => {
+  var productID = req.query.productID;
+  getProductOverview(productID).then(results => {
+    //console.log('Inside express server productOverview', results.data);
+    res.send(results.data);
+  })
+  .catch(err => {
+    console.log('Failing inside of express productOverview', err);
+    res.status(404).send(err);
+  })
+});
+
 
 app.listen(port, () => {
   console.log(`Upgraded Umbrella app listening at http://localhost:${port}`);
