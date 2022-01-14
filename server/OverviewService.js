@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { token } = require('../config.js');
+const { API_Token } = require('../client/config/apiKey.js');
 
 const getStarReviews = (productId) => {
     return axios({
@@ -44,5 +44,5 @@ const getStyles = (productId) => {
 }
 
 module.exports = {
-    getStarReviews, getProductOverview, getStyles, 
+    getStarReviews, getProductOverview, getStyles,
 }

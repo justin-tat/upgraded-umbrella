@@ -13,7 +13,7 @@ const Price = (props) => {
   } else {
     salePrice = `$${props.originalPrice}`;
   }
-  
+
   return (
     <div className='price'>
       <div className='salePrice' style={redFont}>{salePrice}</div>

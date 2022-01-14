@@ -1,10 +1,7 @@
 node_modules
 config.js
-<<<<<<< HEAD
-=======
 coverage/
 client/dist/bundle.js
->>>>>>> 1e806bcbf76dd8962b35400ad83a000a586dd220
 
 ##API Keys ##
 client/config/apiKey.js

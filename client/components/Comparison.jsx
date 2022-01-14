@@ -168,7 +168,6 @@ createProductObj (productId, cb) {
   render() {
     return(
       <div>
-        <h2>Related Items and Comparison Modal</h2>
         <div className='relatedTitle' >RELATED PRODUCTS</div>
         <Related  relatedProducts={this.state.related}
                   currProductData={this.state.productData}
