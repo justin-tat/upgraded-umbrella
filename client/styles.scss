@@ -302,7 +302,6 @@ h2 {
     max-height: 400px;
     width: 75%;
     margin-left: 40px;
-    /* margin: 0 auto; */
 }
 
 #outfitCarousel {
@@ -314,7 +313,6 @@ h2 {
     max-height: 400px;
     width: 75%;
     margin-left: 40px;
-    /* margin: 0 auto; */
 }
 
 .scrollWrapper {
@@ -481,30 +479,31 @@ h2 {
 }
 
 .addItem {
-    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
     border: solid gray 0.05em;
     width: 12em;
     height: 94%;
     max-height: fit-content;
     min-height: fit-content;
-    align-items: center;
 }
 
 .addToOutfit {
-    position: relative;
-    margin-left: 0.40em;
-    margin-top: 0.25em;
-    left: 10%;
-    top: 30%;
+    flex-direction: row;
     font-size: x-large;
+    font-family: sans-serif;
+    margin-bottom: 70%;
     cursor:pointer
 }
 
 .plusImage {
-    position: relative;
-    margin-top: 5em;
-    margin-left: 3.5em;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     height: 5em;
+    margin-top: 50%;
 }
 
 .featureRow {
@@ -526,11 +525,6 @@ h2 {
     font-weight: lighter;
 }
 
-/*.featureRow > div {
-    margin: 5px;
-    max-width:max-content;
-    justify-content: center;
-}*/
 
 .leftCheckContainer {
     vertical-align: left;
