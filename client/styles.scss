@@ -508,41 +508,48 @@ h2 {
 }
 
 .featureRow {
-    /* width:fit-content;*/
+    width:100%;
     display: flex;
     object-fit: contain;
     text-align: center;
+    min-height: 15px;
+    margin-top: 10px;
+    margin-bottom: 25px;
 }
 
 .featureName {
-    max-width: 80%;
+    width: 100%;
     vertical-align: center;
     display:inline-block;
+    flex-direction: row;
+    font-family: sans-serif;
+    font-weight: lighter;
 }
 
-.featureRow > div {
+/*.featureRow > div {
     margin: 5px;
     max-width:max-content;
-    /* justify-content: center; */
-}
+    justify-content: center;
+}*/
 
-.checkContainer {
-    vertical-align: right;
+.leftCheckContainer {
+    vertical-align: left;
+    margin-left: 5px;
     max-height: 5em;
     width: 10%;
+    align-self: flex-start;
 }
 
-.leftCheck {
-    max-height: 40%;
-    max-width: 2em;
-}
-
-.rightCheck {
-    max-height: 40%;
-    max-width: 2em;
+.rightCheckContainer {
+    vertical-align: right;
     margin-right: 5px;
-    right: 0;
-    float: right;
+    max-height: 5em;
+    width: 10%;
+    align-self: flex-end;
+}
+
+.leftCheck, .rightCheck {
+    max-width: 1em;
 }
 
 .modalProductNames {
