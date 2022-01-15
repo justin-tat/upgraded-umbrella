@@ -31,61 +31,84 @@ class Overview extends React.Component {
   }
 
   componentDidMount() {
-    this.getOverview(this.props.productId);
+    this.getOverview(this.props.productId)
+    .then(() => {
+      console.log('Testing 1 2 3');
+    })
+    .catch(err => {
+      console.log('Damn bruh', err);
+    })
   }
   
+  //this.setState with prev state and previous props
+
   getOverview(productID) {
-    //Good
-    axios({
+    return this.getProductOverview(productID)
+    .then((obj) => {
+      return this.getStyles(productID, obj);
+    })
+    .then((obj) => {
+      return this.getStarReviews(productID, obj);
+    })
+    .then(obj => {
+      return this.setState({
+        productOverview: obj.productOverview,
+        results: obj.results,
+        photos: obj.photos,
+        currStyle: 0,
+        zoom: 'default',
+        reviewMetadata: obj.reviewMetadata
+      })
+    })
+  }
+
+  getProductOverview(productID) {
+    return axios({
       baseURL: 'http://localhost:3000',
       url: '/productOverview',
       method: 'get',
       params: { productID: productID }
     }).then(result => {
       let results = result.data;
-      console.log('Inside of client side code styles', results);
-      this.setState({
-        productOverview: results
-      });
+      return { "productOverview": results };
     })
     .catch(err => {
       console.log('Failed inside of productOverview of client side code');
     });
-    axios({
+  }
+
+  getStyles(productID, obj) {
+    return axios({
       baseURL: 'http://localhost:3000',
       url: '/styles',
       method: 'get',
       params: { productID: productID }
     }).then(result => {
       let styles = result.data;
-      console.log('Inside of client side code styles', styles);
-      this.setState({
-        results: styles.results,
-        photos: styles.results[0].photos,
-        currStyle: 0,
-        zoom: 'expanded'
-      });
+      obj["results"] = styles.results;
+      obj["photos"] = styles.results[0].photos;
+      return obj;
     })
     .catch(err => {
       console.log('Failed inside of styles of client side code');
-    });;
-    axios({
+    });
+  }
+
+  getStarReviews(productID, obj) {
+    return axios({
       baseURL: 'http://localhost:3000',
       url: '/starReviews',
       method: 'get',
       params: { productID: productID }
     }).then(result => {
       let reviewMetadata = result.data;
-      console.log('Inside of client side code reviewMetadata', reviewMetadata);
-      this.setState({
-        reviewMetadata: reviewMetadata
-      })
+      obj["reviewMetadata"] = reviewMetadata;
+      return obj;
     })
     .catch(err => {
       console.log('Failed inside of starReviews of client side code');
-    });;
+    });
   }
-
   
 
   zoom(event) {
@@ -206,7 +229,8 @@ class Overview extends React.Component {
             updateStyle={this.updateStyle}
             zoom={this.zoom}
             hide={this.state.hide} 
-            addToCarousel={this.props.addToCarousel}/>
+            addToCarousel={this.props.addToCarousel}
+            />
           : <div></div>
         }
         {this.state.zoom === 'expanded'

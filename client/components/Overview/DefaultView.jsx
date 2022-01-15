@@ -3,6 +3,7 @@ import ThumbnailList from './ThumbnailList.jsx';
 import ProductInfo from './ProductInfo.jsx';
 
 var DefaultView = (props) => {
+    console.log(props.photos);
     return (
         <div id="defaultView">
             {props.currPhotoIndex !== 0
@@ -20,7 +21,8 @@ var DefaultView = (props) => {
                 ? <div> <img src="./img/rightArrow.png" id="rightArrow" onClick={props.arrowClick}></img> </div>
                 : <div></div>}
             <div id="productInfo">
-                <ProductInfo results={props.results} 
+                <ProductInfo 
+                results={props.results} 
                 ratings={props.reviewMetadata} 
                 productOverview={props.productOverview} 
                 currStyle={props.currStyle} 
