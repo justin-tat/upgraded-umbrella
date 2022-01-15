@@ -480,28 +480,29 @@ h2 {
 
 .addItem {
     display: flex;
-    align-items: center;
-    justify-content: center;
     flex-wrap: wrap;
+    flex-direction: column;
+    flex: 0 0 auto;
     border: solid gray 0.05em;
     width: 12em;
     height: 94%;
     max-height: fit-content;
     min-height: fit-content;
+    position: relative;
+    align-items: stretch;
 }
 
 .addToOutfit {
     flex-direction: row;
     font-size: x-large;
     font-family: sans-serif;
-    margin-bottom: 70%;
+    align-self: center;
     cursor:pointer
 }
 
 .plusImage {
     flex-direction: row;
-    align-items: center;
-    justify-content: center;
+    align-self: center;
     height: 5em;
     margin-top: 50%;
 }
