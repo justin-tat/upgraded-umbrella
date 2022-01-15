@@ -338,7 +338,7 @@ h2 {
 
 .relatedDetails  {
     position: absolute;
-    bottom: 2%;
+    bottom: 6%;
 }
 
 .category {
@@ -350,7 +350,7 @@ h2 {
     font: normal;
 }
 
-.price {
+.compPrice {
     display: flex;
     margin-top: 0.25em;
     margin-bottom: 0.25em;
@@ -414,8 +414,8 @@ h2 {
     margin: auto;
 
 }
-.relatedImgBox /*.modalButton*/ {
-    background-color: rgb(211, 208, 208); /*removing this takes the gray away */
+.relatedImgBox {
+    background-color: rgb(211, 208, 208);
     position: relative;
     display: flex;
     align-items: center;
