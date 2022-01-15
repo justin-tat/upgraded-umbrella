@@ -33,10 +33,10 @@ class Overview extends React.Component {
   componentDidMount() {
     this.getOverview(this.props.productId)
     .then(() => {
-      console.log('Testing 1 2 3');
+      console.log('Successfully set state for Overview from Atelier Data');
     })
     .catch(err => {
-      console.log('Damn bruh', err);
+      console.log('Failed in ComponentDidMount of Overview.jsx', err);
     })
   }
   
