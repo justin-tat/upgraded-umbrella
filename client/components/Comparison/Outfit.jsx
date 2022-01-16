@@ -42,7 +42,7 @@ const Outfit = (props) => {
     )
   }
   return (
-      <div className='scrollWrapper'>
+      <div id='outfit' className='scrollWrapper'>
         <br></br>
         <div id='outfitCarousel'>
           <div className='addItem' onClick={props.addOutfitItem}>

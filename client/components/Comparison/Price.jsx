@@ -15,7 +15,7 @@ const Price = (props) => {
   }
 
   return (
-    <div className='price'>
+    <div className='compPrice'>
       <div className='salePrice' style={redFont}>{salePrice}</div>
       <div className='originalPrice'> {originalPrice}</div>
     </div>

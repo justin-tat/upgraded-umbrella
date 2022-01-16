@@ -56,7 +56,7 @@ const Related = (props) => {
     />
   );
   return(
-      <div className='scrollWrapper'>
+      <div id='related' className='scrollWrapper'>
         <div id='relatedCarousel'>
           {relatedItems}
         </div>
