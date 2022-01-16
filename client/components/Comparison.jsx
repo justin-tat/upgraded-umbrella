@@ -11,7 +11,7 @@ class Comparison extends React.Component {
     this.state = {
       outfit: [],
       related: [],
-      productId: /*props.productId ||*/ 59553,
+      productId: props.productId || 59553,
       productData: {}
       }
     this.addOutfitItem = this.addOutfitItem.bind(this);
@@ -58,19 +58,22 @@ fillCarousels (productId) {
       productData: productObj
     });
     for (var relatedId of productObj.related) {
-      this.createProductObj(relatedId, (err, relatedProductObj) => {
-        if (err) {
-          console.log('ERROR: ', err);
-        } else {
-          relatedProducts = this.state.related;
-          relatedProducts.push(relatedProductObj);
-          this.setState({
-            related: relatedProducts
-          });
-        }
-      });
+      if (relatedId !== this.state.productId) {
+        this.createProductObj(relatedId, (err, relatedProductObj) => {
+          if (err) {
+            console.log('ERROR: ', err);
+          } else {
+            relatedProducts = this.state.related;
+            relatedProducts.push(relatedProductObj);
+            this.setState({
+              related: relatedProducts
+            });
+          }
+        });
+      }
+      //this is where inner of if statement was
     }
-    });
+  });
 }
 
 createProductObj (productId, cb) {
@@ -96,12 +99,14 @@ createProductObj (productId, cb) {
         }
       }, (relatedData) => {
         productObj.related = relatedData;
+        console.log(`This is the relatedData for ${productObj.id}:`, relatedData);
         $.get({
           url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/${productId}/styles/`,
           headers: {
             'Authorization': `${API_Token.API_Token}`
           }
         }, (imageData) => {
+          console.log('imageData: ', imageData);
           var defaultFound = false;
           var imageUrl,
               originalPrice,
@@ -131,8 +136,9 @@ createProductObj (productId, cb) {
 
   addOutfitItem (event) {
     var newOutfit = this.state.outfit;
-    for (var item=0; item < newOutfit.length; item++) {
-      if (newOutfit[item].id === this.state.productId) {
+    for ( var index = 0; index < newOutfit.length; index ++ ) {
+      if (newOutfit[index].id === this.state.productId) {
+        console.log('Item already in outfit. Item #', newOutfit[index].id);
         return;
       }
     }
@@ -166,8 +172,9 @@ createProductObj (productId, cb) {
   }
 
   render() {
+    console.log(this.state);
     return(
-      <div>
+      <div id='comparison'>
         <div className='relatedTitle' >RELATED PRODUCTS</div>
         <Related  relatedProducts={this.state.related}
                   currProductData={this.state.productData}
