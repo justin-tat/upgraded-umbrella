@@ -1,6 +1,7 @@
 const express = require('express');
 const { getAllReviews } = require('./ReviewsService.js');
 const { getStarReviews, getProductOverview, getStyles } = require('./OverviewService');
+const { createProductObj, addRatingsData, addRelatedData, addImageData } = require('./ComparisonService');
 
 const app = express();
 const port = 3000;
@@ -79,6 +80,57 @@ app.get('/productOverview', (req, res) => {
     res.status(404).send(err);
   })
 });
+
+//Comparison API Requests
+app.get('/productData', (req, res) => {
+  var productId = req.query.productId;
+  createProductObj(productId)
+  .then(results => {
+    res.send(results.data);
+  })
+  .catch(err => {
+    console.log('ERROR pulling product data: ', err);
+    res.status(404).send(err);
+  });
+});
+
+app.get('/addRatingsData', (req, res) => {
+  var productId = req.query.productId;
+  addRatingsData(productId)
+  .then(results => {
+    res.send(results.data.ratings);
+  })
+  .catch(err => {
+    console.log('ERROR pulling ratings data: ', err);
+    res.status(404).send(err);
+  });
+});
+
+app.get('/addRelatedData', (req, res) => {
+  var productId = req.query.productId;
+  addRelatedData(productId)
+  .then(results => {
+    res.send(results.data);
+  })
+  .catch(err => {
+    console.log('ERROR pulling related data: ', err);
+    res.status(404).send(err);
+  });
+});
+
+app.get('/addImageData', (req, res) => {
+  var productId = req.query.productId;
+  addImageData(productId)
+  .then(results => {
+    res.send(results.data);
+  })
+  .catch(err => {
+    console.log('ERROR pulling image data: ', err);
+    res.status(404).send(err);
+  });
+});
+
+
 
 
 app.listen(port, () => {
