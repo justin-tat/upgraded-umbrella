@@ -20,6 +20,9 @@ const Ratings = (props) => {
 
   ratings = props.ratings;
   var keys = Object.keys(ratings);
+  if (keys.length === 0) {
+    return;
+  }
     for (var key of keys) {
       sumOfAllRatings += (Number(key) * Number(ratings[key]));
       numOfRatings += Number(ratings[key]);
@@ -27,9 +30,10 @@ const Ratings = (props) => {
   averageRating = sumOfAllRatings/numOfRatings;
   for (var star = 1; star < 6; star++ ) {
     if (averageRating < 0) {
+      starRating[star] = Empty;
       averageRating++;
     }
-    if (averageRating > 1) {
+    if (averageRating >= 1) {
       starRating[star] = Full;
       averageRating --;
     } else if (averageRating === 0) {
