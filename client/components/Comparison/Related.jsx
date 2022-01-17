@@ -42,7 +42,7 @@ const RelatedItem = (props) => {
 
 const Related = (props) => {
   var relatedItems = (props.relatedProducts).map((product) =>
-    <RelatedItem  key = {product.id}
+    <RelatedItem  key = {product.id + 5}
                   productId = {product.id}
                   relatedProducts = {props.relatedProducts}
                   category = {product.category}
