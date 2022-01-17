@@ -57,23 +57,21 @@ fillCarousels (productId) {
     this.setState({
       productData: productObj
     });
-    for (var relatedId of this.state.productData.related) {
-      if (relatedId !== this.state.productId) {
-        this.createProductObj(relatedId, (err, relatedProductObj) => {
-          if (err) {
-            console.log('ERROR creating relatedProductObj: ', err);
-          } else {
-            relatedProducts = this.state.related;
-            relatedProducts.push(relatedProductObj);
-            this.setState({
-              related: relatedProducts
-            });
-          }
+  for (var relatedId of this.state.productData.related)
+    this.createProductObj(relatedId, (err, relatedProductObj) => {
+      if (err) {
+        console.log('ERROR creating relatedProductObj: ', err);
+      } else {
+        relatedProducts = this.state.related;
+        relatedProducts.push(relatedProductObj);
+        this.setState({
+          related: relatedProducts
         });
       }
-    }
-  })
+    });
+  });
 }
+
 
 createProductObj (productId, cb) {
   var productObj;
