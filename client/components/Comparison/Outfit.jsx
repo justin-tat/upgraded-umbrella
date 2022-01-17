@@ -14,7 +14,7 @@ const OutfitItem = (props) => {
   return (
     <div className='listItem' >
       <div className='relatedImgBox' >
-        <img className='relatedImg' src={props.image}></img>
+        <img className='relatedImg' src={image}></img>
         <img className='xImg' src={xImg} onClick={() => {props.removeOutfitItem(props.id)}} ></img>
       </div>
       <div className='relatedDetails'>
@@ -42,7 +42,7 @@ const Outfit = (props) => {
     )
   }
   return (
-      <div className='scrollWrapper'>
+      <div id='outfit' className='scrollWrapper'>
         <br></br>
         <div id='outfitCarousel'>
           <div className='addItem' onClick={props.addOutfitItem}>

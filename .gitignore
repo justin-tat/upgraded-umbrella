@@ -1,4 +1,7 @@
 node_modules
+config.js
+coverage/
+client/dist/bundle.js
 
 ##API Keys ##
 client/config/apiKey.js

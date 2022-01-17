@@ -1,6 +1,6 @@
 import React from 'react';
 import jquery from 'jquery';
-import $ from 'jquery';
+import axios from 'axios';
 import Related from './Comparison/Related.jsx';
 import Outfit from './Comparison/Outfit.jsx';
 import API_Token from '../config/apiKey.js';
@@ -11,11 +11,12 @@ class Comparison extends React.Component {
     this.state = {
       outfit: [],
       related: [],
-      productId: /*props.productId ||*/ 59553,
+      productId: props.productId || 59553,
       productData: {}
       }
     this.addOutfitItem = this.addOutfitItem.bind(this);
     this.removeOutfitItem = this.removeOutfitItem.bind(this);
+    this.changeId = this.changeId.bind(this);
   }
 
 componentDidMount() {
@@ -27,7 +28,6 @@ componentDidMount() {
       this.setState({
         outfit: storageData,
       });
-      console.log('THIS IS THE STATE: ', this.state);
     }
   });
 }
@@ -49,68 +49,80 @@ checkLocalStorage (cb) {
 fillCarousels (productId) {
   var currentProduct;
   var relatedProducts = [];
+  this.setState({
+    related: [],
+    productData: ''
+  });
   this.createProductObj(productId, (err, productObj) => {
-    console.log('Created Product Obj: ', productObj);
     this.setState({
       productData: productObj
     });
-    for (var relatedId of productObj.related) {
-      console.log('Iterated related Id: ', relatedId);
-      this.createProductObj(relatedId, (err, relatedProductObj) => {
-        if (err) {
-          console.log('ERROR: ', err);
-        } else {
-          console.log('Created Related Product Obj: ', relatedProductObj);
-          relatedProducts = this.state.related;
-          relatedProducts.push(relatedProductObj);
-          this.setState({
-            related: relatedProducts
-          });
-        }
-      });
-    }
+  for (var relatedId of this.state.productData.related)
+    this.createProductObj(relatedId, (err, relatedProductObj) => {
+      if (err) {
+        console.log('ERROR creating relatedProductObj: ', err);
+      } else {
+        relatedProducts = this.state.related;
+        relatedProducts.push(relatedProductObj);
+        this.setState({
+          related: relatedProducts
+        });
+      }
     });
+  });
 }
+
 
 createProductObj (productId, cb) {
   var productObj;
-  $.get({
-    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/${productId}/`,
-    headers: {
-      'Authorization': `${API_Token.API_Token}`
-    }
-  }, (productData) => {
-    console.log('Pulled Product Data: ', productData);
-    productObj = productData;
-    $.get({
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/meta/?product_id=${productId}`,
-      headers: {
-        'Authorization': `${API_Token.API_Token}`
-      }
-    }, (ratingsData) => {
-      console.log('Pulled Ratings Data: ', ratingsData);
-      productObj.ratings = ratingsData.ratings;
-      $.get({
-        url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/${productId}/related/`,
-        headers: {
-          'Authorization': `${API_Token.API_Token}`
-        }
-      }, (relatedData) => {
-        console.log('Pulled Related Data: ', relatedData);
-        productObj.related = relatedData;
-        $.get({
-          url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/${productId}/styles/`,
-          headers: {
-            'Authorization': `${API_Token.API_Token}`
-          }
-        }, (imageData) => {
-          console.log('Pulled Image Data: ', imageData);
+  axios({
+    baseURL: 'http://localhost:3000',
+    url: '/productData',
+    method: 'get',
+    params: {productId: productId}
+  })
+  .then(results => {
+    productObj = results.data;
+    return productObj;
+  })
+  .then(productObj => {
+    axios({
+      baseURL: 'http://localhost:3000',
+      url: '/addRatingsData',
+      method: 'get',
+      params: {productId: productObj.id}
+    })
+    .then(ratingsData => {
+      productObj.ratings = ratingsData.data;
+      return productObj;
+    })
+    .then(productObj => {
+      axios({
+        baseURL: 'http://localhost:3000',
+        url: '/addRelatedData',
+        method: 'get',
+        params: {productId: productObj.id}
+      })
+      .then(relatedData => {
+        var uniqueRelatedData = [...new Set(relatedData.data)];
+        productObj.related = uniqueRelatedData;
+        return productObj;
+      })
+      .then(productObj => {
+        axios({
+          baseURL: 'http://localhost:3000',
+          url: '/addImageData',
+          method: 'get',
+          params: {productId: productObj.id}
+        })
+        .then(imageData => {
           var defaultFound = false;
           var imageUrl,
               originalPrice,
               styleId,
               salePrice;
-          for (var style of imageData.results) {
+
+          for (var style of imageData.data.results) {
             if (style['default?']) {
               defaultFound = true;
               productObj.styleId = style.style_id;
@@ -120,22 +132,26 @@ createProductObj (productId, cb) {
             }
           }
           if (!defaultFound) {
-            productObj.styleId = imageData.results[0].styleId;
-            productObj.imageUrl = imageData.results[0].photos[0].url;
-            productObj.originalPrice = imageData.results[0].original_price;
-            productObj.salePrice = imageData.results[0].sale_price;
+            productObj.styleId = imageData.data.results[0].styleId;
+            productObj.imageUrl = imageData.data.results[0].photos[0].url;
+            productObj.originalPrice = imageData.data.results[0].original_price;
+            productObj.salePrice = imageData.data.results[0].sale_price;
           }
-          cb(null, productObj);
-        });
-      });
-    });
-  });
+          return productObj;
+        })
+      .then(productObj => {
+        cb(null, productObj);
+      })
+      })
+    })
+  })
 }
 
   addOutfitItem (event) {
     var newOutfit = this.state.outfit;
-    for (var item=0; item < newOutfit.length; item++) {
-      if (newOutfit[item].id === this.state.productId) {
+    for ( var index = 0; index < newOutfit.length; index ++ ) {
+      if (newOutfit[index].id === this.state.productId) {
+        console.log('Item already in outfit. Item #', newOutfit[index].id);
         return;
       }
     }
@@ -147,7 +163,6 @@ createProductObj (productId, cb) {
   }
 
   removeOutfitItem (productId) {
-    console.log('Removing item: ', productId);
     localStorage.removeItem(productId);
     var newOutfit = [];
     var outfit = this.state.outfit;
@@ -161,14 +176,22 @@ createProductObj (productId, cb) {
     });
   }
 
+  changeId (productId) {
+    console.log('new product id: ', productId);
+    this.setState ({
+      productId: productId
+    });
+    this.fillCarousels(productId);
+  }
+
   render() {
     return(
-      <div>
-        <h2>Related Items and Comparison Modal</h2>
-        <p>RELATED PRODUCTS</p>
+      <div id='comparison'>
+        <div className='relatedTitle' >RELATED PRODUCTS</div>
         <Related  relatedProducts={this.state.related}
-                  currProductData={this.state.productData}/>
-        <p>YOUR OUTFIT</p>
+                  currProductData={this.state.productData}
+                  changeId={this.changeId} />
+        <div className='outfitTitle'>YOUR OUTFIT</div>
         <Outfit outfit={this.state.outfit}
                 addOutfitItem={this.addOutfitItem}
                 removeOutfitItem={this.removeOutfitItem} />
