@@ -1,6 +1,5 @@
 import React from 'react';
 import jquery from 'jquery';
-// import $ from 'jquery';
 import axios from 'axios';
 import Related from './Comparison/Related.jsx';
 import Outfit from './Comparison/Outfit.jsx';
@@ -53,16 +52,16 @@ fillCarousels (productId) {
   this.setState({
     related: [],
     productData: ''
-  })
+  });
   this.createProductObj(productId, (err, productObj) => {
     this.setState({
       productData: productObj
     });
-    for (var relatedId of productObj.related) {
+    for (var relatedId of this.state.productData.related) {
       if (relatedId !== this.state.productId) {
         this.createProductObj(relatedId, (err, relatedProductObj) => {
           if (err) {
-            console.log('ERROR: ', err);
+            console.log('ERROR creating relatedProductObj: ', err);
           } else {
             relatedProducts = this.state.related;
             relatedProducts.push(relatedProductObj);
@@ -72,9 +71,8 @@ fillCarousels (productId) {
           }
         });
       }
-      //this is where inner of if statement was
     }
-  });
+  })
 }
 
 createProductObj (productId, cb) {
@@ -108,7 +106,8 @@ createProductObj (productId, cb) {
         params: {productId: productObj.id}
       })
       .then(relatedData => {
-        productObj.related = relatedData.data;
+        var uniqueRelatedData = [...new Set(relatedData.data)];
+        productObj.related = uniqueRelatedData;
         return productObj;
       })
       .then(productObj => {
@@ -188,7 +187,6 @@ createProductObj (productId, cb) {
   }
 
   render() {
-    console.log(this.state);
     return(
       <div id='comparison'>
         <div className='relatedTitle' >RELATED PRODUCTS</div>
