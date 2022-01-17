@@ -2,7 +2,6 @@ import React from 'react';
 import Check from './ComparisonImages/checkMark.png';
 
 const Feature = (props) => {
-  console.log('Feature Props: ', props);
   if (props.feature.check === 'right') {
     var rightCheck = Check;
   } else if (props.feature.check === 'left') {
@@ -24,7 +23,6 @@ const Feature = (props) => {
 }
 
 const ComparisonModal = (props) => {
-  console.log(props);
   var foundSharedFeature;
   var relatedFeatureList = props.relatedProduct.features;
   var currentFeatureList = props.currProductData.features;
@@ -49,7 +47,7 @@ const ComparisonModal = (props) => {
   }
   allFeatureList = allFeatureList.concat(holdingArray);
   var modalFeatures = allFeatureList.map((feature) =>
-    <Feature key={props.relatedProduct.styleId ? props.relatedProduct.styleId + props.relatedProduct.id : props.relatedProduct.id} feature={feature} />
+  <Feature key={feature.feature} feature={feature} />
   );
 
   return (
