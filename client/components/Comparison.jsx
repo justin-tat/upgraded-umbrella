@@ -23,7 +23,7 @@ componentDidMount() {
   this.fillCarousels(this.state.productId);
   this.checkLocalStorage((err, storageData) =>{
     if (err) {
-      console.log(err);
+      // console.log(err);
     } else {
       this.setState({
         outfit: storageData,
