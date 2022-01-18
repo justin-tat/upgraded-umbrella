@@ -8,7 +8,7 @@ class Reviews extends React.Component {
     super(props);
 
     this.state = {
-      productId: 59554,
+      productId: 59553,
       reviews: [],
       averageRating: null
     }
@@ -29,7 +29,9 @@ class Reviews extends React.Component {
       this.setState({
         reviews: reviews
       }, () => this.sort());
-    });
+    }).catch(err => {
+      console.log(`Error fetching product with ${productId}`, err);
+    })
     //TODO handle case where we do not successfully retrieve a productId by letting client display error
   }
 

@@ -1,6 +1,6 @@
 const express = require('express');
 const { getAllReviews } = require('./ReviewsService.js');
-const { getStarReviews, getProductOverview, getStyles } = require('./OverviewService'); 
+const { getStarReviews, getProductOverview, getStyles } = require('./OverviewService');
 
 const app = express();
 const port = 3000;
@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 
 // Ratings & Reviews
 app.get('/reviews', (req, res) => {
-  let productId = req.query.product_id;
+  let productId = req.query.productId;
   getAllReviews(productId).then(result => {
     let reviews = result.data.results;
     res.send(reviews);
@@ -29,7 +29,7 @@ app.get('/reviews', (req, res) => {
 })
 
 app.get('/averageRating', (req, res) => {
-  let productId = req.query.productID;
+  let productId = req.query.productId;
   getAllReviews(productId).then(result => {
     let reviews = result.data.results;
     let rating = 0;
