@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Overview from './components/Overview.jsx'
-import Comparison from './components/Comparison.jsx'
-import Reviews from './components/Reviews.jsx'
-import "./styles.scss";
+import Overview from './components/Overview.jsx';
+import Comparison from './components/Comparison.jsx';
+import Reviews from './components/Reviews.jsx';
+import './styles.scss';
 
 class App extends React.Component {
   constructor(props) {
@@ -49,7 +49,7 @@ class App extends React.Component {
         <h1>Team Parasol's App</h1>
         <Overview productId={this.state.id} addToCarousel={this.addToCarousel} />
         <Comparison productId={this.state.id} changeId={this.changeId} addToCarousel={this.addToCarousel}/>
-        {/* <Reviews productId={this.state.id}/> */}
+        <Reviews productId={this.state.id}/>
       </div>
     )
   }
