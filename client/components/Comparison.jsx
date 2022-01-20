@@ -19,15 +19,6 @@ class Comparison extends React.Component {
 
 componentDidMount() {
   this.fillCarousels(this.state.productId);
-  // this.checkLocalStorage((err, storageData) =>{
-  //   if (err) {
-  //     // console.log(err);
-  //   } else {
-  //     this.setState({
-  //       outfit: storageData,
-  //     });
-  //   }
-  // });
 }
 
 checkLocalStorage (cb) {
@@ -64,9 +55,6 @@ fillCarousels (productId) {
       if ( index === relatedProductIds.length - 1) {
         this.createProductObj(relatedProductIds[index], (err, relatedProductObj) => {
           relatedProductObjs.push(relatedProductObj);
-          console.log('current product data: ', productObj);
-          console.log('current related products data: ', relatedProductObjs);
-          console.log('current outfit in local: ', storage);
           this.setState({
             productData: productObj,
             related: relatedProductObjs,
@@ -159,9 +147,6 @@ createProductObj (productId, cb) {
   }).then(productObj => {
     cb(null, productObj);
   });
-  //     });
-  //   });
-  // });
 }
 
   addOutfitItem (event) {
