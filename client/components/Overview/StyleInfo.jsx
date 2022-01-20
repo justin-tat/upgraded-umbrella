@@ -15,11 +15,14 @@ class StyleInfo extends React.Component {
             size: '',
             quantity: [],
             cart: [],
-            skuSelected: ''
+            skuSelected: '',
+            favorited: false
         }
         this.updateSize = this.updateSize.bind(this);
         this.getQuantityBySize = this.getQuantityBySize.bind(this);
         this.updateCart = this.updateCart.bind(this);
+        this.toggleFavorite = this.toggleFavorite.bind(this);
+        
     }
 
     //Calling componentDidMount 
@@ -68,6 +71,13 @@ class StyleInfo extends React.Component {
             }
         }
         return availableSizes;
+    }
+
+    toggleFavorite() {
+        this.setState({
+            favorited: !this.state.favorited
+        });
+
     }
 
     //Sets the size variable and calls getQuantityBySize as a callback to ensure state is set before execution
@@ -146,7 +156,8 @@ class StyleInfo extends React.Component {
                 </div>
                 <StyleList styles={this.state.styleRows} updateStyle={this.props.updateStyle} currStyle={this.props.currStyle}/>
                 <CartSpecifics availableSizes={this.state.availableSizes} updateSize={this.updateSize} size={this.state.size} quantity={this.state.quantity}/>
-                <AddToCart updateCart={this.updateCart} addToCarousel={this.props.addToCarousel}/>
+                <AddToCart updateCart={this.updateCart} addToCarousel={this.props.addToCarousel} toggleFavorite={this.toggleFavorite} favorited={this.state.favorited}/>
+                
             </div>
         )
     }

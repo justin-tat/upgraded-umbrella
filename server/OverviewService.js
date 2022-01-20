@@ -19,7 +19,6 @@ const getStarReviews = (productId) => {
 }
 
 const getProductOverview = (productId) => {
-    console.log('api-key', API_TOKEN)
     return axios({
         baseURL: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp',
         url: '/products/' + productId,
