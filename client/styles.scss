@@ -275,6 +275,12 @@ div {
     height: 2em;
 }
 
+#cartAndStar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 #cart {
     display: flex;
     flex-direction: row;
@@ -285,11 +291,20 @@ div {
     border-color: gray;
 }
 
+
 .cartElem {
     padding: 0.25em;
 }
 
-
+#faveStar {
+    display: inline-block;
+    border-style: solid;
+    border-color: black;
+    width:8%;
+    max-height: 8%;
+    margin-left: 10%;
+    padding: 0.6%;
+}
 
 #thumbnailList {
     position: absolute;
@@ -365,21 +380,9 @@ div {
 .selected {
     border-color: red;
 }
-#cartAndStar {
-    display: flex;
-    flex-direction: row;
 
-}
 
-#faveStar {
-    display: inline-block;
-    border-style: solid;
-    border-color: black;
-    width:8%;
-    max-height: 8%;
-    padding-left: 10%;
-    padding-top: 2%;
-}
+
 
 /** COMPARISON COMPONENT**/
 
