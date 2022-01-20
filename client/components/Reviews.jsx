@@ -12,12 +12,40 @@ class Reviews extends React.Component {
       reviews: [],
       averageRating: null,
     }
-
-    this.getReviews = this.getReviews.bind(this);
   }
 
   componentDidMount() {
     this.getReviews(this.state.productId);
+  }
+
+  getAverageRating(reviews) {
+    let ratingSum = 0;
+    for (let review of reviews) {
+      ratingSum += review.rating;
+    }
+    let averageRating = ratingSum / reviews.length;
+    return averageRating;
+  }
+
+  //Creates a 5 element Number array, where each element represents the fill status of the star
+  createStarRatingArray(reviews) {
+    let starRatingArray = [];
+    let averageRating = this.getAverageRating(reviews);
+
+    while (averageRating > 0) {
+      averageRating--;
+      if (averageRating > 0) {
+        starRatingArray.push(1);
+      } else {
+        starRatingArray.push(1 + averageRating)
+      }
+    }
+
+    while (starRatingArray.length < 5) {
+      starRatingArray.push(0);
+    }
+
+    return starRatingArray;
   }
 
   getReviews(productId) {
@@ -92,8 +120,16 @@ class Reviews extends React.Component {
     return(<>
       <h2>Ratings &amp; Reviews</h2>
       <section id='reviews'>
-        <ReviewSummary reviews={this.state.reviews}/>
-        <ReviewList reviews={this.state.reviews} sort={this.sort.bind(this)} sortOption={this.state.sortOption}/>
+        <ReviewSummary
+          reviews={this.state.reviews}
+          averageRating={this.getAverageRating(this.state.reviews)}
+          starRatingArray={this.createStarRatingArray(this.state.reviews)}
+        />
+        <ReviewList
+          reviews={this.state.reviews}
+          sort={this.sort.bind(this)}
+          sortOption={this.state.sortOption}
+        />
       </section>
     </>)
   }

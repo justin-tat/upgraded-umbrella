@@ -27,7 +27,6 @@ const determineStarRating = (starFillStatus) => {
   }
 }
 
-
 var StarRating = (props) => {
   return(<>
     {

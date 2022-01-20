@@ -46,7 +46,6 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>Team Parasol's App</h1>
         <Overview productId={this.state.id} addToCarousel={this.addToCarousel} />
         <Comparison productId={this.state.id} changeId={this.changeId} addToCarousel={this.addToCarousel}/>
         <Reviews productId={this.state.id}/>

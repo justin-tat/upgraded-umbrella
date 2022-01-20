@@ -1,9 +1,7 @@
 import React from 'react';
-import jquery from 'jquery';
 import axios from 'axios';
 import Related from './Comparison/Related.jsx';
 import Outfit from './Comparison/Outfit.jsx';
-import API_Token from '../config/apiKey.js';
 
 class Comparison extends React.Component {
   constructor(props) {

@@ -1,3 +1,12 @@
+h2 {
+    font-family: 'Trebuchet MS';
+    font-weight: 400;
+}
+
+div {
+    font-family: 'Trebuchet MS';
+}
+
 #reviews {
     display: grid;
     grid-template-columns: 40% 60%;
@@ -20,6 +29,7 @@
             height: 1em;
             gap: 1em;
             align-items: center;
+            margin-bottom: 10px;
 
             .star {
                 height: 100%;
@@ -33,12 +43,53 @@
 
     .reviewList {
         grid-row: 1/4;
-    }
-}
 
-h2 {
-    font-family: 'Trebuchet MS';
-    font-weight: 400;
+        .review-tile {
+            border-bottom: black;
+
+            .rating-display {
+                display: flex;
+                height: 1em;
+                align-items: center;
+                margin: 20px 0px 10px 0px;
+
+                .star {
+                    height: 100%;
+                }
+
+                .empty-star {
+                    height: 75%;
+                }
+
+                .review-info {
+                    font-size: small;
+                }
+
+                .review-check-mark {
+                    height: 1em;
+                }
+            }
+
+            .review-title {
+                font-weight: 900;
+                font-size: large;
+            }
+
+            .review-body {
+                margin: 10px 10px 10px 10px;
+            }
+
+            .helpful {
+                display: flex;
+                font-size: small;
+
+                .helpful-clickable {
+                    text-decoration: underline;
+                    margin: 0px 5px 0px 5px;
+                }
+            }
+        }
+    }
 }
 
 #overview{
