@@ -30,7 +30,7 @@ const OutfitItem = (props) => {
 const Outfit = (props) => {
   if ((props.outfit).length > 0) {
     var outfits = (props.outfit).map((product) =>
-      <OutfitItem key={product.id}
+      <OutfitItem key={product.id + 1}
                   id={product.id}
                   category={product.category}
                   name={product.name}

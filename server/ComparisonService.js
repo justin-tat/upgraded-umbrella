@@ -4,7 +4,7 @@ const { API_Token } = require('../client/config/apiKey.js');
 const createProductObj = (productId) => {
   return axios({
       baseURL: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp',
-      url: '/products/' + productId,
+      url: `/products/${productId}`,
       method: 'get',
       headers: { 'Authorization': API_Token }
   });
@@ -13,9 +13,11 @@ const createProductObj = (productId) => {
 const addRatingsData = (productId) => {
   return axios({
     baseURL: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp',
-    url: `/reviews/meta/?product_id=${productId}`,
+    // url: `/reviews/meta/?product_id=${productId}`,
+    url: 'reviews/meta',
     method: 'get',
     headers: { 'Authorization': API_Token },
+    params: {product_id: productId}
   });
 }
 

@@ -6,6 +6,12 @@ import Quarter from './ComparisonImages/quarterStar.png';
 import Empty from './ComparisonImages/emptyStar.png';
 
 const Ratings = (props) => {
+  console.log('Ratings props: ', props);
+  if (props.ratings === undefined) {
+    return (
+      <div className='rating'></div>
+    );
+  }
   var starRating = {
     1: '',
     2: '',
@@ -20,13 +26,10 @@ const Ratings = (props) => {
 
   ratings = props.ratings;
   var keys = Object.keys(ratings);
-  if (keys.length === 0) {
-    return;
+  for (var key of keys) {
+    sumOfAllRatings += (Number(key) * Number(ratings[key]));
+    numOfRatings += Number(ratings[key]);
   }
-    for (var key of keys) {
-      sumOfAllRatings += (Number(key) * Number(ratings[key]));
-      numOfRatings += Number(ratings[key]);
-    }
   averageRating = sumOfAllRatings/numOfRatings;
   for (var star = 1; star < 6; star++ ) {
     if (averageRating < 0) {
