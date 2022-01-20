@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 
 // Ratings & Reviews
 app.get('/reviews', (req, res) => {
-  let productId = req.query.product_id;
+  let productId = req.query.productId;
   getAllReviews(productId).then(result => {
     let reviews = result.data.results;
     res.send(reviews);
@@ -31,7 +31,7 @@ app.get('/reviews', (req, res) => {
 })
 
 app.get('/averageRating', (req, res) => {
-  let productId = req.query.productID;
+  let productId = req.query.productId;
   getAllReviews(productId).then(result => {
     let reviews = result.data.results;
     let rating = 0;

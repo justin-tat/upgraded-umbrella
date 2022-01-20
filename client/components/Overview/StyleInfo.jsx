@@ -23,8 +23,11 @@ class StyleInfo extends React.Component {
     }
 
     //Calling componentDidMount 
+
+    //s3, cloudfront optimize how fast data can be downloaded from s3
     componentDidMount() {
         this.getPrice();
+        
     }
 
     componentDidUpdate(prevProps) {
@@ -35,14 +38,16 @@ class StyleInfo extends React.Component {
                 skuSelected: '',
                 salePrice: 0,
                 hasSale: false,
-                originalPrice: 0
+                originalPrice: 0,
             }, () => {
                 this.getPrice();
                 this.setState({
-                    availableSizes: this.parseAvailableSizes()
+                    availableSizes: this.parseAvailableSizes(),
+                    styleRows: this.parseStyles()
                 });
             });
         }
+        
     }
 
     updateCart() {
