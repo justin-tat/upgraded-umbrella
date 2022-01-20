@@ -8,10 +8,12 @@ class Reviews extends React.Component {
     super(props);
 
     this.state = {
-      productId: 59553,
+      productId: 59557,
       reviews: [],
-      averageRating: null
+      averageRating: null,
     }
+
+    this.getReviews = this.getReviews.bind(this);
   }
 
   componentDidMount() {
@@ -32,7 +34,6 @@ class Reviews extends React.Component {
     }).catch(err => {
       console.log(`Error fetching product with ${productId}`, err);
     })
-    //TODO handle case where we do not successfully retrieve a productId by letting client display error
   }
 
   /*
@@ -89,7 +90,7 @@ class Reviews extends React.Component {
 
   render() {
     return(<>
-      <h3>Ratings &amp; Reviews</h3>
+      <h2>Ratings &amp; Reviews</h2>
       <section id='reviews'>
         <ReviewSummary reviews={this.state.reviews}/>
         <ReviewList reviews={this.state.reviews} sort={this.sort.bind(this)} sortOption={this.state.sortOption}/>
