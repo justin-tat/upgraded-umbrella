@@ -365,6 +365,21 @@ div {
 .selected {
     border-color: red;
 }
+#cartAndStar {
+    display: flex;
+    flex-direction: row;
+
+}
+
+#faveStar {
+    display: inline-block;
+    border-style: solid;
+    border-color: black;
+    width:8%;
+    max-height: 8%;
+    padding-left: 10%;
+    padding-top: 2%;
+}
 
 /** COMPARISON COMPONENT**/
 
