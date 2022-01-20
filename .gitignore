@@ -2,6 +2,9 @@ node_modules
 config.js
 coverage/
 client/dist/bundle.js
+*.pem
+
 
 ##API Keys ##
 client/config/apiKey.js
+AtelierOverview.pem

@@ -47,6 +47,7 @@ class Reviews extends React.Component {
 
     return starRatingArray;
   }
+  //Change to 'http://100.24.25.169'
 
   getReviews(productId) {
     axios({

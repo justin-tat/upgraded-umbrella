@@ -28,7 +28,8 @@ const OutfitItem = (props) => {
 }
 
 const Outfit = (props) => {
-  if ((props.outfit).length > 0) {
+  var outfits = <div></div>;
+  if (props.outfit !== undefined && (props.outfit).length > 0) {
     var outfits = (props.outfit).map((product) =>
       <OutfitItem key={product.id + 1}
                   id={product.id}

@@ -11,7 +11,7 @@ var StarRating = (props) => {
                 filledStar = starNumber.value === 1 ? <img key={starNumber.index} alt="work harder bro" src={'./img/filledStar.png'} className="indStar"></img> : filledStar;
                 return filledStar;
             })}
-            <a href="#FillMeInLater">Read all reviews</a>
+            <a href="#reviews">Read all reviews</a>
             
         </div>)
 }

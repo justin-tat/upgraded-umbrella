@@ -62,6 +62,8 @@ class Overview extends React.Component {
     })
   }
 
+  //Change to baseURL: 'http://100.24.25.169',
+
   getProductOverview(productID) {
     return axios({
       baseURL: 'http://localhost:3000',
