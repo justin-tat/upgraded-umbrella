@@ -1,8 +1,9 @@
 node_modules
 config.js
 coverage/
-client/dist/bundle.js
 *.pem
+login.sh
+client/dist/bundle
 
 
 ##API Keys ##

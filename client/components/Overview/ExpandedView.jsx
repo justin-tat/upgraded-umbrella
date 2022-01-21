@@ -18,7 +18,7 @@ var ExpandedView = (props) => {
                     : <Zoom img={props.photos[props.currPhotoIndex].url} zoomScale={2.5} zoom={props.zoom} dimensions={props.dimensions}/>
                 }
 
-                {props.currPhotoIndex !== props.photos.length - 1 && props.zoomedIn === false
+                {props.currPhotoIndex !== props.allPhotos.length - 1 && props.zoomedIn === false
                     ? <img src="./img/rightArrow.png" 
                     id="expandedRightArrow" 
                     onClick={props.arrowClick}></img>

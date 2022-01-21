@@ -10,12 +10,12 @@ class App extends React.Component {
     super(props);
     this.state = {
       id: 59556,
-      addToCarousel: false,
+      shouldAddToCarousel: {},
       outfitCarousel: []
 
     }
     this.changeId = this.changeId.bind(this);
-    this.addToCarousel = this.addToCarousel.bind(this);
+    this.appAddToCarousel = this.appAddToCarousel.bind(this);
     // this.starClickHandler = this.startClickHandler.bind(this);
 
   }
@@ -31,23 +31,27 @@ class App extends React.Component {
     })
   }
 
-  addToCarousel() {
+  appAddToCarousel(thingToBeAdded) {
+    console.log("Inside appAddToCarousel ", thingToBeAdded);
     this.setState({
-      addToCarousel: !this.state.addToCarousel
+      shouldAddToCarousel: thingToBeAdded
     });
   }
 
   changeId(event) {
+    console.log("Inside changeId of app",event);
     this.setState({
-      id: event.target.value,
+      id: event,
+    }, () => {
+      console.log("Successfully changed state of App to ", this.state.id);
     });
   }
 
   render() {
     return (
       <div>
-        <Overview productId={this.state.id} addToCarousel={this.addToCarousel} />
-        <Comparison productId={this.state.id} changeId={this.changeId} addToCarousel={this.addToCarousel}/>
+        <Overview productId={this.state.id} appAddToCarousel={this.appAddToCarousel} />
+        <Comparison productId={this.state.id} changeId={this.changeId} addToCarousel={this.appAddToCarousel}/>
         <Reviews productId={this.state.id}/>
       </div>
     )
