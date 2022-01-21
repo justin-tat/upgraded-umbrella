@@ -8,3 +8,4 @@ client/dist/bundle.js
 ##API Keys ##
 client/config/apiKey.js
 AtelierOverview.pem
+envVars.env
