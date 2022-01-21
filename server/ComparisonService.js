@@ -1,5 +1,6 @@
 const axios = require('axios');
-const { API_TOKEN } = require('../config.js');
+const { API_TOKEN } = process.env.API_KEY || require('../config.js');
+
 
 const createProductObj = (productId) => {
   return axios({
