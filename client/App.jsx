@@ -12,7 +12,6 @@ class App extends React.Component {
       id: 59556,
       shouldAddToCarousel: {},
       outfitCarousel: []
-
     }
     this.changeId = this.changeId.bind(this);
     this.appAddToCarousel = this.appAddToCarousel.bind(this);

@@ -49,10 +49,20 @@ div {
                 width: 240px;
             }
         }
+
+        .product-breakdown {
+            display: flex;
+            flex-direction: column;
+            margin-top: 50px;
+
+            .product-breakdown-bar {
+                width: 300px;
+            }
+        }
     }
 
     .reviewList {
-        grid-row: 1/4;
+        grid-row: 1/3;
 
         .review-tile {
             border-bottom: black;
@@ -97,6 +107,48 @@ div {
                     text-decoration: underline;
                     margin: 0px 5px 0px 5px;
                 }
+            }
+        }
+    }
+
+    .write-review-modal {
+        grid-row: 3/4;
+
+        menu {
+            justify-content: left;
+            margin: 0px;
+            padding: 0px;
+
+            #write-review {
+                font-size: large;
+                font-family: sans-serif;
+                font-weight: lighter;
+                border-style:solid;
+                background-color:whitesmoke;
+                height: 100px;
+                width: 100%;
+            }
+        }
+
+        #write-review-dialog {
+
+            div{
+                margin-bottom: 10px;
+            }
+
+            label {
+                margin-right: 5px;
+                margin-left: 10px;
+            }
+
+            textarea {
+                margin-left: 10px;
+                width: 100%;
+            }
+
+            .write-review-title {
+                margin-bottom: 10px;
+                font-weight: bold;
             }
         }
     }

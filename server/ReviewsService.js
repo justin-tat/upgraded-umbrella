@@ -11,6 +11,17 @@ const getAllReviews = (productId) => {
   });
 }
 
+const getAllReviewsMeta = (productId) => {
+  return axios({
+    baseURL: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp',
+    url: '/reviews/meta',
+    method: 'get',
+    headers: {'Authorization' : API_TOKEN },
+    params: { product_id: productId }
+  });
+}
+
 module.exports = {
   getAllReviews,
+  getAllReviewsMeta
 }
