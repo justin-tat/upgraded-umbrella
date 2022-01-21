@@ -3,7 +3,7 @@ config.js
 coverage/
 *.pem
 login.sh
-client/dist/bundle
+client/dist/bundle.js
 
 
 ##API Keys ##

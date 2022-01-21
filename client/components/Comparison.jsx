@@ -64,9 +64,9 @@ fillCarousels (productId) {
       if ( index === relatedProductIds.length - 1) {
         this.createProductObj(relatedProductIds[index], (err, relatedProductObj) => {
           relatedProductObjs.push(relatedProductObj);
-          console.log('current product data: ', productObj);
-          console.log('current related products data: ', relatedProductObjs);
-          console.log('current outfit in local: ', storage);
+          // console.log('current product data: ', productObj);
+          // console.log('current related products data: ', relatedProductObjs);
+          // console.log('current outfit in local: ', storage);
           this.setState({
             productData: productObj,
             related: relatedProductObjs,

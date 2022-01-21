@@ -6,7 +6,6 @@ import Quarter from './ComparisonImages/quarterStar.png';
 import Empty from './ComparisonImages/emptyStar.png';
 
 const Ratings = (props) => {
-  console.log('Ratings props: ', props);
   if (props.ratings === undefined) {
     return (
       <div className='rating'></div>
