@@ -37,9 +37,10 @@ class App extends React.Component {
     });
   }
 
-  changeId(event) {
+  changeId(productId) {
+    console.log('this is the new product id: ', productId);
     this.setState({
-      id: event.target.value,
+      id: productId,
     });
   }
 

@@ -10,11 +10,12 @@ class Comparison extends React.Component {
       outfit: [],
       related: [],
       productId: props.productId || 59554,
-      productData: {}
+      productData: {},
+      changeId: this.props.changeId
       }
     this.addOutfitItem = this.addOutfitItem.bind(this);
     this.removeOutfitItem = this.removeOutfitItem.bind(this);
-    this.changeId = this.changeId.bind(this);
+    // this.changeId = this.changeId.bind(this);
   }
 
 componentDidMount() {
@@ -68,18 +69,6 @@ fillCarousels (productId) {
       }
     }
   });
-  // for (var relatedId of this.state.productData.related)
-  //   this.createProductObj(relatedId, (err, relatedProductObj) => {
-  //     if (err) {
-  //       console.log('ERROR creating relatedProductObj: ', err);
-  //     } else {
-  //       relatedProducts = this.state.related;
-  //       relatedProducts.push(relatedProductObj);
-  //       this.setState({
-  //         related: relatedProducts
-  //       });
-  //     }
-  //   });
 }
 
 
@@ -178,13 +167,13 @@ createProductObj (productId, cb) {
     });
   }
 
-  changeId (productId) {
-    console.log('new product id: ', productId);
-    this.setState ({
-      productId: productId
-    });
-    this.fillCarousels(productId);
-  }
+  // changeId (productId) {
+  //   console.log('new product id: ', productId);
+  //   this.setState ({
+  //     productId: productId
+  //   });
+  //   this.fillCarousels(productId);
+  // }
 
   render() {
     return(
@@ -192,7 +181,7 @@ createProductObj (productId, cb) {
         <div className='relatedTitle' >RELATED PRODUCTS</div>
         <Related  relatedProducts={this.state.related}
                   currProductData={this.state.productData}
-                  changeId={this.changeId} />
+                  changeId={this.state.changeId} />
         <div className='outfitTitle'>YOUR OUTFIT</div>
         <Outfit outfit={this.state.outfit}
                 addOutfitItem={this.addOutfitItem}

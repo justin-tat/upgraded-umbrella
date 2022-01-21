@@ -10,7 +10,7 @@ const getStarReviews = (productId) => {
         params: { product_id: productId }
     })
     .then((results) => {
-        //console.log('Testing inside of overview Service:', results);
+        // console.log('Testing inside of overview Service:', results);
         return results;
     })
     .catch(err => {
