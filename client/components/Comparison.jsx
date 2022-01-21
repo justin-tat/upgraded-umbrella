@@ -59,7 +59,7 @@ fillCarousels (productId) {
           this.setState({
             productData: productObj,
             related: relatedProductObjs,
-            outfit: storage
+            outfit: storage || []
           });
         })
       } else {
@@ -181,7 +181,7 @@ createProductObj (productId, cb) {
         <div className='relatedTitle' >RELATED PRODUCTS</div>
         <Related  relatedProducts={this.state.related}
                   currProductData={this.state.productData}
-                  changeId={this.state.changeId} />
+                  changeId={this.props.changeId} />
         <div className='outfitTitle'>YOUR OUTFIT</div>
         <Outfit outfit={this.state.outfit}
                 addOutfitItem={this.addOutfitItem}

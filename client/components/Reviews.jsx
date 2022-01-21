@@ -8,14 +8,13 @@ class Reviews extends React.Component {
     super(props);
 
     this.state = {
-      productId: 59557,
       reviews: [],
       averageRating: null,
     }
   }
 
   componentDidMount() {
-    this.getReviews(this.state.productId);
+    this.getReviews(this.props.productId);
   }
 
   getAverageRating(reviews) {
@@ -119,7 +118,7 @@ class Reviews extends React.Component {
 
   render() {
     return(<>
-      <h2>Ratings &amp; Reviews</h2>
+      <div>RATINGS &amp; REVIEWS</div>
       <section id='reviews'>
         <ReviewSummary
           reviews={this.state.reviews}

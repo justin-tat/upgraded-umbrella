@@ -74,9 +74,15 @@ class StyleInfo extends React.Component {
     }
 
     toggleFavorite() {
+        console.log("productId", this.props.productId);
         this.setState({
             favorited: !this.state.favorited
-        });
+        }, () => {
+            this.props.addToCarousel({
+                productID: this.props.productId,
+                status: this.state.favorited === true ? "favorited" : "unfavorited"
+            });
+        })
 
     }
 
@@ -156,8 +162,13 @@ class StyleInfo extends React.Component {
                 </div>
                 <StyleList styles={this.state.styleRows} updateStyle={this.props.updateStyle} currStyle={this.props.currStyle}/>
                 <CartSpecifics availableSizes={this.state.availableSizes} updateSize={this.updateSize} size={this.state.size} quantity={this.state.quantity}/>
-                <AddToCart updateCart={this.updateCart} addToCarousel={this.props.addToCarousel} toggleFavorite={this.toggleFavorite} favorited={this.state.favorited}/>
-                
+                <AddToCart 
+                    updateCart={this.updateCart} 
+                    addToCarousel={this.props.addToCarousel} 
+                    toggleFavorite={this.toggleFavorite} 
+                    favorited={this.state.favorited} 
+                />
+                    
             </div>
         )
     }

@@ -20,7 +20,9 @@ class Overview extends React.Component {
       zoom: 'default',
       zoomedIn: false,
       dimensions: {},
-      expViewImg: {}
+      expViewImg: {},
+      allPhotos: exampleData.styles.results[0].photos,
+      photosIndices: {start: 0, end: 0}
     };
     this.photoClick = this.photoClick.bind(this);
     this.arrowClick = this.arrowClick.bind(this);
@@ -28,6 +30,7 @@ class Overview extends React.Component {
     this.zoom = this.zoom.bind(this);
     this.onImgLoad = this.onImgLoad.bind(this);
     this.revertToExpanded = this.revertToExpanded.bind(this);
+    this.parsePhotos = this.parsePhotos.bind(this);
   }
 
   componentDidMount() {
@@ -38,6 +41,18 @@ class Overview extends React.Component {
     .catch(err => {
       console.log('Failed in ComponentDidMount of Overview.jsx', err);
     })
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.productId !== this.props.productId) {
+      this.getOverview(this.props.productId)
+      .then(() => {
+        console.log('Successfully set state for Overview from Atelier Data inside ComponentDidUpdate');
+      })
+      .catch(err => {
+        console.log('Failed in ComponentDidMount of Overview.jsx', err);
+      })
+    }
   }
 
   //this.setState with prev state and previous props
@@ -55,6 +70,7 @@ class Overview extends React.Component {
         productOverview: obj.productOverview,
         results: obj.results,
         photos: obj.photos,
+        allPhotos: obj.allPhotos,
         currStyle: 0,
         zoom: 'default',
         reviewMetadata: obj.reviewMetadata
@@ -87,8 +103,11 @@ class Overview extends React.Component {
       params: { productID: productID }
     }).then(result => {
       let styles = result.data;
+      console.log("All photos", styles.results[0].photos);
       obj["results"] = styles.results;
-      obj["photos"] = styles.results[0].photos;
+      obj["allPhotos"] = styles.results[0].photos;
+      //obj["photos"] = this.parsePhotos(styles.results[0].photos);
+      obj["photos"] = this.parsePhotos(obj["allPhotos"]);
       return obj;
     })
     .catch(err => {
@@ -123,7 +142,15 @@ class Overview extends React.Component {
         zoomedIn: !this.state.zoomedIn
       });
     }
+  }
 
+  parsePhotos(arr, modifier) {
+    var indexCorrecter = modifier === undefined ? 0 : modifier;
+    var endIndex = Math.min(arr.length, this.state.currPhotoIndex + 7);
+    console.log("End Index of Parse Photos", endIndex);
+    var startIndex = Math.max(endIndex - 7, 0);
+    console.log("Start Index of Parse Photos", startIndex);
+    return (arr.slice(startIndex, endIndex));
   }
 
   revertToExpanded(e) {
@@ -199,14 +226,19 @@ class Overview extends React.Component {
   arrowClick(event) {
     event.preventDefault();
     var identity = event.target.getAttribute('src');
-
+    var newDisplayPhotos = [];
+    console.log("allPhotos from arrowClick", this.state.allPhotos);
     if (identity === './img/photoIndexUpArrow.png' || identity === './img/leftArrow.png') {
+      newDisplayPhotos = this.parsePhotos(this.state.allPhotos, -1);
       this.setState({
-        currPhotoIndex: this.state.currPhotoIndex - 1
+        currPhotoIndex: this.state.currPhotoIndex - 1,
+        photos: newDisplayPhotos
       });
     } else {
+      newDisplayPhotos = this.parsePhotos(this.state.allPhotos, 1);
       this.setState({
-        currPhotoIndex: this.state.currPhotoIndex + 1
+        currPhotoIndex: this.state.currPhotoIndex + 1,
+        photos: newDisplayPhotos
       });
 
     }
@@ -230,7 +262,9 @@ class Overview extends React.Component {
             updateStyle={this.updateStyle}
             zoom={this.zoom}
             hide={this.state.hide}
-            addToCarousel={this.props.addToCarousel}
+            productId = {this.props.productId}
+            addToCarousel={this.props.appAddToCarousel}
+            allPhotos = {this.state.allPhotos.length}
             />
           : <div></div>
         }
@@ -255,7 +289,10 @@ class Overview extends React.Component {
               dimensions={this.state.dimensions}
               expViewImg = {this.state.expViewImg}
               revertToExpanded = {this.revertToExpanded}
-              addToCarousel={this.props.addToCarousel}/>
+              productId = {this.props.productId}
+              addToCarousel={this.props.appAddToCarousel}
+              allPhotos = {this.state.allPhotos.length}
+              />
           : <div></div>
         }
         <div id="productFeatures">
