@@ -15,6 +15,7 @@ class App extends React.Component {
     }
     this.changeId = this.changeId.bind(this);
     this.appAddToCarousel = this.appAddToCarousel.bind(this);
+    this.removeFromCarousel = this.removeFromCarousel.bind(this);
     // this.starClickHandler = this.startClickHandler.bind(this);
 
   }
@@ -26,7 +27,7 @@ class App extends React.Component {
 
   removeFromCarousel(){
     this.setState({
-      addToCarousel: false
+      shouldAddToCarousel: {}
     })
   }
 
@@ -50,7 +51,7 @@ class App extends React.Component {
     return (
       <div>
         <Overview productId={this.state.id} appAddToCarousel={this.appAddToCarousel} />
-        <Comparison productId={this.state.id} changeId={this.changeId} addToCarousel={this.appAddToCarousel}/>
+        <Comparison productId={this.state.id} changeId={this.changeId} shouldAddToCarousel={this.state.shouldAddToCarousel} removeFromCarousel={this.removeFromCarousel}/>
         <Reviews productId={this.state.id}/>
       </div>
     )

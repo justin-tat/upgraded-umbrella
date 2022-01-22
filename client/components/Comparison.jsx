@@ -33,6 +33,14 @@ componentDidUpdate(prevProps) {
     this.fillCarousels(this.props.productId)
     console.log('Successfully set state for Comparison from Atelier Data inside ComponentDidUpdate');
   }
+  if (this.props.shouldAddToCarousel.productID) {
+    console.log(`Item: ${this.props.shouldAddToCarousel.productID} Favorited!`);
+    var productId = this.props.shouldAddToCarousel.productID;
+    this.createProductObj(productId, (err, productObj) => {
+      this.addOutfitItem(productObj);
+    })
+    this.props.removeFromCarousel();
+  }
 }
 
 checkLocalStorage (cb) {
