@@ -43,20 +43,12 @@ app.post('/reviews', (req, res) => {
   let name = req.query.name;
   let email = req.query.email;
 
-  console.log(res);
-
-  console.log(typeof productId);
-  console.log(typeof rating);
-  console.log(summary);
-  console.log(body);
-  console.log(typeof recommend);
-  console.log(name);
-  console.log(email);
-
   addReview(productId, rating, summary, body, recommend, name, email)
     .then(result => {
+      console.log(result);
       res.status(201);
     }).catch(err => {
+      console.log(err);
       res.status(404).send(err);
     })
 })

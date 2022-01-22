@@ -164,7 +164,7 @@ class Reviews extends React.Component {
   }
 
   writeReviewSubmitBtnClick(event) {
-    let productId = 59553;
+    let productId = this.props.productId;
     let rating = document.getElementById('overall-rating').value;
     let recommendYes = document.getElementById('yes-recommend').checked; //on or off
     let recommendNo = document.getElementById('no-recommend').checked;
