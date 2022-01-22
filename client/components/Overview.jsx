@@ -3,6 +3,7 @@ import axios from 'axios';
 import DefaultView from './Overview/DefaultView.jsx';
 import ExpandedView from './Overview/ExpandedView.jsx';
 import SellingPoints from './Overview/SellingPoints.jsx';
+import ThumbnailList from './Overview/ThumbnailList.jsx';
 import exampleData from '../exampleData/OverviewData.js';
 
 //Create mock data structure instead of using exampleData
@@ -266,7 +267,15 @@ class Overview extends React.Component {
   render() {
     return (
       <div id="overview">
-
+        {this.state.zoom === 'default'
+        ? <ThumbnailList photos={this.state.photos}
+            photoClick={this.photoClick}
+            arrowClick={this.arrowClick}
+            currPhotoIndex={this.state.currPhotoIndex}
+            allPhotos={this.state.allPhotos}
+          />
+        : <div></div> 
+        }
         {this.state.zoom === 'default'
           ? <DefaultView
             results={this.state.results}
@@ -286,6 +295,7 @@ class Overview extends React.Component {
             />
           : <div></div>
         }
+
         {this.state.zoom === 'expanded'
           ?
             <ExpandedView

@@ -32,14 +32,12 @@ class App extends React.Component {
   }
 
   appAddToCarousel(thingToBeAdded) {
-    console.log("Inside appAddToCarousel ", thingToBeAdded);
     this.setState({
       shouldAddToCarousel: thingToBeAdded
     });
   }
 
   changeId(event) {
-    console.log("Inside changeId of app",event);
     this.setState({
       id: event,
     }, () => {

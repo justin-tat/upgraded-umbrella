@@ -1,6 +1,6 @@
 const express = require('express');
 const { getAllReviews, getAllReviewsMeta, addReview } = require('./ReviewsService.js');
-const { getStarReviews, getProductOverview, getStyles } = require('./OverviewService');
+const { getStarReviews, getProductOverview, getStyles, getCart, postCart } = require('./OverviewService');
 const { createProductObj, addRatingsData, addRelatedData, addImageData } = require('./ComparisonService');
 
 const app = express();
@@ -88,6 +88,30 @@ app.get('/productOverview', (req, res) => {
     res.status(404).send(err);
   })
 });
+
+app.get('/cart', (req, res) => {
+  var productId = req.query.productID;
+  //console.log("ProductID form index.js", productId);
+  getCart().then(data => {
+    res.send(data.data);
+  })
+  .catch(err => {
+    console.log('Failed inside of getCart of index.js', err);
+  })
+});
+
+app.post('/postToCart', (req, res) => {
+  var skuID = req.query.skuID;
+  var numItems = req.query.numItems;
+  postCart(skuID, numItems)
+  .then(() => {
+    res.status(200).send();
+  })
+  .catch(err => {
+    console.log('Failed inside of postToCart of index.js', err);
+  })
+
+})
 
 //Comparison API Requests
 app.get('/productData', (req, res) => {
