@@ -15,7 +15,7 @@ class ReviewList extends React.Component {
       </select>
       {
         this.props.reviews.map(review => {
-          return <ReviewTile key={review.review_id} review={review}/>
+          return <ReviewTile key={review.review_id} review={review} onHelpfulClick={this.props.onHelpfulClick} onReportClick={this.props.onReportClick}/>
         })
       }
     </div>)

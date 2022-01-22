@@ -1,6 +1,6 @@
 const express = require('express');
-const { getAllReviews, getAllReviewsMeta, addReview } = require('./ReviewsService.js');
 const { getStarReviews, getProductOverview, getStyles, getCart, postCart } = require('./OverviewService');
+const { getAllReviews, getAllReviewsMeta, addReview, markHelpful, reportReview } = require('./ReviewsService.js');
 const { createProductObj, addRatingsData, addRelatedData, addImageData } = require('./ComparisonService');
 
 const app = express();
@@ -34,23 +34,46 @@ app.get('/reviews/meta', (req, res) => {
   })
 })
 
-app.post('/reviews', (req, res) => {
-  let productId = Number (req.query.productId);
-  let rating = Number (req.query.rating);
-  let summary = req.query.summary;
-  let body = req.query.body;
-  let recommend = Boolean (req.query.recommend);
-  let name = req.query.name;
-  let email = req.query.email;
+app.post('/reviews', express.urlencoded({ extended: true }), express.json(), (req, res) => {
+  let productId = Number (req.body.productId);
+  let rating = Number (req.body.rating);
+  let summary = req.body.summary;
+  let body = req.body.body;
+  let recommend = Boolean (req.body.recommend);
+  let name = req.body.name;
+  let email = req.body.email;
 
   addReview(productId, rating, summary, body, recommend, name, email)
     .then(result => {
-      console.log(result);
-      res.status(201);
+      res.status(201).send('Successfully added review');
     }).catch(err => {
-      console.log(err);
+      console.log('Failed to add review', err);
       res.status(404).send(err);
     })
+})
+
+app.put('/reviews/:review_id/helpful', express.urlencoded({ extended: true }), express.json(), (req, res) => {
+  let reviewId = Number(req.params.review_id);
+  markHelpful(reviewId)
+    .then(result => {
+      console.log(`Successfully marked review ${reviewId} as helpful`);
+      res.status(200);
+    }).catch(err => {
+      console.log(`Failed to mark review ${reviewId} as helpful`, err);
+      res.status(400);
+    });
+})
+
+app.put('/reviews/:review_id/report', (req, res) => {
+  let reviewId = Number(req.params.review_id);
+  reportReview(reviewId)
+    .then(result => {
+      console.log(`Successfully reported review ${reviewId}`);
+      res.status(200);
+    }).catch(err => {
+      console.log(`Failed to report review ${reviewId}`, err);
+      res.status(400);
+    });
 })
 
 //Overview API Requests
