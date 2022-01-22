@@ -68,10 +68,10 @@ class StyleInfo extends React.Component {
         
     }
 
-    //Change to baseURL: 'http://100.24.25.169',
+    //Change to baseURL: 'http://localhost:3000',
     getFromCart() {
         return axios({
-            baseURL: 'http://100.24.25.169',
+            baseURL: 'http://localhost:3000',
             url: '/cart',
             method: 'get',
         }).then(result => {
@@ -92,7 +92,7 @@ class StyleInfo extends React.Component {
         var numItems = parseInt(sizeSelector.options[sizeSelector.selectedIndex].value)
         skuID = parseInt(skuID);
         return axios({
-            baseURL: 'http://100.24.25.169',
+            baseURL: 'http://localhost:3000',
             url: '/postToCart',
             method: 'post',
             params: {skuID: skuID, numItems: numItems}
