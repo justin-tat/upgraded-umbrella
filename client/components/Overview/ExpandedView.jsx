@@ -9,20 +9,20 @@ var ExpandedView = (props) => {
                 <img src="./img/expandedToDefault.png" 
                     className="revertToExpanded" 
                     onClick={props.revertToExpanded}></img>
-                {props.currPhotoIndex !== 0 && props.zoomedIn === false
-                    ? <img src="./img/leftArrow.png" id="expandedLeftArrow" onClick={props.arrowClick}></img>
-                    : <div></div>
+                {(props.photos[0].url === props.allPhotos[0].url && props.currPhotoIndex === 0) || props.zoomedIn === true
+                    ? <div></div>
+                    : <img src="./img/leftArrow.png" id="expandedLeftArrow" onClick={props.arrowClick}></img>
                 }
                 {props.zoomedIn === false
                     ? <img id="expandedImg" onLoad={props.onImgLoad} src={props.photos[props.currPhotoIndex].url} onClick={props.zoom} style={props.expViewImg} ></img>
                     : <Zoom img={props.photos[props.currPhotoIndex].url} zoomScale={2.5} zoom={props.zoom} dimensions={props.dimensions}/>
                 }
 
-                {props.currPhotoIndex !== props.allPhotos.length - 1 && props.zoomedIn === false
-                    ? <img src="./img/rightArrow.png" 
+                {(props.photos[props.photos.length - 1].url === props.allPhotos[props.allPhotos.length - 1].url && props.currPhotoIndex === props.photos.length - 1) || props.zoomedIn === true
+                    ? <div></div>
+                    : <img src="./img/rightArrow.png" 
                     id="expandedRightArrow" 
-                    onClick={props.arrowClick}></img>
-                    : <div></div>}
+                    onClick={props.arrowClick}></img>}
             </div>
             <div id="productInfo">
                 <ProductInfo 
