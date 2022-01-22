@@ -185,9 +185,6 @@ app.get('/addImageData', (req, res) => {
   });
 });
 
-
-
-
 app.listen(port, () => {
   console.log(`Upgraded Umbrella app listening at http://localhost:${port}`);
 });

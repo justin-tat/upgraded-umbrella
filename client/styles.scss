@@ -89,6 +89,7 @@ div {
 
         .review-tile {
             border-bottom: black;
+            word-wrap: break-word;
 
             .rating-display {
                 display: flex;
@@ -180,7 +181,7 @@ div {
 }
 
 #overview{
-    width: 100em;
+    width: 100%;
     height: 50em;
     position: relative;
 
