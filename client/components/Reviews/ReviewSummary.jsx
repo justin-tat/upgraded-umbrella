@@ -8,49 +8,39 @@ class ReviewSummary extends React.Component {
     super(props);
   }
 
-  getRecommendPercent(reviews) {
-    let recommendCount = 0;
-    for (let review of reviews) {
-      if (review.recommend) {
-        recommendCount++;
-      }
+  getRecommendPercent(reviewsMeta) {
+    let recommendPercent = 0;
+    if (reviewsMeta !== null) {
+      let recommendCount = Number(reviewsMeta.recommended.true);
+      let totalCount = Number(reviewsMeta.recommended.false) + Number(reviewsMeta.recommended.true);
+      recommendPercent = (recommendCount / totalCount) * 100;
     }
-    let recommendPercent = (recommendCount / reviews.length) * 100;
-    return recommendPercent;
+    return String(Math.round(recommendPercent));
   }
 
-  getRatingBreakDown(reviews) {
-    let ratingBreakDown = {
-      '5': 0,
-      '4': 0,
-      '3': 0,
-      '2': 0,
-      '1': 0
-    }
-
-    for (let review of reviews) {
-      switch(review.rating) {
-        case 5:
-          ratingBreakDown['5']++;
-          break;
-        case 4:
-          ratingBreakDown['4']++;
-          break;
-        case 3:
-          ratingBreakDown['3']++;
-          break;
-        case 2:
-          ratingBreakDown['2']++;
-          break;
-        case 1:
-          ratingBreakDown['1']++;
-          break;
-        default:
-          console.log('Not a valid rating');
+  getNumReviews(reviewsMeta) {
+    let count = 0;
+    if (reviewsMeta !== null) {
+      for (let index in reviewsMeta.ratings) {
+        count += Number(reviewsMeta.ratings[index]);
       }
     }
+    return String(count);
+  }
 
-    return ratingBreakDown;
+  getCharacteristics() {
+    let characteristicsArray = [];
+    if (this.props.reviewsMeta !== null) {
+      let characteristics = this.props.reviewsMeta.characteristics;
+      for (let name in characteristics) {
+        let characteristic = {
+          'name': name,
+          'value': characteristics[name]['value']
+        }
+        characteristicsArray.push(characteristic);
+      }
+    }
+    return characteristicsArray;
   }
 
   render() {
@@ -61,9 +51,17 @@ class ReviewSummary extends React.Component {
           return <StarRating key={index} starFillStatus={starFillStatus}/>
         })
       }</div>
-      <div className='recommend-percent'>{this.getRecommendPercent(this.props.reviews)}% of reviews recommend this product</div>
-      <RatingBreakdown reviewsMeta={this.props.reviewsMeta} ratingBreakDown={this.getRatingBreakDown(this.props.reviews)} numReviews={this.props.reviews.length}/>
-      <ProductBreakdown reviewsMeta={this.props.reviewsMeta}/>
+      <div className='recommend-percent'>{this.getRecommendPercent(this.props.reviewsMeta)}% of reviews recommend this product</div>
+      <RatingBreakdown
+        reviewsMeta={this.props.reviewsMeta}
+        numReviews={this.getNumReviews(this.props.reviewsMeta)}
+      />
+      <p></p>
+      <div>
+        {this.getCharacteristics().map((characteristic, index) => {
+          return <ProductBreakdown key={index} name={characteristic.name} value={characteristic.value}/>
+        })}
+      </div>
     </div>)}
 }
 

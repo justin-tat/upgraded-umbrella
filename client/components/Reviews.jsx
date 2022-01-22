@@ -12,10 +12,12 @@ class Reviews extends React.Component {
       reviews: [],
       reviewsMeta: null
     }
-
+    this.getReviews = this.getReviews.bind(this);
     this.sort = this.sort.bind(this);
     this.writeReviewBtnClick = this.writeReviewBtnClick.bind(this);
     this.writeReviewSubmitBtnClick = this.writeReviewSubmitBtnClick.bind(this);
+    this.onHelpfulClick = this.onHelpfulClick.bind(this);
+    this.onReportClick = this.onReportClick.bind(this);
   }
 
   componentDidMount() {
@@ -176,7 +178,7 @@ class Reviews extends React.Component {
       baseURL: 'http://localhost:3000',
       url: '/reviews',
       method: 'post',
-      params: {
+      data: {
         productId: productId,
         rating: rating,
         summary: summary,
@@ -186,9 +188,32 @@ class Reviews extends React.Component {
         email: email,
       }
     }).then(result => {
-      console.log('Successfully added review');
+      console.log(`Successfully added review for ${productId}`, result);
+      this.getReviews(productId);
     }).catch(err => {
       console.log(`Error submitting review for ${productId}`, err);
+    })
+  }
+
+  onHelpfulClick(event) {
+    let reviewId = Number(event.target.getAttribute('value'));
+    axios({
+      baseURL: 'http://localhost:3000',
+      url: `/reviews/${reviewId}/helpful`,
+      method: 'put'
+    }).catch(err => {
+      console.log(`Error marking review ${reviewId} as helpful`)
+    })
+  }
+
+  onReportClick(event) {
+    let reviewId = Number(event.target.getAttribute('value'));
+    axios({
+      baseURL: 'http://localhost:3000',
+      url: `/reviews/${reviewId}/report`,
+      method: 'put'
+    }).catch(err => {
+      console.log(`Error reporting review ${reviewId}`)
     })
   }
 
@@ -199,7 +224,6 @@ class Reviews extends React.Component {
         <ReviewSummary
           reviews={this.state.reviews}
           reviewsMeta={this.state.reviewsMeta}
-          // ratingBreakDown={this.getRatingsBreakDown(this.state.reviewsMeta)}
           averageRating={this.getAverageRating(this.state.reviewsMeta)}
           starRatingArray={this.createStarRatingArray(this.getAverageRating(this.state.reviewsMeta))}
         />
@@ -207,8 +231,14 @@ class Reviews extends React.Component {
           reviews={this.state.reviews}
           sort={this.sort}
           sortOption={this.state.sortOption}
+          onHelpfulClick={this.onHelpfulClick}
+          onReportClick={this.onReportClick}
         />
-        <WriteReviewModal writeReviewBtnClick={this.writeReviewBtnClick} writeReviewSubmitBtnClick={this.writeReviewSubmitBtnClick}/>
+        <WriteReviewModal
+          writeReviewBtnClick={this.writeReviewBtnClick}
+          writeReviewSubmitBtnClick={this.writeReviewSubmitBtnClick}
+          getReviews={this.getReviews}
+        />
       </section>
     </>)
   }

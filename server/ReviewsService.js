@@ -58,8 +58,28 @@ const addReview = (productId, rating, summary, body, recommend, name, email) => 
   })
 }
 
+const markHelpful = (reviewId) => {
+  return axios({
+    baseURL: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp',
+    url: `/reviews/${reviewId}/helpful`,
+    method: 'put',
+    headers: {'Authorization' : API_TOKEN },
+  });
+}
+
+const reportReview = (reviewId) => {
+  return axios({
+    baseURL: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp',
+    url: `/reviews/${reviewId}/report`,
+    method: 'put',
+    headers: {'Authorization' : API_TOKEN },
+  });
+}
+
 module.exports = {
   getAllReviews,
   getAllReviewsMeta,
-  addReview
+  addReview,
+  markHelpful,
+  reportReview
 }

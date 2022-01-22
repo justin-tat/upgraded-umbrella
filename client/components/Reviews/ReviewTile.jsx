@@ -37,7 +37,10 @@ class ReviewTile extends React.Component {
         </div>
         <div className='review-title'>{this.props.review.summary}</div>
         <div className='review-body'>{this.props.review.body}</div>
-        <div className='helpful'>Helpful?<div className='helpful-clickable'>Yes({this.props.review.helpfulness})</div>|<div className='helpful-clickable'>Report</div></div>
+        <div className='helpful'>Helpful?
+          <div value={this.props.review.review_id} onClick={this.props.onHelpfulClick} className='helpful-clickable'>Yes({this.props.review.helpfulness})</div>|
+          <div value={this.props.review.review_id} onClick={this.props.onReportClick} className='helpful-clickable'>Report</div>
+        </div>
         <hr></hr>
     </div>)
   }
