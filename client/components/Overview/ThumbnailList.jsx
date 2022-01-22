@@ -4,9 +4,9 @@ var ThumbnailList = (props) => {
     return(
         <div id="thumbnailList">
             {
-                props.currPhotoIndex !== 0 
-                    ? <div> <img src="./img/photoIndexUpArrow.png" key="upArrow" id="upPhotoArrow" onClick={props.arrowClick}></img> </div>
-                    : <div></div>
+                props.photos[0].url === props.allPhotos[0].url && props.currPhotoIndex === 0
+                    ? <div></div>
+                    : <div> <img src="./img/photoIndexUpArrow.png" key="upArrow" id="upPhotoArrow" onClick={props.arrowClick}></img> </div>
             }
             {props.photos.map((urls, i) => {
                 if(i === props.currPhotoIndex) {
@@ -22,7 +22,7 @@ var ThumbnailList = (props) => {
                 }
             )}
             {
-                props.currPhotoIndex === props.photos.length - 1
+                props.photos[props.photos.length - 1].url === props.allPhotos[props.allPhotos.length - 1].url && props.currPhotoIndex === props.photos.length - 1
                     ? <div></div>
                     : <div> <img src="./img/photoIndexDownArrow.png" key="downArrow" id="downPhotoArrow" onClick={props.arrowClick}></img> </div>
             }

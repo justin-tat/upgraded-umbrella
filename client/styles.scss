@@ -381,6 +381,16 @@ div {
     height: 100%;
 }
 
+.thumbnail {
+    position: absolute;
+    flex: 17%;
+    max-height: 60px;
+    width: auto;
+    height: auto;
+    border-style: solid;
+    border-color: white;
+}
+
 #leftArrow {
     position: absolute;
     max-width: 30px;
@@ -423,16 +433,6 @@ div {
     top: 10px;
     max-width: 50px;
     height: auto;
-}
-
-.thumbnail {
-    position: absolute;
-    flex: 17%;
-    max-height: 60px;
-    width: auto;
-    height: auto;
-    border-style: solid;
-    border-color: white;
 }
 
 #downPhotoArrow {

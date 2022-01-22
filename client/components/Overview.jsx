@@ -22,7 +22,8 @@ class Overview extends React.Component {
       dimensions: {},
       expViewImg: {},
       allPhotos: exampleData.styles.results[0].photos,
-      photosIndices: {start: 0, end: 0}
+      photosIndices: {start: 0, end: 0},
+      displayPhotosOffset: 0
     };
     this.photoClick = this.photoClick.bind(this);
     this.arrowClick = this.arrowClick.bind(this);
@@ -73,7 +74,8 @@ class Overview extends React.Component {
         allPhotos: obj.allPhotos,
         currStyle: 0,
         zoom: 'default',
-        reviewMetadata: obj.reviewMetadata
+        reviewMetadata: obj.reviewMetadata,
+        photosIndices: obj.photosIndices
       })
     })
   }
@@ -103,11 +105,12 @@ class Overview extends React.Component {
       params: { productID: productID }
     }).then(result => {
       let styles = result.data;
-      console.log("All photos", styles.results[0].photos);
       obj["results"] = styles.results;
       obj["allPhotos"] = styles.results[0].photos;
       //obj["photos"] = this.parsePhotos(styles.results[0].photos);
-      obj["photos"] = this.parsePhotos(obj["allPhotos"]);
+      var parsedPhotos = this.parsePhotos(obj["allPhotos"]);
+      obj["photos"] = parsedPhotos.photos;
+      obj["photosIndices"] = parsedPhotos.photosIndices;
       return obj;
     })
     .catch(err => {
@@ -144,13 +147,49 @@ class Overview extends React.Component {
     }
   }
 
-  parsePhotos(arr, modifier) {
-    var indexCorrecter = modifier === undefined ? 0 : modifier;
+  parsePhotos(arr) {
     var endIndex = Math.min(arr.length, this.state.currPhotoIndex + 7);
-    console.log("End Index of Parse Photos", endIndex);
     var startIndex = Math.max(endIndex - 7, 0);
-    console.log("Start Index of Parse Photos", startIndex);
-    return (arr.slice(startIndex, endIndex));
+    return ({
+      photos: arr.slice(startIndex, endIndex), 
+      photosIndices: {start: startIndex, end: endIndex}
+    });
+  }
+
+  arrowClick(event) {
+    event.preventDefault();
+    var identity = event.target.getAttribute('src');
+    var newDisplayPhotos = this.state.photos;
+    var displayLength = this.state.photos.length;
+    var maxLength = this.state.allPhotos.length;
+    var unchangedPhotoIndex = this.state.currPhotoIndex;
+    var modifier = 0;
+    var photosIndices = this.state.photosIndices;
+    var offset = this.state.offset;
+    if (identity === './img/photoIndexUpArrow.png' || identity === './img/leftArrow.png') {
+      if (unchangedPhotoIndex - 1 === -1 && this.state.photosIndices.start !== 0) {
+        photosIndices.end -= 1;
+        photosIndices.start -= 1;
+        offset -= 1;
+      } else {
+        modifier = -1;
+      }
+    } else {
+      if (unchangedPhotoIndex + 1 === displayLength && this.state.photosIndices.end !== maxLength) {
+        photosIndices.end += 1;
+        photosIndices.start += 1;
+        offset += 1;
+      } else {
+        modifier = 1;
+      }
+    }
+    newDisplayPhotos = this.state.allPhotos.slice(photosIndices.start, photosIndices.end);
+    this.setState({
+        currPhotoIndex: unchangedPhotoIndex + modifier,
+        photos: newDisplayPhotos,
+        photosIndices: photosIndices,
+        displayPhotosOffset: offset
+    });
   }
 
   revertToExpanded(e) {
@@ -211,44 +250,23 @@ class Overview extends React.Component {
     for (var i = 0; i < this.state.results.length; i++) {
       if (this.state.results[i].photos[0].thumbnail_url === url) {
         if (i !== this.state.currStyle) {
+          var parsedPhotos = this.parsePhotos(this.state.results[i].photos);
           this.setState({
             currStyle: i,
             currPhotoIndex: 0,
-            photos: this.state.results[i].photos
+            allPhotos: this.state.results[i].photos,
+            photos: parsedPhotos.photos,
+            photosIndices: parsedPhotos.photosIndices
           });
         }
       }
     }
   }
 
-
-
-  arrowClick(event) {
-    event.preventDefault();
-    var identity = event.target.getAttribute('src');
-    var newDisplayPhotos = [];
-    console.log("allPhotos from arrowClick", this.state.allPhotos);
-    if (identity === './img/photoIndexUpArrow.png' || identity === './img/leftArrow.png') {
-      newDisplayPhotos = this.parsePhotos(this.state.allPhotos, -1);
-      this.setState({
-        currPhotoIndex: this.state.currPhotoIndex - 1,
-        photos: newDisplayPhotos
-      });
-    } else {
-      newDisplayPhotos = this.parsePhotos(this.state.allPhotos, 1);
-      this.setState({
-        currPhotoIndex: this.state.currPhotoIndex + 1,
-        photos: newDisplayPhotos
-      });
-
-    }
-  }
-
-
-
   render() {
     return (
       <div id="overview">
+
         {this.state.zoom === 'default'
           ? <DefaultView
             results={this.state.results}
@@ -264,7 +282,7 @@ class Overview extends React.Component {
             hide={this.state.hide}
             productId = {this.props.productId}
             addToCarousel={this.props.appAddToCarousel}
-            allPhotos = {this.state.allPhotos.length}
+            allPhotos = {this.state.allPhotos}
             />
           : <div></div>
         }
@@ -291,7 +309,7 @@ class Overview extends React.Component {
               revertToExpanded = {this.revertToExpanded}
               productId = {this.props.productId}
               addToCarousel={this.props.appAddToCarousel}
-              allPhotos = {this.state.allPhotos.length}
+              allPhotos = {this.state.allPhotos}
               />
           : <div></div>
         }
