@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllReviews } = require('./ReviewsService.js');
+const { getAllReviews, getAllReviewsMeta, addReview } = require('./ReviewsService.js');
 const { getStarReviews, getProductOverview, getStyles } = require('./OverviewService');
 const { createProductObj, addRatingsData, addRelatedData, addImageData } = require('./ComparisonService');
 
@@ -7,12 +7,6 @@ const app = express();
 const port = 3000;
 
 app.use(express.static('./client/dist'));
-
-// app.get('/*', (req, res) => {
-//   console.log('req.method', req.method);
-//   console.log('req.url', req.url);
-//   res.sendStatus(200);
-// })
 
 app.get('/', (req, res) => {
   console.log('testing');
@@ -30,19 +24,33 @@ app.get('/reviews', (req, res) => {
   });
 })
 
-app.get('/averageRating', (req, res) => {
+app.get('/reviews/meta', (req, res) => {
   let productId = req.query.productId;
-  getAllReviews(productId).then(result => {
-    let reviews = result.data.results;
-    let rating = 0;
-    for (let review of reviews) {
-      rating += review.rating;
-    }
-    averageRating = rating / reviews.length;
-    res.send({ averageRating: averageRating });
+  getAllReviewsMeta(productId).then(result => {
+    let reviewsMeta = result.data;
+    res.send(reviewsMeta);
   }).catch(err => {
     res.status(404).send(err);
-  });
+  })
+})
+
+app.post('/reviews', (req, res) => {
+  let productId = Number (req.query.productId);
+  let rating = Number (req.query.rating);
+  let summary = req.query.summary;
+  let body = req.query.body;
+  let recommend = Boolean (req.query.recommend);
+  let name = req.query.name;
+  let email = req.query.email;
+
+  addReview(productId, rating, summary, body, recommend, name, email)
+    .then(result => {
+      console.log(result);
+      res.status(201);
+    }).catch(err => {
+      console.log(err);
+      res.status(404).send(err);
+    })
 })
 
 //Overview API Requests

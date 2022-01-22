@@ -1,6 +1,7 @@
 import React from 'react';
 import StarRating from './StarRating.jsx';
 import RatingBreakdown from './RatingBreakdown.jsx';
+import ProductBreakdown from './ProductBreakdown.jsx';
 
 class ReviewSummary extends React.Component {
   constructor(props) {
@@ -48,6 +49,7 @@ class ReviewSummary extends React.Component {
           console.log('Not a valid rating');
       }
     }
+
     return ratingBreakDown;
   }
 
@@ -60,7 +62,8 @@ class ReviewSummary extends React.Component {
         })
       }</div>
       <div className='recommend-percent'>{this.getRecommendPercent(this.props.reviews)}% of reviews recommend this product</div>
-      <RatingBreakdown ratingBreakDown={this.getRatingBreakDown(this.props.reviews)} numReviews={this.props.reviews.length}/>
+      <RatingBreakdown reviewsMeta={this.props.reviewsMeta} ratingBreakDown={this.getRatingBreakDown(this.props.reviews)} numReviews={this.props.reviews.length}/>
+      <ProductBreakdown reviewsMeta={this.props.reviewsMeta}/>
     </div>)}
 }
 

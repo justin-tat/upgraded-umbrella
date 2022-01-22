@@ -2,17 +2,15 @@ import React from 'react';
 
 var RatingBreakdown = (props) => {
   return(<>
+    <div>{(props.reviewsMeta !== null) ? console.log(props.reviewsMeta) : 'hello!'}</div>
     <div className='rating-breakdown'>
-      {
-        console.log(typeof props.ratingBreakDown[5])
-      }
       <label htmlFor='5-stars'>5 stars</label>
       <meter
         className='rating-breakdown-bar'
         id='5-stars'
-        value={String (props.ratingBreakDown[5])}
+        value={(props.reviewsMeta !== null) ? String (props.ratingBreakDown[5]) : '0'}
         min='0'
-        max={String (props.numReviews)}>
+        max={(props.reviewsMeta !== null) ? String (props.numReviews) : '10'}>
       </meter>
     </div>
     <div className='rating-breakdown'>

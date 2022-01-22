@@ -1,6 +1,7 @@
 import React from 'react';
 import ReviewSummary from './Reviews/ReviewSummary.jsx';
 import ReviewList from './Reviews/ReviewList.jsx';
+import WriteReviewModal from './Reviews/WriteReviewModal.jsx';
 import axios from 'axios';
 
 class Reviews extends React.Component {
@@ -9,27 +10,42 @@ class Reviews extends React.Component {
 
     this.state = {
       reviews: [],
-      averageRating: null,
+      reviewsMeta: null
     }
+
+    this.sort = this.sort.bind(this);
+    this.writeReviewBtnClick = this.writeReviewBtnClick.bind(this);
+    this.writeReviewSubmitBtnClick = this.writeReviewSubmitBtnClick.bind(this);
   }
 
   componentDidMount() {
+    this.getReviewsMeta(this.props.productId);
     this.getReviews(this.props.productId);
   }
 
-  getAverageRating(reviews) {
-    let ratingSum = 0;
-    for (let review of reviews) {
-      ratingSum += review.rating;
+  getAverageRating(reviewsMeta) {
+    if (reviewsMeta !== null) {
+      let ratingSum = 0;
+      let ratingCount = 0;
+      ratingSum += Number(reviewsMeta.ratings[1]);
+      ratingSum += Number(reviewsMeta.ratings[2]) * 2;
+      ratingSum += Number(reviewsMeta.ratings[3]) * 3;
+      ratingSum += Number(reviewsMeta.ratings[4]) * 4;
+      ratingSum += Number(reviewsMeta.ratings[5]) * 5;
+
+      ratingCount += Number(reviewsMeta.ratings[1]);
+      ratingCount += Number(reviewsMeta.ratings[2]);
+      ratingCount += Number(reviewsMeta.ratings[3]);
+      ratingCount += Number(reviewsMeta.ratings[4]);
+      ratingCount += Number(reviewsMeta.ratings[5]);
+      let averageRating = Math.round((ratingSum/ratingCount) * 10)/10;
+      return averageRating;
     }
-    let averageRating = ratingSum / reviews.length;
-    return averageRating;
   }
 
   //Creates a 5 element Number array, where each element represents the fill status of the star
-  createStarRatingArray(reviews) {
+  createStarRatingArray(averageRating) {
     let starRatingArray = [];
-    let averageRating = this.getAverageRating(reviews);
 
     while (averageRating > 0) {
       averageRating--;
@@ -60,8 +76,30 @@ class Reviews extends React.Component {
         reviews: reviews
       }, () => this.sort());
     }).catch(err => {
-      console.log(`Error fetching product with ${productId}`, err);
+      console.log(`Error fetching product reviews with ${productId}`, err);
     })
+  }
+
+  getReviewsMeta(productId) {
+    axios({
+      baseURL: 'http://localhost:3000',
+      url: '/reviews/meta',
+      method: 'get',
+      params: { productId: productId }
+    }).then(result => {
+      let reviewsMeta = result.data;
+      this.setState({
+        reviewsMeta: reviewsMeta
+      });
+    }).catch(err => {
+      console.log(`Error fetching product review meta data with ${productId}`, err);
+    })
+  }
+
+  getRatingsBreakDown(reviewsMeta) {
+    if (reviewsMeta !== null) {
+      return reviewsMeta.ratings;
+    }
   }
 
   /*
@@ -116,20 +154,61 @@ class Reviews extends React.Component {
     })
   }
 
+  writeReviewBtnClick(event) {
+    let dialog = document.getElementById('write-review-dialog');
+    if (typeof dialog.showModal === 'function') {
+      dialog.showModal();
+    } else {
+      alert('The <dialog> API is not supported by this browser');
+    }
+  }
+
+  writeReviewSubmitBtnClick(event) {
+    let productId = this.props.productId;
+    let rating = document.getElementById('overall-rating').value;
+    let recommendYes = document.getElementById('yes-recommend').checked; //on or off
+    let recommendNo = document.getElementById('no-recommend').checked;
+    let summary = document.getElementById('summary').value;
+    let body = document.getElementById('body').value;
+    let username = document.getElementById('username').value;
+    let email = document.getElementById('email').value;
+    axios({
+      baseURL: 'http://localhost:3000',
+      url: '/reviews',
+      method: 'post',
+      params: {
+        productId: productId,
+        rating: rating,
+        summary: summary,
+        body: body,
+        recommend: recommendYes,
+        name: username,
+        email: email,
+      }
+    }).then(result => {
+      console.log('Successfully added review');
+    }).catch(err => {
+      console.log(`Error submitting review for ${productId}`, err);
+    })
+  }
+
   render() {
     return(<>
       <div>RATINGS &amp; REVIEWS</div>
       <section id='reviews'>
         <ReviewSummary
           reviews={this.state.reviews}
-          averageRating={this.getAverageRating(this.state.reviews)}
-          starRatingArray={this.createStarRatingArray(this.state.reviews)}
+          reviewsMeta={this.state.reviewsMeta}
+          // ratingBreakDown={this.getRatingsBreakDown(this.state.reviewsMeta)}
+          averageRating={this.getAverageRating(this.state.reviewsMeta)}
+          starRatingArray={this.createStarRatingArray(this.getAverageRating(this.state.reviewsMeta))}
         />
         <ReviewList
           reviews={this.state.reviews}
-          sort={this.sort.bind(this)}
+          sort={this.sort}
           sortOption={this.state.sortOption}
         />
+        <WriteReviewModal writeReviewBtnClick={this.writeReviewBtnClick} writeReviewSubmitBtnClick={this.writeReviewSubmitBtnClick}/>
       </section>
     </>)
   }
