@@ -155,7 +155,7 @@ class Reviews extends React.Component {
   }
 
   writeReviewBtnClick(event) {
-    var dialog = document.getElementById('write-review-dialog');
+    let dialog = document.getElementById('write-review-dialog');
     if (typeof dialog.showModal === 'function') {
       dialog.showModal();
     } else {
@@ -164,7 +164,32 @@ class Reviews extends React.Component {
   }
 
   writeReviewSubmitBtnClick(event) {
-    console.log(event);
+    let productId = 59553;
+    let rating = document.getElementById('overall-rating').value;
+    let recommendYes = document.getElementById('yes-recommend').checked; //on or off
+    let recommendNo = document.getElementById('no-recommend').checked;
+    let summary = document.getElementById('summary').value;
+    let body = document.getElementById('body').value;
+    let username = document.getElementById('username').value;
+    let email = document.getElementById('email').value;
+    axios({
+      baseURL: 'http://localhost:3000',
+      url: '/reviews',
+      method: 'post',
+      params: {
+        productId: productId,
+        rating: rating,
+        summary: summary,
+        body: body,
+        recommend: recommendYes,
+        name: username,
+        email: email,
+      }
+    }).then(result => {
+      console.log('Successfully added review');
+    }).catch(err => {
+      console.log(`Error submitting review for ${productId}`, err);
+    })
   }
 
   render() {

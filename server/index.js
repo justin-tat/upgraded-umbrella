@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllReviews, getAllReviewsMeta } = require('./ReviewsService.js');
+const { getAllReviews, getAllReviewsMeta, addReview } = require('./ReviewsService.js');
 const { getStarReviews, getProductOverview, getStyles } = require('./OverviewService');
 const { createProductObj, addRatingsData, addRelatedData, addImageData } = require('./ComparisonService');
 
@@ -32,6 +32,33 @@ app.get('/reviews/meta', (req, res) => {
   }).catch(err => {
     res.status(404).send(err);
   })
+})
+
+app.post('/reviews', (req, res) => {
+  let productId = Number (req.query.productId);
+  let rating = Number (req.query.rating);
+  let summary = req.query.summary;
+  let body = req.query.body;
+  let recommend = Boolean (req.query.recommend);
+  let name = req.query.name;
+  let email = req.query.email;
+
+  console.log(res);
+
+  console.log(typeof productId);
+  console.log(typeof rating);
+  console.log(summary);
+  console.log(body);
+  console.log(typeof recommend);
+  console.log(name);
+  console.log(email);
+
+  addReview(productId, rating, summary, body, recommend, name, email)
+    .then(result => {
+      res.status(201);
+    }).catch(err => {
+      res.status(404).send(err);
+    })
 })
 
 //Overview API Requests

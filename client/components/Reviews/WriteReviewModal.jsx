@@ -15,17 +15,17 @@ class WriteReviewModal extends React.Component {
               <label htmlFor='overall-rating'>Overall Rating</label>
                 <select id='overall-rating'>
                   <option></option>
-                  <option>Poor</option>
-                  <option>Fair</option>
-                  <option>Average</option>
-                  <option>Good</option>
-                  <option>Great</option>
+                  <option value='1'>Poor</option>
+                  <option value='2'>Fair</option>
+                  <option value='3'>Average</option>
+                  <option value='4'>Good</option>
+                  <option value='5'>Great</option>
                 </select>
             </div>
-            <div><label>Do you recommend this product?</label>
-              <input type='radio' id='yes-recommend'></input>
+            <div id='recommend'><label>Do you recommend this product?</label>
+              <input type='radio' id='yes-recommend' name='recommend'></input>
               <label htmlFor='yes-recommend'>Yes</label>
-              <input type='radio' id='no-recommend'></input>
+              <input type='radio' id='no-recommend' name='recommend'></input>
               <label htmlFor='no-recommend'>No</label>
             </div>
             <div>
