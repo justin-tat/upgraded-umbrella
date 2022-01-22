@@ -7,7 +7,8 @@ const Feature = (props) => {
   } else if (props.feature.check === 'left') {
     var leftCheck = Check;
   } else {
-    var rightCheck, leftCheck = Check;
+    var rightCheck = Check;
+    var leftCheck = Check;
   }
   return(
     <div className='featureRow'>

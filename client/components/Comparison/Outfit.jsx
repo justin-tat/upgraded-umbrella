@@ -28,10 +28,11 @@ const OutfitItem = (props) => {
 }
 
 const Outfit = (props) => {
+  console.log('OUTFIT PROPS: ', props);
   var outfits = <div></div>;
   if (props.outfit !== undefined && (props.outfit).length > 0) {
     var outfits = (props.outfit).map((product) =>
-      <OutfitItem key={product.id + 1}
+      <OutfitItem key={product.id}
                   id={product.id}
                   category={product.category}
                   name={product.name}
@@ -46,7 +47,7 @@ const Outfit = (props) => {
       <div id='outfit' className='scrollWrapper'>
         <br></br>
         <div id='outfitCarousel'>
-          <div className='addItem' onClick={props.addOutfitItem}>
+          <div className='addItem' onClick={() => {props.addOutfitItem(props.currProductData)}}>
           <img className='plusImage' src={Plus} />
           <div className='addToOutfit' >Add To Outfit</div>
           </div>

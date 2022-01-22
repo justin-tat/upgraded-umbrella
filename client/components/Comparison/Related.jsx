@@ -7,6 +7,7 @@ import Price from './Price.jsx';
 
 
 const RelatedItem = (props) => {
+  console.log('Related Items props: ', props);
   var [show, setShow] = useState(false);
   var image = props.image ? props.image : NoImage;
   var currProductData,
@@ -32,6 +33,7 @@ const RelatedItem = (props) => {
         <Ratings ratings={props.ratings} />
      </div>
       <ComparisonModal  currProductData={props.currProductData}
+                        features={props.features}
                         relatedProduct={relatedProduct}
                         show={show}
                         onClose={() => setShow(false)} show={show}
@@ -41,8 +43,9 @@ const RelatedItem = (props) => {
 }
 
 const Related = (props) => {
+  console.log('Related Props: ', props);
   var relatedItems = (props.relatedProducts).map((product) =>
-    <RelatedItem  key = {product.id + 5}
+    <RelatedItem  key = {product.id}
                   productId = {product.id}
                   relatedProducts = {props.relatedProducts}
                   category = {product.category}
@@ -53,6 +56,7 @@ const Related = (props) => {
                   ratings = {product.ratings}
                   currProductData = {props.currProductData}
                   changeId = {props.changeId}
+                  features = {product.features}
     />
   );
   return(

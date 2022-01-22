@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Related from './Comparison/Related.jsx';
 import Outfit from './Comparison/Outfit.jsx';
+import 'regenerator-runtime/runtime';
 
 class Comparison extends React.Component {
   constructor(props) {
@@ -9,22 +10,35 @@ class Comparison extends React.Component {
     this.state = {
       outfit: [],
       related: [],
-      productId: props.productId || 59554,
+      productId: this.props.productId || 59554,
       productData: {},
       changeId: this.props.changeId
       }
     this.addOutfitItem = this.addOutfitItem.bind(this);
     this.removeOutfitItem = this.removeOutfitItem.bind(this);
-    // this.changeId = this.changeId.bind(this);
+    this.createProductObj = this.createProductObj.bind(this);
   }
 
 componentDidMount() {
+  // localStorage.clear();
+  console.log('Props.productId: ', this.props.productId);
   this.fillCarousels(this.state.productId);
+}
+
+componentDidUpdate(prevProps) {
+  if (prevProps.productId !== this.props.productId) {
+    this.setState({
+      related: []
+    })
+    this.fillCarousels(this.props.productId)
+    console.log('Successfully set state for Comparison from Atelier Data inside ComponentDidUpdate');
+  }
 }
 
 checkLocalStorage (cb) {
   var outfitList = [];
   var myStorage = window.localStorage;
+  console.log('This is in local storage: ', myStorage);
   var productIds = Object.keys(myStorage);
   if (productIds.length > 0) {
     for (var productId of productIds) {
@@ -51,10 +65,12 @@ fillCarousels (productId) {
   });
 
   this.createProductObj(productId, (err, productObj) => {
+    console.log('Product Obj: ', productObj);
     relatedProductIds = productObj.related;
+
     for (var index = 0; index <= relatedProductIds.length - 1; index ++) {
-      if ( index === relatedProductIds.length - 1) {
         this.createProductObj(relatedProductIds[index], (err, relatedProductObj) => {
+          relatedProductObjs = this.state.related;
           relatedProductObjs.push(relatedProductObj);
           this.setState({
             productData: productObj,
@@ -62,11 +78,6 @@ fillCarousels (productId) {
             outfit: storage || []
           });
         })
-      } else {
-        this.createProductObj(relatedProductIds[index], (err, relatedProductObj) => {
-          relatedProductObjs.push(relatedProductObj);
-        });
-      }
     }
   });
 }
@@ -101,6 +112,10 @@ createProductObj (productId, cb) {
     });
   }).then(relatedData => {
     var uniqueRelatedData = [...new Set(relatedData.data)];
+    var index = uniqueRelatedData.indexOf(productObj.id);
+    if (index > -1) {
+      uniqueRelatedData.splice(index, 1);
+    }
     productObj.related = uniqueRelatedData;
     return productObj;
   }).then(productObj => {
@@ -111,6 +126,7 @@ createProductObj (productId, cb) {
       params: {productId: productObj.id}
     });
   }).then(imageData => {
+    console.log('IMAGE DATA: ', imageData);
     var defaultFound = false;
     var imageUrl,
         originalPrice,
@@ -138,19 +154,23 @@ createProductObj (productId, cb) {
   });
 }
 
-  addOutfitItem (event) {
+  addOutfitItem (productData) {
+    console.log('product data to be added to outfit: ', productData);
     var newOutfit = this.state.outfit;
+    var indexFound = false;
     for ( var index = 0; index < newOutfit.length; index ++ ) {
-      if (newOutfit[index].id === this.state.productId) {
+      if (newOutfit[index].id === productData.id) {
         console.log('Item already in outfit. Item #', newOutfit[index].id);
-        return;
+        indexFound = true;
       }
     }
-    localStorage.setItem(this.state.productData.id, JSON.stringify(this.state.productData));
-    newOutfit.push(this.state.productData);
-    this.setState ({
-      outfit: newOutfit
-    });
+    if (!indexFound) {
+      localStorage.setItem(productData.id, JSON.stringify(productData));
+      newOutfit.push(productData);
+      this.setState ({
+        outfit: newOutfit
+      });
+    }
   }
 
   removeOutfitItem (productId) {
@@ -167,23 +187,17 @@ createProductObj (productId, cb) {
     });
   }
 
-  // changeId (productId) {
-  //   console.log('new product id: ', productId);
-  //   this.setState ({
-  //     productId: productId
-  //   });
-  //   this.fillCarousels(productId);
-  // }
-
   render() {
     return(
       <div id='comparison'>
         <div className='relatedTitle' >RELATED PRODUCTS</div>
         <Related  relatedProducts={this.state.related}
                   currProductData={this.state.productData}
-                  changeId={this.props.changeId} />
+                  changeId={this.props.changeId}
+                  features={this.state.productData.features} />
         <div className='outfitTitle'>YOUR OUTFIT</div>
         <Outfit outfit={this.state.outfit}
+                currProductData={this.state.productData}
                 addOutfitItem={this.addOutfitItem}
                 removeOutfitItem={this.removeOutfitItem} />
       </div>
