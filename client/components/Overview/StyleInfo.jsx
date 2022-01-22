@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import StyleList from './StyleList.jsx';
 import CartSpecifics from './CartSpecifics.jsx';
 import AddToCart from './AddToCart.jsx';
@@ -22,7 +23,8 @@ class StyleInfo extends React.Component {
         this.getQuantityBySize = this.getQuantityBySize.bind(this);
         this.updateCart = this.updateCart.bind(this);
         this.toggleFavorite = this.toggleFavorite.bind(this);
-        
+        this.getFromCart = this.getFromCart.bind(this);
+        this.postToCart = this.postToCart.bind(this);
     }
 
     //Calling componentDidMount 
@@ -30,7 +32,7 @@ class StyleInfo extends React.Component {
     //s3, cloudfront optimize how fast data can be downloaded from s3
     componentDidMount() {
         this.getPrice();
-        
+        this.getFromCart();
     }
 
     componentDidUpdate(prevProps) {
@@ -57,9 +59,46 @@ class StyleInfo extends React.Component {
         if(this.state.skuSelected === '') {
             alert('You need to choose a size!');
         } else {
+            this.postToCart(this.state.skuSelected)
+            .then(() => {
+                this.getFromCart(this.state.skuSelected);
+            });
             alert('Trying to purchase ' + this.state.skuSelected);
         }
         
+    }
+
+    //Change to baseURL: 'http://100.24.25.169',
+    getFromCart() {
+        return axios({
+            baseURL: 'http://localhost:3000',
+            url: '/cart',
+            method: 'get',
+        }).then(result => {
+            var printString = "";
+            for(var i = 0; i < result.data.length; i++) {
+                var temp = "SKU Number: " + String(result.data[i].sku_id) + " \n\t Quantity: " + String(result.data[i].count) + "\n"
+                printString += temp;
+            }
+            console.log('Successfully got items from cart: \n', printString);
+        })
+        .catch(err => {
+            console.log('Failed inside of productOverview of client side code');
+        });
+    }
+
+    postToCart(skuID) {
+        var sizeSelector = document.getElementById('quantitySelector');
+        var numItems = parseInt(sizeSelector.options[sizeSelector.selectedIndex].value)
+        skuID = parseInt(skuID);
+        return axios({
+            baseURL: 'http://localhost:3000',
+            url: '/postToCart',
+            method: 'post',
+            params: {skuID: skuID, numItems: numItems}
+        })
+
+
     }
 
 
@@ -74,7 +113,6 @@ class StyleInfo extends React.Component {
     }
 
     toggleFavorite() {
-        console.log("productId", this.props.productId);
         this.setState({
             favorited: !this.state.favorited
         }, () => {
