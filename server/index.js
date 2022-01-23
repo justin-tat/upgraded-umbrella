@@ -1,4 +1,10 @@
 const express = require('express');
+
+//const compression = require('compression');
+//const shrinkRay = require('shrink-ray-current');
+const expressStaticGzip = require('express-static-gzip');
+
+
 const { getStarReviews, getProductOverview, getStyles, getCart, postCart } = require('./OverviewService');
 const { getAllReviews, getAllReviewsMeta, addReview, markHelpful, reportReview } = require('./ReviewsService.js');
 const { createProductObj, addRatingsData, addRelatedData, addImageData } = require('./ComparisonService');
@@ -6,7 +12,22 @@ const { createProductObj, addRatingsData, addRelatedData, addImageData } = requi
 const app = express();
 const port = 3000;
 
-app.use(express.static('./client/dist'));
+
+
+//app.use(compression());
+
+//app.use(express.static('./client/dist'));
+
+app.use('/', expressStaticGzip('./client/dist'));
+
+
+app.get('*.js', function(req, res, next) {
+  req.url = req.url + '.gz'
+  res.set('Content-Encoding', 'gzip')
+  res.set('Content-Type', 'text/javascript')
+	res.status(200);
+  next()
+})
 
 app.get('/', (req, res) => {
   console.log('testing');

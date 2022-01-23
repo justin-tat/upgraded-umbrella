@@ -6,7 +6,7 @@ var ThumbnailList = (props) => {
             {
                 props.photos[0].url === props.allPhotos[0].url && props.currPhotoIndex === 0
                     ? <div></div>
-                    : <div> <img src="./img/photoIndexUpArrow.png" key="upArrow" id="upPhotoArrow" onClick={props.arrowClick}></img> </div>
+                    : <div> <img src="./img/photoIndexupArrow.png" key="upArrow" id="upPhotoArrow" onClick={props.arrowClick}></img> </div>
             }
             {props.photos.map((urls, i) => {
                 if(i === props.currPhotoIndex) {

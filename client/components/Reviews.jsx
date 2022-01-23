@@ -68,7 +68,7 @@ class Reviews extends React.Component {
 
   getReviews(productId) {
     axios({
-      baseURL: 'http://localhost:3000',
+      baseURL: 'http://100.24.25.169',
       url: '/reviews',
       method: 'get',
       params: { productId: productId }
@@ -84,7 +84,7 @@ class Reviews extends React.Component {
 
   getReviewsMeta(productId) {
     axios({
-      baseURL: 'http://localhost:3000',
+      baseURL: 'http://100.24.25.169',
       url: '/reviews/meta',
       method: 'get',
       params: { productId: productId }

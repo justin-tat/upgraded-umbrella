@@ -86,7 +86,7 @@ class Overview extends React.Component {
 
   getProductOverview(productID) {
     return axios({
-      baseURL: 'http://localhost:3000',
+      baseURL: 'http://100.24.25.169',
       url: '/productOverview',
       method: 'get',
       params: { productID: productID }
@@ -101,7 +101,7 @@ class Overview extends React.Component {
 
   getStyles(productID, obj) {
     return axios({
-      baseURL: 'http://localhost:3000',
+      baseURL: 'http://100.24.25.169',
       url: '/styles',
       method: 'get',
       params: { productID: productID }
@@ -122,7 +122,7 @@ class Overview extends React.Component {
 
   getStarReviews(productID, obj) {
     return axios({
-      baseURL: 'http://localhost:3000',
+      baseURL: 'http://100.24.25.169',
       url: '/starReviews',
       method: 'get',
       params: { productID: productID }
@@ -168,7 +168,7 @@ class Overview extends React.Component {
     var modifier = 0;
     var photosIndices = this.state.photosIndices;
     var offset = this.state.offset;
-    if (identity === './img/photoIndexUpArrow.png' || identity === './img/leftArrow.png') {
+    if (identity === './img/photoIndexupArrow.png' || identity === './img/leftArrow.png') {
       if (unchangedPhotoIndex - 1 === -1 && this.state.photosIndices.start !== 0) {
         photosIndices.end -= 1;
         photosIndices.start -= 1;

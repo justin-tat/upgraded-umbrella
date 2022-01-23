@@ -71,7 +71,7 @@ class StyleInfo extends React.Component {
     //Change to baseURL: 'http://localhost:3000',
     getFromCart() {
         return axios({
-            baseURL: 'http://localhost:3000',
+            baseURL: 'http://100.24.25.169',
             url: '/cart',
             method: 'get',
         }).then(result => {
@@ -83,7 +83,7 @@ class StyleInfo extends React.Component {
             console.log('Successfully got items from cart: \n', printString);
         })
         .catch(err => {
-            console.log('Failed inside of productOverview of client side code');
+            console.log('Failed inside of getFromCart of client side code', err);
         });
     }
 
@@ -92,7 +92,7 @@ class StyleInfo extends React.Component {
         var numItems = parseInt(sizeSelector.options[sizeSelector.selectedIndex].value)
         skuID = parseInt(skuID);
         return axios({
-            baseURL: 'http://localhost:3000',
+            baseURL: 'http://100.24.25.169',
             url: '/postToCart',
             method: 'post',
             params: {skuID: skuID, numItems: numItems}
