@@ -13,11 +13,11 @@ const Feature = (props) => {
   return(
     <div className='featureRow'>
       <div className='leftCheckContainer'>
-        <img className='leftCheck' src={leftCheck} ></img>
+        <img className='leftCheck' src={leftCheck} alt="leftCheck"></img>
       </div>
       <div className='featureName'>{props.feature.feature}: {props.feature.value} </div>
       <div className='rightCheckContainer'>
-        <img className='rightCheck' src={rightCheck} ></img>
+        <img className='rightCheck' src={rightCheck} alt="rightCheck"></img>
       </div>
     </div>
   )

@@ -32,7 +32,7 @@ class ReviewTile extends React.Component {
           return <StarRating key={index} starFillStatus={starFillStatus}/>
         })}
           <div className='review-info'>
-            <img className='review-check-mark' src='./img/review-check-mark.png'></img> {this.props.review.reviewer_name}, {this.props.review.date}
+            <img className='review-check-mark' src='./img/review-check-mark.png' alt="review-check-mark"></img> {this.props.review.reviewer_name}, {this.props.review.date}
         </div>
         </div>
         <div className='review-title'>{this.props.review.summary}</div>

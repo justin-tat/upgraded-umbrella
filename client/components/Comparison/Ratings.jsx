@@ -56,11 +56,11 @@ const Ratings = (props) => {
 
   return (
     <div className='rating'>
-      <img className='ratingStar' src={starRating[1]}></img>
-      <img className='ratingStar' src={starRating[2]}></img>
-      <img className='ratingStar' src={starRating[3]}></img>
-      <img className='ratingStar' src={starRating[4]}></img>
-      <img className='ratingStar' src={starRating[5]}></img>
+      <img className='ratingStar' src={starRating[1]} alt="star"></img>
+      <img className='ratingStar' src={starRating[2]} alt="star"></img>
+      <img className='ratingStar' src={starRating[3]} alt="star"></img>
+      <img className='ratingStar' src={starRating[4]} alt="star"></img>
+      <img className='ratingStar' src={starRating[5]} alt="star"></img>
     </div>
   )
 }

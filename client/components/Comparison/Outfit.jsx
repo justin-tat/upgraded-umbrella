@@ -14,8 +14,8 @@ const OutfitItem = (props) => {
   return (
     <div className='listItem' >
       <div className='relatedImgBox' >
-        <img className='relatedImg' src={image}></img>
-        <img className='xImg' src={xImg} onClick={() => {props.removeOutfitItem(props.id)}} ></img>
+        <img className='relatedImg' src={image} alt="relatedImage"></img>
+        <img className='xImg' src={xImg} onClick={() => {props.removeOutfitItem(props.id)}} alt="xImg"></img>
       </div>
       <div className='relatedDetails'>
         <div className='category'>{props.category}</div>
@@ -48,7 +48,7 @@ const Outfit = (props) => {
         <br></br>
         <div id='outfitCarousel'>
           <div className='addItem' onClick={() => {props.addOutfitItem(props.currProductData)}}>
-          <img className='plusImage' src={Plus} />
+          <img className='plusImage' src={Plus} alt="plusImage"/>
           <div className='addToOutfit' >Add To Outfit</div>
           </div>
           {outfits}

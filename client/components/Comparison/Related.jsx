@@ -23,8 +23,8 @@ const RelatedItem = (props) => {
   return (
     <div className='listItem'>
     <div className='relatedImgBox' >
-      <img className='starImg' src={Star} onClick={() => setShow(true)}></img>
-      <img className='relatedImg' value={props.productId} src={image} onClick={() => {props.changeId(props.productId)}} ></img>
+      <img className='starImg' src={Star} onClick={() => setShow(true)} alt="starImg"></img>
+      <img className='relatedImg' value={props.productId} src={image} onClick={() => {props.changeId(props.productId)}} alt="relatedImg"></img>
     </div>
       <div className='relatedDetails'>
         <div className='category'>{props.category}</div>

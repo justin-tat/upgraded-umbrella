@@ -8,11 +8,11 @@ import React from 'react';
 //If number is > 0 & < 0.375 -> 1/4 star
 //If number is 0 -> empty star
 const determineStarRating = (starFillStatus) => {
-  let emptyStar = <img className='empty-star' src='./img/emptyStar.png'></img>;
-  let quarterStar = <img className='star' src='./img/quarterStar.png'></img>;
-  let halfStar = <img className='star' src='./img/halfStar.png'></img>;
-  let threeQuarterStar = <img className='star' src='./img/threeQuarterStar.png'></img>;
-  let filledStar = <img className='star' src='./img/filledStar.png'></img>;
+  let emptyStar = <img className='empty-star' src='./img/emptyStar.png' alt="star"></img>;
+  let quarterStar = <img className='star' src='./img/quarterStar.png' alt="star"></img>;
+  let halfStar = <img className='star' src='./img/halfStar.png' alt="star"></img>;
+  let threeQuarterStar = <img className='star' src='./img/threeQuarterStar.png' alt="star"></img>;
+  let filledStar = <img className='star' src='./img/filledStar.png' alt="star"></img>;
 
   if (starFillStatus === 1) {
     return filledStar;
