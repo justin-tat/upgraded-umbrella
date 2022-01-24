@@ -41,7 +41,7 @@ class Overview extends React.Component {
       console.log('Successfully set state for Overview from Atelier Data');
     })
     .catch(err => {
-      console.log('Failed in ComponentDidMount of Overview.jsx', err);
+      //console.log('Failed in ComponentDidMount of Overview.jsx', err);
     })
   }
 
@@ -52,7 +52,7 @@ class Overview extends React.Component {
         console.log('Successfully set state for Overview from Atelier Data inside ComponentDidUpdate');
       })
       .catch(err => {
-        console.log('Failed in ComponentDidMount of Overview.jsx', err);
+        //console.log('Failed in ComponentDidMount of Overview.jsx', err);
       })
     }
   }
@@ -95,7 +95,7 @@ class Overview extends React.Component {
       return { "productOverview": results };
     })
     .catch(err => {
-      console.log('Failed inside of productOverview of client side code');
+      //console.log('Failed inside of productOverview of client side code');
     });
   }
 
@@ -116,7 +116,7 @@ class Overview extends React.Component {
       return obj;
     })
     .catch(err => {
-      console.log('Failed inside of styles of client side code');
+      //console.log('Failed inside of styles of client side code');
     });
   }
 
@@ -132,7 +132,7 @@ class Overview extends React.Component {
       return obj;
     })
     .catch(err => {
-      console.log('Failed inside of starReviews of client side code');
+      //console.log('Failed inside of starReviews of client side code');
     });
   }
 

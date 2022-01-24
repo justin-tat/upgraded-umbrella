@@ -8,8 +8,8 @@ var AddToCart = props => {
                 <div className="cartElem">+</div>
             </div>
             {props.favorited === true 
-            ? <img src='./img/favoriteStar.png' id="faveStar" onClick={props.toggleFavorite}></img>
-            : <img src='./img/notFavoriteStar.png' id="faveStar" onClick={props.toggleFavorite}></img>
+            ? <img src='./img/favoriteStar.png' id="faveStar" onClick={props.toggleFavorite} alt="favorite star"></img>
+            : <img src='./img/notFavoriteStar.png' id="faveStar" onClick={props.toggleFavorite} alt="sad star"></img>
             }
         </div>
     )

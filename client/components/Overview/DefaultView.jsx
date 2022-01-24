@@ -6,15 +6,15 @@ var DefaultView = (props) => {
         <div id="defaultView">
             {props.photos[0].url === props.allPhotos[0].url && props.currPhotoIndex === 0
                 ? <div className="arrowFiller"></div>
-                : <img src="./img/leftArrow.png" id="leftArrow" onClick={props.arrowClick}></img>
+                : <img src="./img/leftArrow.png" id="leftArrow" onClick={props.arrowClick} alt="defView left arrow"></img>
             }
             <div id="defaultViewImages">
-                <img id="mainImage" src={props.photos[props.currPhotoIndex].url} onClick={props.zoom}></img>
+                <img id="mainImage" src={props.photos[props.currPhotoIndex].url} onClick={props.zoom} alt="defView mainImage"></img>
                 
             </div>
             {(props.photos[props.photos.length - 1].url === props.allPhotos[props.allPhotos.length - 1].url && props.currPhotoIndex === props.photos.length - 1)
                 ? <div className="arrowFiller"></div>
-                : <img src="./img/rightArrow.png" id="rightArrow" onClick={props.arrowClick}></img>
+                : <img src="./img/rightArrow.png" id="rightArrow" onClick={props.arrowClick} alt="defView rightArrow"></img>
             }
             <div id="productInfo">
                 <ProductInfo

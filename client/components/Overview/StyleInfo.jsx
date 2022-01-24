@@ -83,7 +83,7 @@ class StyleInfo extends React.Component {
             console.log('Successfully got items from cart: \n', printString);
         })
         .catch(err => {
-            console.log('Failed inside of getFromCart of client side code', err);
+            //console.log('Failed inside of getFromCart of client side code');
         });
     }
 
