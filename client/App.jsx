@@ -49,8 +49,8 @@ class App extends React.Component {
     return (
       <div>
         <Overview productId={this.state.id} appAddToCarousel={this.appAddToCarousel} />
-        <Comparison productId={this.state.id} changeId={this.changeId} shouldAddToCarousel={this.state.shouldAddToCarousel} removeFromCarousel={this.removeFromCarousel}/>
-        <Reviews productId={this.state.id}/>
+        {/* <Comparison productId={this.state.id} changeId={this.changeId} shouldAddToCarousel={this.state.shouldAddToCarousel} removeFromCarousel={this.removeFromCarousel}/>
+        <Reviews productId={this.state.id}/> */}
       </div>
     )
   }

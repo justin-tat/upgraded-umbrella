@@ -78,7 +78,7 @@ class Reviews extends React.Component {
         reviews: reviews
       }, () => this.sort());
     }).catch(err => {
-      console.log(`Error fetching product reviews with ${productId}`, err);
+      //console.log(`Error fetching product reviews with ${productId}`, err);
     })
   }
 

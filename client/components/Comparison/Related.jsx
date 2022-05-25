@@ -43,7 +43,7 @@ const RelatedItem = (props) => {
 }
 
 const Related = (props) => {
-  console.log('Related Props: ', props);
+  //console.log('Related Props: ', props);
   var relatedItems = (props.relatedProducts).map((product) =>
     <RelatedItem  key = {product.id}
                   productId = {product.id}

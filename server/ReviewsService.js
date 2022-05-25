@@ -1,9 +1,14 @@
 const axios = require('axios');
 const { API_TOKEN } = process.env.API_KEY || require('../config.js');
 
+let load = 'http://ec2-44-202-243-147.compute-1.amazonaws.com'
+let server = 'http://ec2-34-227-173-64.compute-1.amazonaws.com'
+
+//ssh -i "FirstSDCserver.pem" ubuntu@ec2-34-227-173-64.compute-1.amazonaws.com
+
 const getAllReviews = (productId) => {
   return axios({
-    baseURL: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp',
+    baseURL: server,
     url: '/reviews',
     method: 'get',
     headers: {'Authorization' : API_TOKEN },
@@ -17,7 +22,7 @@ const getAllReviews = (productId) => {
 
 const getAllReviewsMeta = (productId) => {
   return axios({
-    baseURL: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp',
+    baseURL: server,
     url: '/reviews/meta',
     method: 'get',
     headers: {'Authorization' : API_TOKEN },
@@ -37,7 +42,7 @@ const addReview = (productId, rating, summary, body, recommend, name, email) => 
     let characteristic = {};
     characteristic[charId] = 3;
     return axios({
-      baseURL: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp',
+      baseURL: server,
       url: '/reviews',
       method: 'post',
       headers: {'Authorization' : API_TOKEN },
@@ -60,7 +65,7 @@ const addReview = (productId, rating, summary, body, recommend, name, email) => 
 
 const markHelpful = (reviewId) => {
   return axios({
-    baseURL: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp',
+    baseURL: server,
     url: `/reviews/${reviewId}/helpful`,
     method: 'put',
     headers: {'Authorization' : API_TOKEN },
@@ -69,7 +74,7 @@ const markHelpful = (reviewId) => {
 
 const reportReview = (reviewId) => {
   return axios({
-    baseURL: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp',
+    baseURL: server,
     url: `/reviews/${reviewId}/report`,
     method: 'put',
     headers: {'Authorization' : API_TOKEN },

@@ -28,7 +28,7 @@ const OutfitItem = (props) => {
 }
 
 const Outfit = (props) => {
-  console.log('OUTFIT PROPS: ', props);
+  //console.log('OUTFIT PROPS: ', props);
   var outfits = <div></div>;
   if (props.outfit !== undefined && (props.outfit).length > 0) {
     var outfits = (props.outfit).map((product) =>

@@ -21,7 +21,7 @@ class Comparison extends React.Component {
 
 componentDidMount() {
   // localStorage.clear();
-  console.log('Props.productId: ', this.props.productId);
+  //console.log('Props.productId: ', this.props.productId);
   this.fillCarousels(this.state.productId);
 }
 
@@ -46,7 +46,7 @@ componentDidUpdate(prevProps) {
 checkLocalStorage (cb) {
   var outfitList = [];
   var myStorage = window.localStorage;
-  console.log('This is in local storage: ', myStorage);
+  //console.log('This is in local storage: ', myStorage);
   var productIds = Object.keys(myStorage);
   if (productIds.length > 0) {
     for (var productId of productIds) {
@@ -66,7 +66,7 @@ fillCarousels (productId) {
 
   this.checkLocalStorage((err, storageData) =>{
     if (err) {
-      console.log(err);
+      //console.log(err);
     } else {
       storage = storageData;
     }
