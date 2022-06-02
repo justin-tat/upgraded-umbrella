@@ -1,4 +1,13 @@
 # Atelier
+
+<p>
+<img alt="Javascript" src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E" />
+<img alt="React" src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
+<img alt="Nodejs" src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" />
+<img alt="babel" src="https://img.shields.io/badge/babel-007FFF?style=for-the-badge&logo=babel&logoColor=white" />
+<img alt="webpack" src="https://img.shields.io/badge/webpack-A07FFF?style=for-the-badge&logo=webpack&logoColor=white" />
+
+<p/>
 Atelier is a modern product detail page for the Atelier Project. 
 
 The app in its entirety comes with an Overview, Related Items, and Reviews sections, this repository being for the Overview section. 
